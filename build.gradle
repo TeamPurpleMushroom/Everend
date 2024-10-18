@@ -7,7 +7,10 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.22'
     // OPTIONAL Kotlin Serialization plugin
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.22'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
+
+apply plugin: 'org.spongepowered.mixin'
 
 version = mod_version
 group = mod_group_id
@@ -118,6 +121,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven { url = "https://repo.repsy.io/mvn/timeconqueror/mc/" }
     maven { url = 'https://thedarkcolour.github.io/KotlinForForge/' }
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
 }
 
 dependencies {
