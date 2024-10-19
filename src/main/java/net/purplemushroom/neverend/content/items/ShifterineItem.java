@@ -31,9 +31,13 @@ public class ShifterineItem extends Item {
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         if (stack.hasTag()) {
             int y = stack.getTag().getInt("LastHolderY");
+            double despawnY = (double)(entity.level().getMinBuildHeight() - 64);
             if (entity.getY() < y && entity.level().clip(
-                    new ClipContext(entity.position(), new Vec3(entity.getX(), entity.level().getMinBuildHeight(), entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity))
+                    new ClipContext(entity.position(), new Vec3(entity.getX(), despawnY, entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity))
                     .getType() == HitResult.Type.MISS) {
+                if (entity.getY() < despawnY) {
+                    entity.setPos(entity.getX(), despawnY, entity.getZ());
+                }
                 entity.push(0.0, 0.1, 0.0);
             }
         }
