@@ -22,10 +22,10 @@ public class ShifterineItem extends Item {
     }
 
     @Override
-    public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull Entity entity, int p_41407_, boolean p_41408_) {
+    public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull Entity entity, int p_41407_, boolean p_41408_) {// TODO: instead of having this run every tick, have it run only on player death
         super.inventoryTick(itemStack, level, entity, p_41407_, p_41408_);
         CompoundTag tag = itemStack.getOrCreateTag();
-        if (entity.onGround()) tag.putInt("LastHolderY", (int) entity.getEyeY());
+        if (entity.onGround()) tag.putInt("LastHolderY", (int) entity.getEyeY());// TODO: use player capability
     }
 
     @Override
