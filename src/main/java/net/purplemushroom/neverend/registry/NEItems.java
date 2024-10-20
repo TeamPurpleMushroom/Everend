@@ -8,7 +8,7 @@ import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 
 @AutoRegistrable.Entries("item")
 public class NEItems {
-    public static Item SHIFTERINE;
+    public static Item SHIFTERINE_CRYSTAL;
 
     @AutoRegistrable
     private static final ItemRegister ITEMS = new ItemRegister(Neverend.MODID);
@@ -17,6 +17,7 @@ public class NEItems {
     private static void register() {
         ITEMS.register("shifterine_crystal", ShifterineItem::new)
                 .name("Shifterine Crystal")
+                .defaultModel(Neverend.tl("item/shifterine_crystal"))
                 .onCreativeTabBuilding(ItemRegister.CreativeTabAdder.tabBased(NECreativeTabs.ITEMS));
     }
 }

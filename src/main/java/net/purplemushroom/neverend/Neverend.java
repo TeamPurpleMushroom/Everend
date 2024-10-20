@@ -16,10 +16,6 @@ public class Neverend {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public final Neverend INSTANCE;
 
-    /** TODO: Create individual registry classes using TimeCore registry system.
-     * See {@link ru.timeconqueror.timecore.api.registry}
-     */
-
     public Neverend() {
         INSTANCE = this;
         TimeCoreAPI.setup(this);
