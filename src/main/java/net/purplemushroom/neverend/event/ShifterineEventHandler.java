@@ -1,0 +1,47 @@
+package net.purplemushroom.neverend.event;
+
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.purplemushroom.neverend.content.items.ShifterineItem;
+
+@Mod.EventBusSubscriber
+public class ShifterineEventHandler {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void playerPickupEvent(EntityItemPickupEvent event) { // WARNING: if another mod adds an equally low priority event handler that happens to cancel the event, the ability will break!
+        ItemStack stack = event.getItem().getItem();
+        if (stack.getItem() instanceof ShifterineItem) {
+            stack.removeTagKey("LastHolderY");
+        }
+    }
+
+    @SubscribeEvent
+    public static void playerDropEvent(ItemTossEvent event) {
+        handleItemDrop(event.getPlayer(), event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void playerDropsEvent(LivingDropsEvent event) {
+        if (event.getEntity() instanceof ServerPlayer) {
+            for (ItemEntity item : event.getDrops()) {
+                handleItemDrop(event.getEntity(), item);
+            }
+        }
+    }
+
+    private static void handleItemDrop(LivingEntity player, ItemEntity itemEntity) {
+        ItemStack stack = itemEntity.getItem();
+        if (stack.getItem() instanceof ShifterineItem) {
+            stack.getOrCreateTag()
+                    .putInt("LastHolderY", (int) (player.getY() + (double) player.fallDistance)); // TODO: use player capability
+        }
+    }
+}

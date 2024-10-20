@@ -12,6 +12,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import javax.naming.CompoundName;
@@ -19,13 +20,6 @@ import javax.naming.CompoundName;
 public class ShifterineItem extends Item {
     public ShifterineItem() {
         super(new Item.Properties());
-    }
-
-    @Override
-    public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull Entity entity, int p_41407_, boolean p_41408_) {// TODO: instead of having this run every tick, have it run only on player death
-        super.inventoryTick(itemStack, level, entity, p_41407_, p_41408_);
-        CompoundTag tag = itemStack.getOrCreateTag();
-        if (entity.onGround()) tag.putInt("LastHolderY", (int) entity.getEyeY());// TODO: use player capability
     }
 
     @Override
