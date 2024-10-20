@@ -24,7 +24,7 @@ public class NECreativeTabs {
                 .build());
         TABS.register(ITEMS.location().getPath(), () -> CreativeModeTab.builder()
                 .title(name("items"))
-                .icon(() -> new ItemStack(NEItems.SHIFTERINE_TEST))
+                .icon(() -> new ItemStack(NEItems.SHIFTERINE))
                 .build());
     }
 

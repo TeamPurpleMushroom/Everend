@@ -18,12 +18,18 @@ public class NEBlocks {
 
     @AutoRegistrable.Init
     private static void register() {
-       BLOCKS.register("pale_end_stone", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.GLASS)
-               .strength(2.0F, 6.0F)
-               .sound(SoundType.GLASS)
-               .lightLevel(value -> 15)).create()))
-               .oneVarStateAndCubeAllModel()
-               .defaultBlockItem(NECreativeTabs.BLOCKS)
-               .name("Pale End Stone");
+        BLOCKS.register("pale_end_stone", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .strength(1.0F, 3.0F)
+                        .lightLevel(value -> 5)
+                        .requiresCorrectToolForDrops()).create()))
+                .oneVarStateAndCubeAllModel()
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("Pale End Stone");
+        BLOCKS.register("shifterine_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .strength(2.0F, 6.0F)
+                        .requiresCorrectToolForDrops()).create()))
+                .oneVarStateAndCubeAllModel()
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("Shifterine Ore");
     }
 }
