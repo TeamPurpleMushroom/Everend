@@ -24,6 +24,22 @@ public class NEItems {
                 .name("Shifterine Crystal")
                 .defaultModel(Neverend.tl("item/shifterine_crystal"))
                 .onCreativeTabBuilding(ItemRegister.CreativeTabAdder.tabBased(NECreativeTabs.ITEMS));
+        ITEMS.register("ludunite_thing", () -> new Item(new Item.Properties()))
+                .name("Ludunite Thing")
+                .defaultModel(Neverend.tl("item/ludunite_thing"))
+                .onCreativeTabBuilding(ItemRegister.CreativeTabAdder.tabBased(NECreativeTabs.ITEMS));
+        ITEMS.register("aldores_thing", () -> new Item(new Item.Properties()))
+                .name("Aldores Thing")
+                .defaultModel(Neverend.tl("item/aldores_thing"))
+                .onCreativeTabBuilding(ItemRegister.CreativeTabAdder.tabBased(NECreativeTabs.ITEMS));
+        ITEMS.register("dragonbone", () -> new Item(new Item.Properties()))
+                .name("Dragonbone")
+                .defaultModel(Neverend.tl("item/dragonbone"))
+                .onCreativeTabBuilding(ItemRegister.CreativeTabAdder.tabBased(NECreativeTabs.ITEMS));
+        ITEMS.register("enchantment_crystal", () -> new Item(new Item.Properties()))
+                .name("Enchantment Crystal") // TODO: change name
+                .defaultModel(Neverend.tl("item/enchantment_crystal"))
+                .onCreativeTabBuilding(ItemRegister.CreativeTabAdder.tabBased(NECreativeTabs.ITEMS));
         registerItem("test", "Test", item -> new Item(baseProps().stacksTo(3).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
     }
 
