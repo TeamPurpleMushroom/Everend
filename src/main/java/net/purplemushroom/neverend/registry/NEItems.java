@@ -14,6 +14,10 @@ import java.util.function.Supplier;
 @AutoRegistrable.Entries("item")
 public class NEItems {
     public static Item SHIFTERINE_CRYSTAL;
+    public static Item LUDUNITE_THING;
+    public static Item ALDORES_THING;
+    public static Item DRAGONBONE;
+    public static Item ENCHANTMENT_CRYSTAL;
 
     @AutoRegistrable
     private static final ItemRegister ITEMS = new ItemRegister(Neverend.MODID);
