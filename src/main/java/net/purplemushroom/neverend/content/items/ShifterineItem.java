@@ -24,18 +24,28 @@ public class ShifterineItem extends Item {
 
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-        if (stack.hasTag() && stack.getTag() != null) {
-            int y = stack.getTag().getInt("LastHolderY");
-            double despawnY = entity.level().getMinBuildHeight() - 64;
-            if (entity.getY() < y && entity.level().clip(
-                    new ClipContext(entity.position(), new Vec3(entity.getX(), despawnY, entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity))
-                    .getType() == HitResult.Type.MISS) {
-                if (entity.getY() < despawnY) {
-                    entity.setPos(entity.getX(), despawnY, entity.getZ());
-                }
-                entity.push(0.0, 0.1, 0.0);
+        if (!(stack.hasTag() && stack.getTag().contains("LastHolderY"))) {
+            setTag(stack, (int) entity.getY());
+        }
+        int y = stack.getTag().getInt("LastHolderY");
+        double despawnY = entity.level().getMinBuildHeight() - 64;
+        if (entity.getY() < y && entity.level().clip(
+                new ClipContext(entity.position(), new Vec3(entity.getX(), despawnY, entity.getZ()), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity))
+                .getType() == HitResult.Type.MISS) {
+            if (entity.getY() < despawnY) {
+                entity.setPos(entity.getX(), despawnY, entity.getZ());
             }
+            entity.push(0.0, 0.1, 0.0);
         }
         return super.onEntityItemUpdate(stack, entity);
+    }
+
+    public void setTag(ItemStack stack, int y) {
+        stack.getOrCreateTag()
+                .putInt("LastHolderY", y); // TODO: use player capability
+    }
+
+    public void removeTag(ItemStack stack) {
+        stack.removeTagKey("LastHolderY");
     }
 }

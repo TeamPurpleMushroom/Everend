@@ -19,7 +19,7 @@ public class ShifterineEventHandler {
     public static void playerPickupEvent(EntityItemPickupEvent event) { // WARNING: if another mod adds an equally low priority event handler that happens to cancel the event, the ability will break!
         ItemStack stack = event.getItem().getItem();
         if (stack.getItem() instanceof ShifterineItem) {
-            stack.removeTagKey("LastHolderY");
+            ((ShifterineItem) stack.getItem()).removeTag(stack);
         }
     }
 
@@ -29,19 +29,16 @@ public class ShifterineEventHandler {
     }
 
     @SubscribeEvent
-    public static void playerDropsEvent(LivingDropsEvent event) {
-        if (event.getEntity() instanceof ServerPlayer) {
-            for (ItemEntity item : event.getDrops()) {
-                handleItemDrop(event.getEntity(), item);
-            }
+    public static void dropsEvent(LivingDropsEvent event) {
+        for (ItemEntity item : event.getDrops()) {
+            handleItemDrop(event.getEntity(), item);
         }
     }
 
-    private static void handleItemDrop(LivingEntity player, ItemEntity itemEntity) {
+    private static void handleItemDrop(LivingEntity dropper, ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
         if (stack.getItem() instanceof ShifterineItem) {
-            stack.getOrCreateTag()
-                    .putInt("LastHolderY", (int) (player.getY() + (double) player.fallDistance)); // TODO: use player capability
+            ((ShifterineItem) stack.getItem()).setTag(stack, (int) (dropper.getY() + (double) dropper.fallDistance));
         }
     }
 }
