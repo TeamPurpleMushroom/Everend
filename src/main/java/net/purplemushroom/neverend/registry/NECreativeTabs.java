@@ -11,6 +11,7 @@ import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 
 public class NECreativeTabs {
     public static final ResourceKey<CreativeModeTab> BLOCKS = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Neverend.rl("blocks"));
+    public static final ResourceKey<CreativeModeTab> ITEMS = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Neverend.rl("items"));
 
     @AutoRegistrable
     private static final SimpleVanillaRegister<CreativeModeTab> TABS = new SimpleVanillaRegister<>(Registries.CREATIVE_MODE_TAB, Neverend.MODID);
@@ -18,8 +19,16 @@ public class NECreativeTabs {
     @AutoRegistrable.Init
     private static void setup() {
         TABS.register(BLOCKS.location().getPath(), () -> CreativeModeTab.builder()
-                .title(Component.translatable("itemGroup." + Neverend.MODID))
+                .title(name("blocks"))
                 .icon(() -> new ItemStack(NEBlocks.PALE_END_STONE))
                 .build());
+        TABS.register(ITEMS.location().getPath(), () -> CreativeModeTab.builder()
+                .title(name("items"))
+                .icon(() -> new ItemStack(NEItems.SHIFTERINE_TEST))
+                .build());
+    }
+
+    private static Component name(String category) {
+        return Component.translatable("itemGroup." + category + "." + Neverend.MODID);
     }
 }
