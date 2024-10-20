@@ -111,3 +111,4 @@ public class NEItems {
     private static Item.Properties baseProps() {
         return new Item.Properties();
     }
+}
