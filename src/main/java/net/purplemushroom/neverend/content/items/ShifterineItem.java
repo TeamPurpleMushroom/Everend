@@ -42,7 +42,7 @@ public class ShifterineItem extends Item {
 
     public void setTag(ItemStack stack, int y) {
         stack.getOrCreateTag()
-                .putInt("LastHolderY", y); // TODO: use player capability
+                .putInt("LastHolderY", y);
     }
 
     public void removeTag(ItemStack stack) {
