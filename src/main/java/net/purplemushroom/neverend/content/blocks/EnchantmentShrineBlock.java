@@ -1,6 +1,7 @@
 package net.purplemushroom.neverend.content.blocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.purplemushroom.neverend.registry.NEItems;
 import net.purplemushroom.neverend.util.InventoryUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -23,9 +25,10 @@ public class EnchantmentShrineBlock extends Block {
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public @NotNull InteractionResult use(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         ItemStack item = player.getMainHandItem();
-        if (item.isEnchanted() && !(item.hasTag() && item.getTag().getBoolean("ShrineEnchanted"))) {
+        CompoundTag tag = item.getTag();
+        if (item.isEnchanted() && !(item.hasTag() && tag != null && tag.getBoolean("ShrineEnchanted"))) {
             if (InventoryUtil.consumeItem(player, NEItems.ENCHANTMENT_CRYSTAL)) {
                 if (!level.isClientSide()) {
                     boolean enchanted = false;

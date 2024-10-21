@@ -39,6 +39,7 @@ public class NEItems {
      * @param enName           English name
      * @param toolItemSupplier Supplier for the ToolItem class
      */
+    //TODO: consolidate registry with modified ItemRegisterChain and/or custom ItemRegister
     private static void registerHandheld(String name, String enName, Supplier<Item> toolItemSupplier) {
         ITEMS.register(name, toolItemSupplier)
                 .model(StandardItemModelParents.HANDHELD, Neverend.tl("item/" + name))
