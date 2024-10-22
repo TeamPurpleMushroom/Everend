@@ -38,7 +38,7 @@ public class ShifterineEventHandler {
     private static void handleItemDrop(LivingEntity dropper, ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
         if (stack.getItem() instanceof ShifterineItem) {
-            ((ShifterineItem) stack.getItem()).setTag(stack, (int) (dropper.getY() + (double) dropper.fallDistance)); // TODO: use player capability
+            ((ShifterineItem) stack.getItem()).setTag(stack, (int) (dropper.getEyeY() + (double) dropper.fallDistance)); // TODO: use player capability
         }
     }
 }

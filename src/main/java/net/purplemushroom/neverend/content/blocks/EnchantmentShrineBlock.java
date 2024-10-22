@@ -2,6 +2,8 @@ package net.purplemushroom.neverend.content.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -43,6 +45,7 @@ public class EnchantmentShrineBlock extends Block {
                     if (enchanted) {
                         EnchantmentHelper.setEnchantments(enchantments, item);
                         item.getOrCreateTag().putBoolean("ShrineEnchanted", true);
+                        level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
                         return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
