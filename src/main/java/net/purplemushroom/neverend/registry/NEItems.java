@@ -1,8 +1,10 @@
 package net.purplemushroom.neverend.registry;
 
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.content.items.NullberryItem;
 import net.purplemushroom.neverend.content.items.ShifterineItem;
 import ru.timeconqueror.timecore.api.client.resource.StandardItemModelParents;
 import ru.timeconqueror.timecore.api.registry.ItemRegister;
@@ -29,6 +31,7 @@ public class NEItems {
         register("aldores_thing", "Aldores Thing");
         register("dragonbone", "Dragonbone");
         register("enchantment_crystal", "Enchantment Crystal");
+        register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
         registerWithPresetModel("test", "Test", () -> new Item(baseProps().stacksTo(3).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
     }
 
