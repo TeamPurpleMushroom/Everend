@@ -19,12 +19,10 @@ public class PlayerMovementEventHandler {
         if (event.phase != TickEvent.Phase.START && event.side == LogicalSide.SERVER) {
             ServerPlayer serverPlayer = (ServerPlayer) event.player;
             if (event.player != null) {
-                boolean onGround = serverPlayer.onGround();
-
                 NEPlayer playerCap = NEPlayer.from(serverPlayer);
                 if (playerCap != null) {
                     PlayerFallTracker fallTracker = playerCap.playerFallTracker;
-                    if (onGround) {
+                    if (serverPlayer.onGround()) {
                         if (serverPlayer.level().getGameTime() % 20L == 0L) {
                             fallTracker.setLastGroundPos(serverPlayer.blockPosition());
                             Neverend.LOGGER.info("GroundPos set at: {}", fallTracker.getLastGroundPos().toString());
