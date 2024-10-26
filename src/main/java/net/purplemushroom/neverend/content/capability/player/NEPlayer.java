@@ -1,22 +1,25 @@
-package net.purplemushroom.neverend.content.capability;
+package net.purplemushroom.neverend.content.capability.player;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.purplemushroom.neverend.content.capability.player.data.PlayerFallTracker;
 import net.purplemushroom.neverend.registry.NECapabilities;
 import org.jetbrains.annotations.NotNull;
+import ru.timeconqueror.timecore.common.capability.CoffeeCapabilityInstance;
 import ru.timeconqueror.timecore.common.capability.owner.CapabilityOwner;
 import ru.timeconqueror.timecore.common.capability.owner.serializer.CapabilityOwnerCodec;
 
 import javax.annotation.Nullable;
 
-public class NEPlayer //extends CoffeeCapabilityInstance<Entity> implements NEPlayerData
-{
+public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlayerData {
+    public final PlayerFallTracker playerFallTracker = container("player_fall_tracker", new PlayerFallTracker());
 
-    /*private final ServerPlayer player;
+    private final ServerPlayer player;
 
     public NEPlayer(ServerPlayer player) {
         this.player = player;
@@ -35,7 +38,7 @@ public class NEPlayer //extends CoffeeCapabilityInstance<Entity> implements NEPl
     }
 
     @Override
-    public void sendChangesToClients(@NotNull SimpleChannel channel, @NotNull Object data) {
+    public void sendChangesToClient(@NotNull SimpleChannel channel, @NotNull Object data) {
         channel.send(PacketDistributor.PLAYER.with(() -> player), data);
     }
 
@@ -48,7 +51,7 @@ public class NEPlayer //extends CoffeeCapabilityInstance<Entity> implements NEPl
     }
 
     @Nullable
-    public static NEPlayer from(@Nullable Player player) {
+    public static NEPlayer from(@Nullable ServerPlayer player) {
         if (player != null) {
             LazyOptional<NEPlayer> cap = player.getCapability(NECapabilities.PLAYER);
             if (cap.isPresent()) {
@@ -56,5 +59,5 @@ public class NEPlayer //extends CoffeeCapabilityInstance<Entity> implements NEPl
             }
         }
         return null;
-    }*/
+    }
 }
