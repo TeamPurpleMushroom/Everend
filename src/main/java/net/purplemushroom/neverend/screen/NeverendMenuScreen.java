@@ -87,7 +87,11 @@ class NeverendSplash extends SplashRenderer {
             "Here's Johnny!",
             "Part of a complete breakfast!",
             "Mamma mia!",
-            "It's a bird! It's a plane!"
+            "It's a bird! It's a plane!",
+            "Level up!",
+            "A sense of pride and accomplishment!",
+            "Alex has joined the party!",
+            "Have you seen the §kHerobrine§r?"
     };
 
     private NeverendSplash(String pSplash) {
@@ -112,7 +116,7 @@ class NeverendSplash extends SplashRenderer {
 
     private static boolean isNostalgic() {
         return false;
-    }
+    } // TODO: determine if it's been 3 years since mod release
 }
 
 class NeverendMenuBackground extends PanoramaRenderer {
