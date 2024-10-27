@@ -1,7 +1,5 @@
 package net.purplemushroom.neverend.event;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,7 +7,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.capability.player.NEPlayer;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerFallTracker;
+import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 
 @Mod.EventBusSubscriber(modid = Neverend.MODID)
 public class PlayerMovementEventHandler {
@@ -21,7 +19,7 @@ public class PlayerMovementEventHandler {
             if (event.player != null) {
                 NEPlayer playerCap = NEPlayer.from(serverPlayer);
                 if (playerCap != null) {
-                    PlayerFallTracker fallTracker = playerCap.playerFallTracker;
+                    PlayerTracker fallTracker = playerCap.playerTracker;
                     if (serverPlayer.onGround()) {
                         if (serverPlayer.level().getGameTime() % 20L == 0L) {
                             fallTracker.setLastGroundPos(serverPlayer.blockPosition());

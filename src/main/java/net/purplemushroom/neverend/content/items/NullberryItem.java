@@ -1,45 +1,30 @@
 package net.purplemushroom.neverend.content.items;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.StreamTagVisitor;
-import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.capability.player.NEPlayer;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerFallTracker;
+import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class NullberryItem extends Item {
     private final Logger LOGGER = Neverend.LOGGER;
@@ -100,10 +85,10 @@ public class NullberryItem extends Item {
         double playerZ = 0;
         NEPlayer playerCap = NEPlayer.from((ServerPlayer) serverPlayer);
         if (playerCap != null) {
-            PlayerFallTracker fallTracker = playerCap.playerFallTracker;
-            playerX = fallTracker.getLastGroundPos().getX();
-            playerY = fallTracker.getLastGroundPos().getY();
-            playerZ = fallTracker.getLastGroundPos().getZ();
+            PlayerTracker playerTracker = playerCap.playerTracker;
+            playerX = playerTracker.getLastGroundPos().getX();
+            playerY = playerTracker.getLastGroundPos().getY();
+            playerZ = playerTracker.getLastGroundPos().getZ();
         } else {
             Neverend.LOGGER.info("fallTracker cap is null!");
         }
