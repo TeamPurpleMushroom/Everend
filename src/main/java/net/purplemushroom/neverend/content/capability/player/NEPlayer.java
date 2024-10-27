@@ -1,13 +1,12 @@
 package net.purplemushroom.neverend.content.capability.player;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerFallTracker;
+import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 import net.purplemushroom.neverend.registry.NECapabilities;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.CoffeeCapabilityInstance;
@@ -17,7 +16,7 @@ import ru.timeconqueror.timecore.common.capability.owner.serializer.CapabilityOw
 import javax.annotation.Nullable;
 
 public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlayerData {
-    public final PlayerFallTracker playerFallTracker = container("player_fall_tracker", new PlayerFallTracker());
+    public final PlayerTracker playerTracker = container("player_tracker", new PlayerTracker());
 
     private final ServerPlayer player;
 
@@ -59,5 +58,9 @@ public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlay
             }
         }
         return null;
+    }
+
+    public static LazyOptional<NEPlayer> of(ServerPlayer player) {
+        return player.getCapability(NECapabilities.PLAYER);
     }
 }

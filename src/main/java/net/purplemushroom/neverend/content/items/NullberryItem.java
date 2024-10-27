@@ -1,43 +1,30 @@
 package net.purplemushroom.neverend.content.items;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.StreamTagVisitor;
-import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.content.capability.player.NEPlayer;
+import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class NullberryItem extends Item {
     private final Logger LOGGER = Neverend.LOGGER;
@@ -88,57 +75,53 @@ public class NullberryItem extends Item {
 
     private void handleTeleport(ServerLevel serverLevel, Player serverPlayer) {
         RandomSource randomSource = serverPlayer.getRandom();
-        double playerX = serverPlayer.getX();
-        double playerY = serverPlayer.getY();
-        double playerZ = serverPlayer.getZ();
+        double currentX = serverPlayer.getX();
+        double currentY = serverPlayer.getY();
+        double currentZ = serverPlayer.getZ();
 
-        //TODO: fix teleporting player in the air sometimes - might be caused by player crossing into chunk containing no solid blocks.
-        // Need to find a way to scan for the nearest chunk containing a solid block
-
-        /*ServerChunkCache chunkCache = serverLevel.getChunkSource();
-        ChunkPos.rangeClosed(minFromRegion, maxFromRegion).forEach((maxChunkPos) -> {
-                    chunkCache.chunkScanner().scanChunk(maxChunkPos, /*collect fields ).completeAsync(() -> teleport(serverLevel, serverPlayer, maxChunkPos.x, 0, maxChunkPos.z));
-                });*/
-
-        //ChunkPos playerChunkPos = serverPlayer.chunkPosition();
-        //int minBlockX = playerChunkPos.getMinBlockX(), minBlockZ = playerChunkPos.getMinBlockZ(), maxBlockX = playerChunkPos.getMaxBlockX(), maxBlockZ = playerChunkPos.getMaxBlockZ();
-
-
-        //ChunkPos minFromRegion = ChunkPos.minFromRegion(minBlockX, minBlockZ);
-        //ChunkPos maxFromRegion = ChunkPos.maxFromRegion(maxBlockX, maxBlockZ);
-        //BlockPos.randomBetweenClosed(randomSource, )
-        BlockPos heightmapPos = serverLevel.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, serverLevel.getBlockRandomPos((int) playerX, serverLevel.getSeaLevel(), (int) playerZ, 32));
-
-        double randomX = heightmapPos.getX();
-        double randomY = heightmapPos.getY();
-        double randomZ = heightmapPos.getZ();
-
-        Entity mount = serverPlayer.getVehicle();
-        if (serverPlayer.isPassenger() && mount != null) {
-            List<Entity> passengers = new ArrayList<>(mount.getPassengers());
-            for (Entity entity : passengers) {
-                if (entity instanceof LivingEntity passenger) {
-                    passenger.stopRiding();
-                    teleport(serverLevel, passenger, playerX, playerY, playerZ, randomX, randomY, randomZ);
-                }
-            }
-            if (mount instanceof LivingEntity livingEntity) {
-                teleport(serverLevel, livingEntity, playerX, playerY, playerZ, randomX, randomY, randomZ);
-            }
+        //TODO: fallback if cap is null or if last blockpos is in different dim
+        double playerX = 0;
+        double playerY = 0;
+        double playerZ = 0;
+        NEPlayer playerCap = NEPlayer.from((ServerPlayer) serverPlayer);
+        if (playerCap != null) {
+            PlayerTracker playerTracker = playerCap.playerTracker;
+            playerX = playerTracker.getLastGroundPos().getX();
+            playerY = playerTracker.getLastGroundPos().getY();
+            playerZ = playerTracker.getLastGroundPos().getZ();
         } else {
-            teleport(serverLevel, serverPlayer, playerX, playerY, playerZ, randomX, randomY, randomZ);
+            Neverend.LOGGER.info("fallTracker cap is null!");
+        }
+
+        for(int i = 0; i < 16; ++i) {
+            double randomX = playerX + (randomSource.nextDouble() - 0.5D) * 16.0D;
+            double randomY = Mth.clamp(playerY + (double) (randomSource.nextInt(16) - 8), serverLevel.getMinBuildHeight(), (serverLevel.getMinBuildHeight() + (serverLevel).getLogicalHeight() - 1));
+            double randomZ = playerZ + (randomSource.nextDouble() - 0.5D) * 16.0D;
+            Entity mount = serverPlayer.getVehicle();
+            if (serverPlayer.isPassenger() && mount != null) {
+                List<Entity> passengers = new ArrayList<>(mount.getPassengers());
+                for (Entity entity : passengers) {
+                    if (entity instanceof LivingEntity passenger) {
+                        passenger.stopRiding();
+                        teleport(serverLevel, passenger, currentX, currentY, currentZ, randomX, randomY, randomZ);
+                    }
+                }
+                if (mount instanceof LivingEntity livingEntity) {
+                    teleport(serverLevel, livingEntity, currentX, currentY, currentZ, randomX, randomY, randomZ);
+                }
+            } else {
+                teleport(serverLevel, serverPlayer, currentX, currentY, currentZ, randomX, randomY, randomZ);
+            }
         }
         serverPlayer.getCooldowns().addCooldown(this, 20);
     }
 
-    private boolean teleport(ServerLevel serverLevel, LivingEntity entity, double x, double y, double z, double x1, double y1, double z1) {
+    private void teleport(ServerLevel serverLevel, LivingEntity entity, double x, double y, double z, double x1, double y1, double z1) {
         if (entity.randomTeleport(x1, y1, z1, true)) {
             serverLevel.gameEvent(GameEvent.TELEPORT, entity.position(), GameEvent.Context.of(entity));
             SoundEvent soundevent = SoundEvents.CHORUS_FRUIT_TELEPORT;
             serverLevel.playSound(null, x, y, z, soundevent, SoundSource.PLAYERS, 1.0F, 1.0F);
             entity.playSound(soundevent, 1.0F, 1.0F);
-            return true;
         }
-        return false;
     }
 }
