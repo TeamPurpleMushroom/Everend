@@ -2,6 +2,7 @@ package net.purplemushroom.neverend.event;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -22,8 +23,13 @@ public class PlayerMovementEventHandler {
             if (playerCap != null) {
                 PlayerTracker fallTracker = playerCap.playerTracker;
                 if (serverLevel.getGameTime() % 20L == 0L) {
-                    if (serverPlayer.onGround() && serverPlayer.blockPosition() != fallTracker.getLastGroundPos()) {
-                        fallTracker.setLastGroundStats(serverPlayer.blockPosition(), serverLevel.dimension().location());
+                    if (serverPlayer.blockPosition() != fallTracker.getLastGroundPos()) {
+                        if (serverPlayer.onGround()) {
+                            fallTracker.setLastGroundStats(serverPlayer.blockPosition(), serverLevel.dimension().location());
+                        } else if (serverPlayer.isPassenger() && serverPlayer.getVehicle() != null && serverPlayer.getVehicle().onGround()) {
+                            Entity vehicle = serverPlayer.getVehicle();
+                            fallTracker.setLastGroundStats(vehicle.blockPosition(), serverLevel.dimension().location());
+                        }
                     }
                     playerCap.detectAndSendChanges();
                 }
