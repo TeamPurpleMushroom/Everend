@@ -11,6 +11,11 @@ public class NeverendMenuScreen extends TitleScreen {
     public NeverendMenuScreen() {
         super(false, new NeverendLogoRender());
     }
+
+    @Override
+    protected void init() {
+        super.init();
+    }
 }
 
 class NeverendLogoRender extends LogoRenderer {
