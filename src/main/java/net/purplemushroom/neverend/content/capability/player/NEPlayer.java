@@ -60,4 +60,8 @@ public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlay
         }
         return null;
     }
+
+    public static LazyOptional<NEPlayer> of(ServerPlayer player) {
+        return player.getCapability(NECapabilities.PLAYER);
+    }
 }
