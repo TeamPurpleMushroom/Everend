@@ -13,7 +13,7 @@ public class PlayerFallTracker extends PropertyContainer {
         return groundPos.get();
     }
 
-    public void setLastGroundPos(BlockPos posInAir) {
-        this.groundPos.set(posInAir);
+    public void setLastGroundPos(BlockPos posOnGround) {
+        this.groundPos.set(posOnGround);
     }
 }
