@@ -25,9 +25,9 @@ public class NeverendMenuScreen extends TitleScreen {
 
     @Override
     protected void init() {
+        if (splash == null) splash = NeverendSplash.getRandomSplash();
+        if (!(panorama instanceof NeverendMenuBackground)) panorama = new NeverendMenuBackground();
         super.init();
-        splash = NeverendSplash.getRandomSplash();
-        panorama = new NeverendMenuBackground();
     }
 }
 
