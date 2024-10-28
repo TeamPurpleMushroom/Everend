@@ -1,9 +1,14 @@
 package net.purplemushroom.neverend.event;
 
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -12,7 +17,7 @@ import net.purplemushroom.neverend.content.capability.player.NEPlayer;
 import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 
 @Mod.EventBusSubscriber(modid = Neverend.MODID)
-public class PlayerMovementEventHandler {
+public class PlayerEventHandler {
 
     @SubscribeEvent
     public static void onPlayerMove(TickEvent.PlayerTickEvent event) {
@@ -34,6 +39,17 @@ public class PlayerMovementEventHandler {
                     playerCap.detectAndSendChanges();
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        DamageSource damageSource = event.getSource();
+        Entity entity = event.getEntity();
+        if (entity instanceof Player player) {
+            Inventory playerInventory = player.getInventory();
+            ListTag listTag = new ListTag();
+            playerInventory.save(listTag);
         }
     }
 }
