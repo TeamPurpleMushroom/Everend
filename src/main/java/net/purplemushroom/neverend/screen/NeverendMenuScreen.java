@@ -10,10 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.renderer.CubeMap;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.PanoramaRenderer;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.purplemushroom.neverend.Neverend;
@@ -26,6 +23,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
+    private long time = 0;
     public NeverendMenuScreen() {
         super(false, new NeverendLogoRender());
     }
@@ -38,7 +36,21 @@ public class NeverendMenuScreen extends TitleScreen {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        time++;
+    }
+
+    @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        RenderSystem.setShaderGameTime(time, pPartialTick);
+        ShaderInstance shaderinstance = RenderSystem.getShader();
+
+        if (shaderinstance.GAME_TIME != null) {
+            shaderinstance.GAME_TIME.set(RenderSystem.getShaderGameTime());
+        }
+
+        shaderinstance.apply();
         pGuiGraphics.fill(RenderType.endPortal(), 0, 0, width, height, 0);
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
@@ -65,7 +77,7 @@ class NeverendSplash extends SplashRenderer {
     public static final String[] SPLASHES = {
             "Purple is the new black!",
             "Nevermine in the End!",
-            "THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER",
+            "THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER", // FIXME: this renders really small
             "A friendly perdition!",
             "Subjectively good!",
             "Woo, Discord!",
@@ -115,7 +127,7 @@ class NeverendSplash extends SplashRenderer {
             "Timeless!",
             "You just lost The Game!",
             "It's a trap!",
-            "Nothing personal, kid!",
+            "Nothing personnel, kid!",
             "No swearing on Christian servers!",
             "Human-generated!"
 
