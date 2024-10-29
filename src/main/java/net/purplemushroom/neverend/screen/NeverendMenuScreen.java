@@ -63,7 +63,7 @@ class NeverendSplash extends SplashRenderer {
     private static final int SPECIAL_SPLASHES = 4;
 
     public static final String[] SPLASHES = {
-            /*"Purple is the new black!",
+            "Purple is the new black!",
             "Nevermine in the End!",
             "THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER",
             "A friendly perdition!",
@@ -116,7 +116,7 @@ class NeverendSplash extends SplashRenderer {
             "You just lost The Game!",
             "It's a trap!",
             "Nothing personal, kid!",
-            "No swearing on Christian servers!",*/
+            "No swearing on Christian servers!",
             "Human-generated!"
 
     };
@@ -154,7 +154,6 @@ class NeverendSplash extends SplashRenderer {
     }
 
     private static NeverendSplash getSpecialSplash(int id) {
-        id = 1;
         switch (id) {
             case 0: // nostalgic
                 return new NeverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!");
@@ -182,8 +181,14 @@ class NeverendSplash extends SplashRenderer {
     }
 
     private static boolean isNostalgic() {
-        return false;
-    } // TODO: determine if it's been 3 years since mod release
+        Calendar releaseDate = Calendar.getInstance();
+        releaseDate.set(2024, Calendar.OCTOBER, 29); // TODO: update release date!
+        releaseDate.add(Calendar.YEAR, 3);
+
+        Calendar time = Calendar.getInstance();
+        time.setTime(new Date());
+        return time.after(releaseDate);
+    }
 }
 
 class NeverendMenuBackground extends PanoramaRenderer {
