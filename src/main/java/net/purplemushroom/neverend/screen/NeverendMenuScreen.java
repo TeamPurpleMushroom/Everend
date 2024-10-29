@@ -21,6 +21,8 @@ import net.purplemushroom.neverend.util.BitUtil;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
@@ -61,7 +63,7 @@ class NeverendSplash extends SplashRenderer {
     private static final int SPECIAL_SPLASHES = 4;
 
     public static final String[] SPLASHES = {
-            "Purple is the new black!",
+            /*"Purple is the new black!",
             "Nevermine in the End!",
             "THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER",
             "A friendly perdition!",
@@ -114,7 +116,7 @@ class NeverendSplash extends SplashRenderer {
             "You just lost The Game!",
             "It's a trap!",
             "Nothing personal, kid!",
-            "No swearing on Christian servers!",
+            "No swearing on Christian servers!",*/
             "Human-generated!"
 
     };
@@ -152,11 +154,23 @@ class NeverendSplash extends SplashRenderer {
     }
 
     private static NeverendSplash getSpecialSplash(int id) {
+        id = 1;
         switch (id) {
             case 0: // nostalgic
                 return new NeverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!");
             case 1: // greeting
-                return null;
+                String greeting;
+                Calendar time = Calendar.getInstance();
+                time.setTime(new Date());
+                int hour = time.get(Calendar.HOUR_OF_DAY);
+                if (hour >= 5 && hour < 12) {
+                    greeting = "morning";
+                } else if (hour >= 12 && hour < 18) {
+                    greeting = "afternoon";
+                } else {
+                    greeting = "evening";
+                }
+                return new NeverendSplash("Good " + greeting + "!");
             case 2: // double trouble
                 NeverendSplash splash = new NeverendSplash("Double trouble!");
                 splash.doubleTrouble = true;
