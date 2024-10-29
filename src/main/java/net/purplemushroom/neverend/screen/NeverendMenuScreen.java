@@ -1,5 +1,7 @@
 package net.purplemushroom.neverend.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -9,12 +11,15 @@ import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.CubeMap;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.util.BitUtil;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 
 import java.util.Random;
 
@@ -28,6 +33,12 @@ public class NeverendMenuScreen extends TitleScreen {
         if (splash == null) splash = NeverendSplash.getRandomSplash();
         if (!(panorama instanceof NeverendMenuBackground)) panorama = new NeverendMenuBackground();
         super.init();
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        pGuiGraphics.fill(RenderType.endPortal(), 0, 0, width, height, 0);
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 }
 
@@ -47,12 +58,13 @@ class NeverendLogoRender extends LogoRenderer {
 }
 
 class NeverendSplash extends SplashRenderer {
+    private static final int SPECIAL_SPLASHES = 4;
+
     public static final String[] SPLASHES = {
             "Purple is the new black!",
             "Nevermine in the End!",
             "THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER",
             "A friendly perdition!",
-            isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!",
             "Subjectively good!",
             "Woo, Discord!",
             "Woo, GitHub!",
@@ -91,8 +103,23 @@ class NeverendSplash extends SplashRenderer {
             "Level up!",
             "A sense of pride and accomplishment!",
             "Alex has joined the party!",
-            "Have you seen the §kHerobrine§r?"
+            "Have you seen the §kHerobrine§r?",
+            ">:(!",
+            "Can't touch this!",
+            "Low risk of death or serious injury!",
+            "Better with friends!",
+            "You've got mail!",
+            "Say hello to my little friend!",
+            "Timeless!",
+            "You just lost The Game!",
+            "It's a trap!",
+            "Nothing personal, kid!",
+            "No swearing on Christian servers!",
+            "Human-generated!"
+
     };
+
+    private boolean doubleTrouble = false;
 
     private NeverendSplash(String pSplash) {
         super(pSplash);
@@ -106,12 +133,38 @@ class NeverendSplash extends SplashRenderer {
         float f = 1.8F - Mth.abs(Mth.sin((float)(Util.getMillis() % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
         f = f * 100.0F / (float)(pFont.width(this.splash) + 32);
         pGuiGraphics.pose().scale(f, f, f);
-        pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
+        if (doubleTrouble) {
+            pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -3, BitUtil.rgbToInt(13, 82, 60) | pColor);
+            pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -13, BitUtil.rgbToInt(197, 54, 201) | pColor);
+        } else {
+            pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
+        }
         pGuiGraphics.pose().popPose();
     }
 
     public static NeverendSplash getRandomSplash() {
-        return new NeverendSplash(SPLASHES[new Random().nextInt(SPLASHES.length)]);
+        int pick = new Random().nextInt(SPLASHES.length + SPECIAL_SPLASHES);
+        if (pick < SPECIAL_SPLASHES) {
+            return getSpecialSplash(pick);
+
+        }
+        return new NeverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
+    }
+
+    private static NeverendSplash getSpecialSplash(int id) {
+        switch (id) {
+            case 0: // nostalgic
+                return new NeverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!");
+            case 1: // greeting
+                return null;
+            case 2: // double trouble
+                NeverendSplash splash = new NeverendSplash("Double trouble!");
+                splash.doubleTrouble = true;
+                return splash;
+            case 3: // you're a wizard
+                return new NeverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
+        }
+        throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
 
     private static boolean isNostalgic() {
