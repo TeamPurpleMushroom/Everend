@@ -11,6 +11,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.purplemushroom.neverend.content.capability.player.NEPlayer;
 import net.purplemushroom.neverend.content.items.ShifterineItem;
 
 @Mod.EventBusSubscriber
@@ -38,7 +39,14 @@ public class ShifterineEventHandler {
     private static void handleItemDrop(LivingEntity dropper, ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
         if (stack.getItem() instanceof ShifterineItem) {
-            ((ShifterineItem) stack.getItem()).setTag(stack, (int) (dropper.getEyeY() + (double) dropper.fallDistance)); // TODO: use player capability
+            int y;
+            NEPlayer playerCap;
+            if (dropper instanceof ServerPlayer && (playerCap = NEPlayer.from((ServerPlayer) dropper)) != null) {
+                y = playerCap.playerTracker.getLastGroundPos().getY();
+            } else {
+                y = (int) (dropper.getEyeY() + (double) dropper.fallDistance);
+            }
+            ((ShifterineItem) stack.getItem()).setTag(stack, y);
         }
     }
 }

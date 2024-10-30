@@ -37,23 +37,9 @@ public class NullberryItem extends Item {
     @Override
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity player) {
         if (!level.isClientSide()) {
-            if (certainDoom(level, player)) handleTeleport((ServerLevel) level, (ServerPlayer) player);
+            if (EntityUtil.isOverVoid(player)) handleTeleport((ServerLevel) level, (ServerPlayer) player);
         }
         return super.finishUsingItem(stack, level, player);
-    }
-
-    private boolean certainDoom(Level level, LivingEntity player) {
-        BlockPos playerPos = player.blockPosition();
-        int playerY = playerPos.getY();
-        int voidY = level.dimensionType().minY() - 1;
-        boolean damagedByVoid = player.getLastDamageSource() == player.damageSources().fellOutOfWorld() && player.getY() < voidY;
-        if (damagedByVoid || (playerPos.getY() <= voidY && player.isDescending())) {
-            return true;
-        } else {
-            int distanceToVoid = Mth.clamp(playerY - voidY, voidY, level.getMaxBuildHeight());
-            AABB belowBB = AABB.ofSize(player.position().subtract(0, distanceToVoid, 0), 1, distanceToVoid, 1).expandTowards(0, playerY, 0);
-            return level.getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
-        }
     }
 
     private void handleTeleport(ServerLevel serverLevel, Player serverPlayer) {
