@@ -72,7 +72,11 @@ class NeverendLogoRender extends LogoRenderer {
 }
 
 class NeverendSplash extends SplashRenderer {
-    private static final int SPECIAL_SPLASHES = 4;
+    private static final int SPECIAL_SPLASHES = 5;
+
+    public static final int SPECIAL_SPLASH_NONE = 0;
+    public static final int SPECIAL_SPLASH_DOUBLE_TROUBLE = 1;
+    public static final int SPECIAL_SPLASH_END_IS_NEVER = 2;
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
@@ -133,7 +137,7 @@ class NeverendSplash extends SplashRenderer {
 
     };
 
-    private boolean doubleTrouble = false;
+    private int specialRenderType = SPECIAL_SPLASH_NONE;
 
     private NeverendSplash(String pSplash) {
         super(pSplash);
@@ -145,15 +149,22 @@ class NeverendSplash extends SplashRenderer {
         pGuiGraphics.pose().translate((float)pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
         pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
         float f = 1.8F - Mth.abs(Mth.sin((float)(Util.getMillis() % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(pFont.width(this.splash) + 32);
+        int textWidth = pFont.width(this.splash);
+        if (specialRenderType == SPECIAL_SPLASH_END_IS_NEVER) textWidth /= 10;
+        f = f * 100.0F / (float)(textWidth + 32);
         pGuiGraphics.pose().scale(f, f, f);
-        if (doubleTrouble) {
+        if (specialRenderType == SPECIAL_SPLASH_DOUBLE_TROUBLE) {
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -3, BitUtil.rgbToInt(13, 82, 60) | pColor);
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -13, BitUtil.rgbToInt(197, 54, 201) | pColor);
         } else {
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
         }
         pGuiGraphics.pose().popPose();
+    }
+
+    private NeverendSplash setType(int type) {
+        specialRenderType = type;
+        return this;
     }
 
     public static NeverendSplash getRandomSplash() {
@@ -183,11 +194,15 @@ class NeverendSplash extends SplashRenderer {
                 }
                 return new NeverendSplash("Good " + greeting + "!");
             case 2: // double trouble
-                NeverendSplash splash = new NeverendSplash("Double trouble!");
-                splash.doubleTrouble = true;
-                return splash;
+                return new NeverendSplash("Double trouble!").setType(SPECIAL_SPLASH_DOUBLE_TROUBLE);
             case 3: // you're a wizard
                 return new NeverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
+            case 4: // THE END IS NEVER THE END
+                StringBuilder endSplash = new StringBuilder("THE END IS NEVER");
+                for (int i = 0; i < 20; i++) {
+                    endSplash.append(" THE END IS NEVER");
+                }
+                return new NeverendSplash(endSplash.toString()).setType(SPECIAL_SPLASH_END_IS_NEVER);
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
