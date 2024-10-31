@@ -60,11 +60,11 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
         if (fullBright) packedLightLevel = 15728880;
         else packedLightLevel = packedLightIn;
 
+        // not a perfect square so that it fits inside the portal
         portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.31F, -0.32F);
         portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.32F, -0.32F);
         portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.32F, 0.32F);
         portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.29F, 0.32F);
-        // pPoseStack.popPose();
 
         vertexConsumer = pBuffer.getBuffer(renderType);
 
@@ -96,7 +96,7 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
     }
 
     private static void vertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY, int pU, int pV) {
-        pConsumer.vertex(pPose, pX, pY, 0.0001F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
+        pConsumer.vertex(pPose, pX, pY, 0.01F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     private static void portalVertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY) {
