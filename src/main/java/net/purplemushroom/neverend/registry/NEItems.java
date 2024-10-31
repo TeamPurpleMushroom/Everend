@@ -21,6 +21,8 @@ public class NEItems {
     public static Item DRAGONBONE;
     public static Item ENCHANTMENT_CRYSTAL;
 
+    public static Item SHIFTERINE_ROD;
+
     @AutoRegistrable
     private static final ItemRegister ITEMS = new ItemRegister(Neverend.MODID);
 
@@ -32,6 +34,8 @@ public class NEItems {
         register("dragonbone", "Dragonbone");
         register("enchantment_crystal", "Enchantment Crystal");
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
+        registerHandheldRod("shifterine_rod", "Shifterine Rod", () -> new Item(baseProps().durability(100)));
+
         registerWithPresetModel("test", "Test", () -> new Item(baseProps().stacksTo(3).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
     }
 

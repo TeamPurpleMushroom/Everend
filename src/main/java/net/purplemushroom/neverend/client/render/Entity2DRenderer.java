@@ -50,6 +50,7 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
         pPoseStack.scale(scale, scale, scale);
         pPoseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        pPoseStack.mulPose(Axis.ZP.rotation((float) ((double) System.nanoTime() / 1000000000.0)));
 
         PoseStack.Pose pose = pPoseStack.last();
         Matrix4f matrix4f = pose.pose();
@@ -59,10 +60,10 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
         if (fullBright) packedLightLevel = 15728880;
         else packedLightLevel = packedLightIn;
 
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.0F, 0, 0, 1);
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 1.0F, 0, 1, 1);
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 1.0F, 1, 1, 0);
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.0F, 1, 0, 0);
+        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, -0.5F, 0, 1);
+        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, -0.5F, 1, 1);
+        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, 0.5F, 1, 0);
+        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, 0.5F, 0, 0);
         pPoseStack.popPose();
     }
 
@@ -86,8 +87,8 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
         return this;
     }
 
-    private static void vertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, int pY, int pU, int pV) {
-        pConsumer.vertex(pPose, pX - 0.5F, (float) pY - 0.25F, 0.0F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void vertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY, int pU, int pV) {
+        pConsumer.vertex(pPose, pX, pY, 0.0F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     @Override

@@ -8,8 +8,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 
-public class Gordon extends Entity {
-    public Gordon(EntityType<?> pEntityType, Level pLevel) {
+public class Rift extends Entity {
+    public Rift(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
