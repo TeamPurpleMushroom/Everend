@@ -124,11 +124,27 @@ repositories {
     maven { url = "https://repo.repsy.io/mvn/timeconqueror/mc/" }
     maven { url = 'https://thedarkcolour.github.io/KotlinForForge/' }
     maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
-    // Accessories mavens
-    maven { url = 'https://maven.wispforest.io/releases/' }
-    maven { url = 'https://maven.su5ed.dev/releases' }
-    maven { url = 'https://maven.fabricmc.net' }
-    maven { url = 'https://maven.shedaniel.me/' }
+
+    //Accessories mavens (-) sinytra (broken, may be fixed at some point)
+    //maven { url 'https://maven.wispforest.io/releases' }
+    //maven { url 'https://maven.fabricmc.net' }
+    //maven { url 'https://maven.shedaniel.me/' }
+
+    //Sinyta maven
+    maven { url 'https://maven.su5ed.dev/releases' }
+
+    //Curse maven
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+
+    //Curios maven
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
     mavenLocal()
 }
 
@@ -137,7 +153,21 @@ dependencies {
     // Adds KFF as dependency and Kotlin libs
     implementation 'thedarkcolour:kotlinforforge:4.10.0'
     implementation fg.deobf('ru.timeconqueror:TimeCore:1.20.1-3.11.0.0.build16')
-    implementation 'io.wispforest:accessories-neoforge:1.0.0-beta.40+1.20.1'
+
+    //Accessories (broken, may be fixed at some point)
+    //implementation("io.wispforest:accessories-neoforge:1.0.0-beta.40+1.20.1")
+
+    //Sinytra Connector + Forgified Fabric API (for trinkets compat)
+    minecraftLibrary fg.deobf("org.sinytra:Connector:1.0.0-beta.46+1.20.1")
+    compileOnly "dev.su5ed.sinytra.fabric-api:fabric-api:0.92.2+1.11.8+1.20.1"
+    runtimeOnly fg.deobf("dev.su5ed.sinytra.fabric-api:fabric-api:0.92.2+1.11.8+1.20.1")
+
+    //Trinkets
+    implementation fg.deobf("curse.maven:trinkets-341284:5173501")
+
+    //Curios
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.9.1+1.20.1:api")
 }
 
 tasks.named('processResources', ProcessResources).configure {
