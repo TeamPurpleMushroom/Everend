@@ -25,7 +25,7 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
 
     public Entity2DRenderer(EntityRendererProvider.Context pContext, TextureLocation texture) {
         super(pContext);
-        renderType = RenderType.entityCutoutNoCull(texture.fullLocation());
+        renderType = RenderType.entityTranslucentCull(texture.fullLocation());
     }
 
     @Override
@@ -55,10 +55,18 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
         PoseStack.Pose pose = pPoseStack.last();
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
-        VertexConsumer vertexConsumer = pBuffer.getBuffer(renderType);
+        VertexConsumer vertexConsumer = pBuffer.getBuffer(RenderType.endPortal());
         int packedLightLevel;
         if (fullBright) packedLightLevel = 15728880;
         else packedLightLevel = packedLightIn;
+
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.31F, -0.32F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.32F, -0.32F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.32F, 0.32F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.29F, 0.32F);
+        // pPoseStack.popPose();
+
+        vertexConsumer = pBuffer.getBuffer(renderType);
 
         vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, -0.5F, 0, 1);
         vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, -0.5F, 1, 1);
@@ -88,7 +96,11 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
     }
 
     private static void vertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY, int pU, int pV) {
-        pConsumer.vertex(pPose, pX, pY, 0.0F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
+        pConsumer.vertex(pPose, pX, pY, 0.0001F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
+    }
+
+    private static void portalVertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY) {
+        pConsumer.vertex(pPose, pX, pY, 0.0F).color(255, 255, 255, 255).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     @Override
