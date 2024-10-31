@@ -37,10 +37,11 @@ public class RiftRenderer extends EntityRenderer<Rift> {
     @Override
     public void render(Rift pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
+        pPoseStack.translate(0, pEntity.getBbHeight() / 2, 0);
         pPoseStack.scale(scale, scale, scale);
         pPoseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        pPoseStack.mulPose(Axis.ZP.rotation((pPartialTicks + pEntity.tickCount) / 40));
+        pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) / 5));
 
         PoseStack.Pose pose = pPoseStack.last();
         Matrix4f matrix4f = pose.pose();

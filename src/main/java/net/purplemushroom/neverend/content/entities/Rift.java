@@ -25,6 +25,11 @@ public class Rift extends Entity {
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
     }
 
+    @Override
+    public boolean isPickable() {
+        return true;
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)

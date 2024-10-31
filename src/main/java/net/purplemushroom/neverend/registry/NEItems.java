@@ -6,6 +6,7 @@ import net.minecraft.world.item.Rarity;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.items.NullberryItem;
 import net.purplemushroom.neverend.content.items.ShifterineItem;
+import net.purplemushroom.neverend.content.items.ShifterineRod;
 import ru.timeconqueror.timecore.api.client.resource.StandardItemModelParents;
 import ru.timeconqueror.timecore.api.registry.ItemRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
@@ -34,7 +35,7 @@ public class NEItems {
         register("dragonbone", "Dragonbone");
         register("enchantment_crystal", "Enchantment Crystal");
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
-        registerHandheldRod("shifterine_rod", "Shifterine Rod", () -> new Item(baseProps().durability(100)));
+        registerHandheldRod("shifterine_rod", "Shifterine Rod", ShifterineRod::new);
 
         registerWithPresetModel("test", "Test", () -> new Item(baseProps().stacksTo(3).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
     }
