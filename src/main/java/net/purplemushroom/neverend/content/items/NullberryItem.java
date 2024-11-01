@@ -14,9 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.capability.player.NEPlayer;
 import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
@@ -79,14 +77,16 @@ public class NullberryItem extends Item {
         double randomX = playerX + (randomSource.nextDouble() - 0.5D) * 16.0D;
         double randomY = Mth.clamp(playerY + (double) (randomSource.nextInt(16) - 8), serverLevel.getMinBuildHeight(), (serverLevel.getMinBuildHeight() + (serverLevel).getLogicalHeight() - 1));
         double randomZ = playerZ + (randomSource.nextDouble() - 0.5D) * 16.0D;
-        for (int i = 0; i < 16; ++i) {
+        for (int i = 0; i < 32; ++i) {
             if (EntityUtil.randomTeleport(entity, randomX, randomY, randomZ, true)) {
                 playEffects(serverLevel, entity, randomX, randomY, randomZ);
+                break;
             } else {
-                if (i == 15) {
+                if (i == 31) {
                     if (entity.isVehicle() && EntityUtil.randomTeleport(entity, playerX, playerY, playerZ, true)) {
                         break;
                     } else {
+                        entity.resetFallDistance();
                         entity.teleportTo(playerX, playerY, playerZ);
                     }
                     playEffects(serverLevel, entity, playerX, playerY, playerZ);

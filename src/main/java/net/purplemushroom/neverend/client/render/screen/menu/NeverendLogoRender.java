@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.screen.menu;
+package net.purplemushroom.neverend.client.render.screen.menu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;

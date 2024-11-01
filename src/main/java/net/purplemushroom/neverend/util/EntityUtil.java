@@ -3,13 +3,10 @@ package net.purplemushroom.neverend.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 public class EntityUtil {
 
@@ -47,6 +44,7 @@ public class EntityUtil {
             }
 
             if (flag1) {
+                entity.resetFallDistance();
                 entity.teleportTo(pX, d3, pZ);
                 if (level.noCollision(entity) && !level.containsAnyLiquid(entity.getBoundingBox())) {
                     flag = true;
@@ -55,6 +53,7 @@ public class EntityUtil {
         }
 
         if (!flag) {
+            entity.resetFallDistance();
             entity.teleportTo(entityX, entityY, entityZ);
             return false;
         } else {

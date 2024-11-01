@@ -33,7 +33,7 @@ public class PlayerEventHandler {
             if (playerCap != null) {
                 // nullberry/shifterine code
                 PlayerTracker fallTracker = playerCap.playerTracker;
-                if (serverLevel.getGameTime() % 20L == 0L) {
+                if (serverLevel.getGameTime() % 30L == 0L) {
                     if (serverPlayer.blockPosition() != fallTracker.getLastGroundPos()) {
                         if (serverPlayer.onGround()) {
                             fallTracker.setLastGroundStats(serverPlayer.blockPosition(), serverLevel.dimension().location());

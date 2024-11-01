@@ -1,23 +1,10 @@
-package net.purplemushroom.neverend.screen.menu;
+package net.purplemushroom.neverend.client.render.screen.menu;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.math.Axis;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.LogoRenderer;
-import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.renderer.*;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.util.BitUtil;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;

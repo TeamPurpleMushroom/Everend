@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.screen.menu;
+package net.purplemushroom.neverend.client.render.screen.menu;
 
 import com.mojang.math.Axis;
 import net.minecraft.Util;

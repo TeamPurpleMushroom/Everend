@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.entities.Rift;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -26,7 +26,7 @@ public class RiftRenderer extends EntityRenderer<Rift> {
 
     public RiftRenderer(EntityRendererProvider.Context pContext, TextureLocation texture) {
         super(pContext);
-        renderType = RenderType.entityTranslucentCull(texture.fullLocation());
+        renderType = RenderType.entityCutout(texture.fullLocation());
     }
 
     @Override
@@ -41,7 +41,6 @@ public class RiftRenderer extends EntityRenderer<Rift> {
         pPoseStack.scale(scale, scale, scale);
         pPoseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) / 5));
 
         PoseStack.Pose pose = pPoseStack.last();
         Matrix4f matrix4f = pose.pose();
@@ -52,17 +51,24 @@ public class RiftRenderer extends EntityRenderer<Rift> {
         else packedLightLevel = pPackedLight;
 
         // not a perfect square so that it fits inside the portal
-        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.31F, -0.32F);
-        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.32F, -0.32F);
-        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.32F, 0.32F);
-        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.29F, 0.32F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.40F, -0.42F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.42F, -0.42F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.42F, 0.42F);
+        portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.38F, 0.42F);
 
-        vertexConsumer = pBuffer.getBuffer(renderType);
+        vertexConsumer = pBuffer.getBuffer(RenderType.entityTranslucentCull(Neverend.tl("entity/rift_outside.png").fullLocation()));
+        pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) * 5));
+        vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.65F, -0.65F, 0, 1);
+        vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.65F, -0.65F, 1, 1);
+        vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.65F, 0.65F, 1, 0);
+        vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.65F, 0.65F, 0, 0);
 
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, -0.5F, 0, 1);
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, -0.5F, 1, 1);
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, 0.5F, 1, 0);
-        vertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, 0.5F, 0, 0);
+        vertexConsumer = pBuffer.getBuffer(RenderType.entityTranslucentCull(Neverend.tl("entity/rift.png").fullLocation()));
+        pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) / 5));
+        vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, -0.5F, 0, 1);
+        vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, -0.5F, 1, 1);
+        vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, 0.5F, 1, 0);
+        vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, 0.5F, 0, 0);
         pPoseStack.popPose();
 
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
@@ -83,7 +89,11 @@ public class RiftRenderer extends EntityRenderer<Rift> {
         return this;
     }
 
-    private static void vertex(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY, int pU, int pV) {
+    private static void vertexFG(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY, int pU, int pV) {
+        pConsumer.vertex(pPose, pX, pY, 0.01F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
+    }
+
+    private static void vertexBG(VertexConsumer pConsumer, Matrix4f pPose, Matrix3f pNormal, int pLightmapUV, float pX, float pY, int pU, int pV) {
         pConsumer.vertex(pPose, pX, pY, 0.0F).color(255, 255, 255, 255).uv((float) pU, (float) pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(pLightmapUV).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
