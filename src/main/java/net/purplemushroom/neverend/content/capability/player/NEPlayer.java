@@ -7,6 +7,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
+import net.purplemushroom.neverend.content.capability.player.data.RiftFishingData;
 import net.purplemushroom.neverend.registry.NECapabilities;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.CoffeeCapabilityInstance;
@@ -17,6 +18,7 @@ import javax.annotation.Nullable;
 
 public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlayerData {
     public final PlayerTracker playerTracker = container("player_tracker", new PlayerTracker());
+    public final RiftFishingData riftFishingData = container("rift_fishing_data", new RiftFishingData());
 
     private final ServerPlayer player;
 
