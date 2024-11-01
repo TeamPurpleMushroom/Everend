@@ -26,7 +26,7 @@ public class RiftRenderer extends EntityRenderer<Rift> {
 
     public RiftRenderer(EntityRendererProvider.Context pContext, TextureLocation texture) {
         super(pContext);
-        renderType = RenderType.entityCutout(texture.fullLocation());
+        renderType = RenderType.entityTranslucentCull(texture.fullLocation());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class RiftRenderer extends EntityRenderer<Rift> {
         vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.65F, 0.65F, 1, 0);
         vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.65F, 0.65F, 0, 0);
 
-        vertexConsumer = pBuffer.getBuffer(RenderType.entityTranslucentCull(Neverend.tl("entity/rift.png").fullLocation()));
+        vertexConsumer = pBuffer.getBuffer(renderType);
         pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) / 5));
         vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, -0.5F, 0, 1);
         vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, -0.5F, 1, 1);
