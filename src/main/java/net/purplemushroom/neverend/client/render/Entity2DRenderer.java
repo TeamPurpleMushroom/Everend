@@ -16,29 +16,16 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import ru.timeconqueror.timecore.api.client.resource.location.TextureLocation;
 
-import static net.purplemushroom.neverend.client.render.NETextures.empty;
-
 public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
     private final RenderType renderType;
-    private TextureLocation textureLocation;
     private float scale;
     private boolean fullBright = false;
     private boolean projectile = false;
     private int blockLightLevel;
 
-    public Entity2DRenderer(EntityRendererProvider.Context pContext) {
+    public Entity2DRenderer(EntityRendererProvider.Context pContext, TextureLocation textureLocation) {
         super(pContext);
-        textureLocation = empty();
         renderType = RenderType.entityCutoutNoCull(textureLocation.fullLocation());
-    }
-
-    public Entity2DRenderer<T> texture(TextureLocation texture) {
-        this.textureLocation = texture;
-        return this;
-    }
-
-    public TextureLocation getTextureLocation() {
-        return textureLocation;
     }
 
     @Override

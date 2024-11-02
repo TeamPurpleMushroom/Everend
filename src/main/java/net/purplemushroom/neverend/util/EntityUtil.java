@@ -71,12 +71,19 @@ public class EntityUtil {
 
     public static boolean isOverVoid(Entity entity) {
         Level level = entity.level();
-        AABB belowBB = entity.getBoundingBox().setMinY(level.getMinBuildHeight());
+        AABB belowBB = entity.getBoundingBox().setMinY(level.getMinBuildHeight()).inflate(0.1D, 0, 0.1D);
         if (belowBB.maxY > level.getMaxBuildHeight()) belowBB.setMaxY(level.getMaxBuildHeight());
         return entity.level().getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
     }
 
-    public static boolean isAtStableLocation(Entity entity) {
-        return !isOverVoid(entity) && entity.onGround();
+    public static boolean isAreaExposedToVoid(Entity entity, double inflate) {
+        Level level = entity.level();
+        AABB belowBB = entity.getBoundingBox().setMinY(level.getMinBuildHeight()).inflate(inflate, inflate, inflate);
+        if (belowBB.maxY > level.getMaxBuildHeight()) belowBB.setMaxY(level.getMaxBuildHeight());
+        return entity.level().getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
+    }
+
+    public static boolean isAtStableLocation(Entity entity, double inflate) {
+        return !isAreaExposedToVoid(entity, inflate) && entity.onGround();
     }
 }

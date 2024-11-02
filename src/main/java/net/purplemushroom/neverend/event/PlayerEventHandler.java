@@ -35,9 +35,9 @@ public class PlayerEventHandler {
                     PlayerTracker fallTracker = playerCap.playerTracker;
                     if (level.getGameTime() % 30L == 0L) {
                         if (player.blockPosition() != fallTracker.getLastGroundPos()) {
-                            if (EntityUtil.isAtStableLocation(player)) {
+                            if (EntityUtil.isAtStableLocation(player, 2.0D)) {
                                 fallTracker.setLastGroundStats(player.blockPosition(), level.dimension().location());
-                            } else if (player.isPassenger() && player.getVehicle() != null && EntityUtil.isAtStableLocation(player.getVehicle())) {
+                            } else if (player.isPassenger() && player.getVehicle() != null && EntityUtil.isAtStableLocation(player.getVehicle(), 1.5D)) {
                                 Entity vehicle = player.getVehicle();
                                 fallTracker.setLastGroundStats(vehicle.blockPosition(), level.dimension().location());
                             }
