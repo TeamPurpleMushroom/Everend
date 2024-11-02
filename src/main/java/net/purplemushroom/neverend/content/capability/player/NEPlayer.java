@@ -2,6 +2,7 @@ package net.purplemushroom.neverend.content.capability.player;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
@@ -52,7 +53,7 @@ public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlay
     }
 
     @Nullable
-    public static NEPlayer from(@Nullable ServerPlayer player) {
+    public static NEPlayer from(@Nullable Player player) {
         if (player != null) {
             LazyOptional<NEPlayer> cap = player.getCapability(NECapabilities.PLAYER);
             if (cap.isPresent()) {
@@ -62,7 +63,7 @@ public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlay
         return null;
     }
 
-    public static LazyOptional<NEPlayer> of(ServerPlayer player) {
+    public static LazyOptional<NEPlayer> of(Player player) {
         return player.getCapability(NECapabilities.PLAYER);
     }
 }

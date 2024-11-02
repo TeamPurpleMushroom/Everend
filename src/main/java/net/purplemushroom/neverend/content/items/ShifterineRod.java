@@ -43,6 +43,7 @@ public class ShifterineRod extends Item {
                         RiftFishingData riftData = playerCap.riftFishingData;
                         if (!riftData.isActive(level)) {
                             riftData.startFishingFromRift((Rift) entity);
+                            playerCap.detectAndSendChanges();
                             return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
                         }
                     }
