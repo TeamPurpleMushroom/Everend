@@ -13,7 +13,7 @@ public class NEEntityRenderRegistry {
 
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(NEEntities.RIFT_TYPE.get(), manager -> new RiftRenderer(manager, Neverend.tl("entity/rift.png"))
+        event.registerEntityRenderer(NEEntities.RIFT_TYPE.get(), manager -> new RiftRenderer(manager)
                 .fullbright(true)
                 .projectile(true)
                 .scale(5.5F));
