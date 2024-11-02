@@ -2,7 +2,6 @@ package net.purplemushroom.neverend.content.capability.player.data.serializers;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerLocationUtil;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.property.serializer.IPropertySerializer;
 
