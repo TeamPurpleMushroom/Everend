@@ -15,7 +15,7 @@ public class NEEntityRenderRegistry {
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(NEEntities.RIFT_TYPE.get(), manager -> new RiftRenderer(manager)
                 .fullbright(true)
-                .projectile(true)
+                .blockLightLevel(2)
                 .scale(5.5F));
     }
 }
