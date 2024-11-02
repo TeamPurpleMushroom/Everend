@@ -25,7 +25,7 @@ import org.joml.Matrix4f;
 import ru.timeconqueror.timecore.api.client.resource.location.TextureLocation;
 
 public class RiftRenderer extends EntityRenderer<Rift> {
-    private static final float PORTAL_RADIUS = 0.4f;
+    private static final float PORTAL_RADIUS = 0.432f;
     private static final float PORTAL_SUBDIVISIONS = 10.0f;
 
     private static final RenderType PORTAL_RENDER_TYPE = RenderType.create("end_portal", DefaultVertexFormat.POSITION, VertexFormat.Mode.TRIANGLE_STRIP, 256, false, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEndPortalShader)).setTextureState(RenderStateShard.MultiTextureStateShard.builder().add(TheEndPortalRenderer.END_SKY_LOCATION, false, false).add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false).build()).createCompositeState(false));
@@ -54,7 +54,6 @@ public class RiftRenderer extends EntityRenderer<Rift> {
         pPoseStack.scale(scale, scale, scale);
         pPoseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        //pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) * 5));
 
         PoseStack.Pose pose = pPoseStack.last();
         Matrix4f matrix4f = pose.pose();
@@ -64,7 +63,6 @@ public class RiftRenderer extends EntityRenderer<Rift> {
         if (fullBright) packedLightLevel = 15728880;
         else packedLightLevel = pPackedLight;
 
-        // not a perfect square so that it fits inside the portal
         // FIXME: end portal is faintly visible through the clouds
         vertexConsumer = pBuffer.getBuffer(PORTAL_RENDER_TYPE);
         float angleOffset = Mth.TWO_PI / PORTAL_SUBDIVISIONS;
@@ -76,14 +74,15 @@ public class RiftRenderer extends EntityRenderer<Rift> {
             portalVertex(vertexConsumer, matrix4f, matrix3f, packedLightLevel, vector.x * PORTAL_RADIUS, vector.y * PORTAL_RADIUS);
         }
 
-        /*vertexConsumer = pBuffer.getBuffer(riftCloudOutsideRenderType);
+        vertexConsumer = pBuffer.getBuffer(riftCloudOutsideRenderType);
+        pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) * 5));
         vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.65F, -0.65F, 0, 1);
         vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.65F, -0.65F, 1, 1);
         vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.65F, 0.65F, 1, 0);
-        vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.65F, 0.65F, 0, 0);*/
+        vertexBG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.65F, 0.65F, 0, 0);
 
         vertexConsumer = pBuffer.getBuffer(riftCloudRenderType);
-        //pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) / 5));
+        pPoseStack.mulPose(Axis.ZP.rotation((float) (pEntity.tickCount / 4) / 5));
         vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, -0.5F, -0.5F, 0, 1);
         vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, -0.5F, 1, 1);
         vertexFG(vertexConsumer, matrix4f, matrix3f, packedLightLevel, 0.5F, 0.5F, 1, 0);
