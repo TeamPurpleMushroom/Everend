@@ -75,4 +75,8 @@ public class EntityUtil {
         if (belowBB.maxY > level.getMaxBuildHeight()) belowBB.setMaxY(level.getMaxBuildHeight());
         return entity.level().getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
     }
+
+    public static boolean isAtStableLocation(Entity entity) {
+        return !isOverVoid(entity) && entity.onGround();
+    }
 }

@@ -11,13 +11,13 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.capability.player.NEPlayer;
 import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 import net.purplemushroom.neverend.content.capability.player.data.RiftFishingData;
 import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.util.EntityUtil;
 import net.purplemushroom.neverend.util.MathUtil;
 
 @Mod.EventBusSubscriber(modid = Neverend.MODID)
@@ -35,9 +35,9 @@ public class PlayerEventHandler {
                     PlayerTracker fallTracker = playerCap.playerTracker;
                     if (level.getGameTime() % 30L == 0L) {
                         if (player.blockPosition() != fallTracker.getLastGroundPos()) {
-                            if (player.onGround()) {
+                            if (EntityUtil.isAtStableLocation(player)) {
                                 fallTracker.setLastGroundStats(player.blockPosition(), level.dimension().location());
-                            } else if (player.isPassenger() && player.getVehicle() != null && player.getVehicle().onGround()) {
+                            } else if (player.isPassenger() && player.getVehicle() != null && EntityUtil.isAtStableLocation(player.getVehicle())) {
                                 Entity vehicle = player.getVehicle();
                                 fallTracker.setLastGroundStats(vehicle.blockPosition(), level.dimension().location());
                             }
