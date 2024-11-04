@@ -28,8 +28,8 @@ public class PlayerEventHandler {
         if (event.phase == TickEvent.Phase.END) {
             Player player = event.player;
             Level level = player.level();
+            NEPlayer playerCap = NEPlayer.from(player);
             if (!event.player.level().isClientSide()) {
-                NEPlayer playerCap = NEPlayer.from(player);
                 if (playerCap != null) {
                     // nullberry/shifterine code
                     PlayerTracker fallTracker = playerCap.playerTracker;
@@ -56,7 +56,6 @@ public class PlayerEventHandler {
                     }
                 }
             } else {
-                NEPlayer playerCap = NEPlayer.from(player);
                 if (playerCap != null) {
                     RiftFishingData riftData = playerCap.riftFishingData;
                     if (riftData.isActive(event.player.level())) { // FIXME: will break if you exit world while doing the rift thingie

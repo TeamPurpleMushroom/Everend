@@ -9,11 +9,11 @@ import ru.timeconqueror.timecore.common.capability.property.CoffeeProperty;
 import ru.timeconqueror.timecore.common.capability.property.container.PropertyContainer;
 
 public class RiftFishingData extends PropertyContainer {
-    private final CoffeeProperty<Integer> rift = prop("rift", Integer.MIN_VALUE, IntegerSerializer.INSTANCE).synced();
-    private final CoffeeProperty<Float> fishingProgress = prop("rift_fishing_progress", Float.NaN, FloatSerializer.INSTANCE).synced();
+    private final CoffeeProperty<Integer> rift = nullableProp("rift", (Integer) null).synced();
+    private final CoffeeProperty<Float> fishingProgress = nullableProp("rift_fishing_progress", (Float) null).synced();
 
     public boolean isActive(Level level) {
-        return !Float.isNaN(fishingProgress.get());
+        return fishingProgress.get() != null;
     }
 
     public Rift getRift(Level level) {
@@ -28,8 +28,8 @@ public class RiftFishingData extends PropertyContainer {
     }
 
     public void stopFishingFromRift() {
-        rift.set(Integer.MIN_VALUE);
-        fishingProgress.set(Float.NaN);
+        rift.set(null);
+        fishingProgress.set(null);
     }
 
     public boolean progressFishing(float amount) {
