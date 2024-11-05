@@ -1,11 +1,16 @@
 package net.purplemushroom.neverend.event;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
@@ -17,6 +22,7 @@ import net.purplemushroom.neverend.content.capability.player.NEPlayer;
 import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
 import net.purplemushroom.neverend.content.capability.player.data.RiftFishingData;
 import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.registry.NEItems;
 import net.purplemushroom.neverend.util.EntityUtil;
 import net.purplemushroom.neverend.util.MathUtil;
 
@@ -49,7 +55,7 @@ public class PlayerEventHandler {
                     RiftFishingData riftData = playerCap.riftFishingData;
                     if (riftData.isActive(level)) { // FIXME: will break if you exit world while doing the rift thingie
                         Rift rift = riftData.getRift(level);
-                        if (player.distanceTo(rift) > 16) {
+                        if (player.distanceTo(rift) > 16 || !EntityUtil.isHolding(player, NEItems.SHIFTERINE_ROD)) {
                             riftData.stopFishingFromRift();
                             playerCap.detectAndSendChanges();
                         }
