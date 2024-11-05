@@ -33,11 +33,11 @@ public class PlayerEventHandler {
                 if (playerCap != null) {
                     // nullberry/shifterine code
                     PlayerTracker fallTracker = playerCap.playerTracker;
-                    if (level.getGameTime() % 30L == 0L) {
+                    if (level.getGameTime() % 20L == 0L) {
                         if (player.blockPosition() != fallTracker.getLastGroundPos()) {
-                            if (EntityUtil.isAtStableLocation(player, 2.0D)) {
+                            if (EntityUtil.isAtStableLocation(player)) {
                                 fallTracker.setLastGroundStats(player.blockPosition(), level.dimension().location());
-                            } else if (player.isPassenger() && player.getVehicle() != null && EntityUtil.isAtStableLocation(player.getVehicle(), 0.5D)) {
+                            } else if (player.isPassenger() && player.getVehicle() != null && EntityUtil.isAtStableLocation(player.getVehicle())) {
                                 Entity vehicle = player.getVehicle();
                                 fallTracker.setLastGroundStats(vehicle.blockPosition(), level.dimension().location());
                             }

@@ -6,9 +6,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.property.serializer.IPropertySerializer;
+import ru.timeconqueror.timecore.common.capability.property.serializer.NullPropertySerializer;
 
 public class ResourceLocationSerializer implements IPropertySerializer<ResourceLocation> {
     public static final IPropertySerializer<ResourceLocation> INSTANCE = new ResourceLocationSerializer();
+    public static final IPropertySerializer<ResourceLocation> NULLABLE_INSTANCE = new NullPropertySerializer<>(INSTANCE);
 
     @Override
     public ResourceLocation deserialize(@NotNull String string, @NotNull CompoundTag compoundTag) {

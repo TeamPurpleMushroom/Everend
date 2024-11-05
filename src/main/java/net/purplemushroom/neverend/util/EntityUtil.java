@@ -76,14 +76,7 @@ public class EntityUtil {
         return entity.level().getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
     }
 
-    public static boolean isAreaExposedToVoid(Entity entity, double deflate) {
-        Level level = entity.level();
-        AABB belowBB = entity.getBoundingBox().setMinY(level.getMinBuildHeight()).deflate(deflate, 0, deflate);
-        if (belowBB.maxY > level.getMaxBuildHeight()) belowBB.setMaxY(level.getMaxBuildHeight());
-        return entity.level().getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
-    }
-
-    public static boolean isAtStableLocation(Entity entity, double deflate) {
-        return !isAreaExposedToVoid(entity, deflate) && entity.onGround();
+    public static boolean isAtStableLocation(Entity entity) {
+        return !isOverVoid(entity) && entity.onGround() && !entity.level().getBlockState(entity.blockPosition().below()).isAir();
     }
 }

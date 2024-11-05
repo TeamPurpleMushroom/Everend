@@ -10,8 +10,8 @@ import ru.timeconqueror.timecore.common.capability.property.container.PropertyCo
 //TODO: log different pos based on dimension, add fallback if area is destroyed
 public class PlayerTracker extends PropertyContainer {
 
-    private final CoffeeProperty<BlockPos> groundPos = prop("ground_pos", (BlockPos) null, BlockPositionSerializer.INSTANCE).synced();
-    private final CoffeeProperty<ResourceLocation> dimensionKey = prop("dimension", (ResourceLocation) null, ResourceLocationSerializer.INSTANCE);
+    private final CoffeeProperty<BlockPos> groundPos = prop("ground_pos", (BlockPos) null, BlockPositionSerializer.NULLABLE_INSTANCE).synced();
+    private final CoffeeProperty<ResourceLocation> dimensionKey = prop("dimension", (ResourceLocation) null, ResourceLocationSerializer.NULLABLE_INSTANCE);
 
     public BlockPos getLastGroundPos() {
         return groundPos.get();
