@@ -12,7 +12,7 @@ public class RiftFishingData extends PropertyContainer {
     private final CoffeeProperty<Integer> rift = nullableProp("rift", (Integer) null).synced();
     private final CoffeeProperty<Float> fishingProgress = nullableProp("rift_fishing_progress", (Float) null).synced();
 
-    public boolean isActive(Level level) {
+    public boolean isActive() {
         return fishingProgress.get() != null;
     }
 
@@ -34,7 +34,6 @@ public class RiftFishingData extends PropertyContainer {
 
     public boolean progressFishing(float amount) {
         float progress = fishingProgress.get() + amount;
-        System.out.println(progress);
         if (progress >= 1.0f) {
             stopFishingFromRift();
             return true;
@@ -43,4 +42,9 @@ public class RiftFishingData extends PropertyContainer {
         return false;
     }
 
+    public float getProgress() {
+        Float progress = fishingProgress.get();
+        if (progress == null) return 0.0f;
+        return fishingProgress.get();
+    }
 }
