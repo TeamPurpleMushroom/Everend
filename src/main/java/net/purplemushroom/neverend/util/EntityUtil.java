@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class EntityUtil {
 
@@ -85,5 +86,16 @@ public class EntityUtil {
 
     public static boolean isHolding(LivingEntity entity, Item item) {
         return entity.getMainHandItem().getItem() == item || entity.getOffhandItem().getItem() == item;
+    }
+
+    public static Vec3 getCenterPos(Entity entity) {
+        return entity.position().add(0.0, entity.getBbHeight() / 2, 0.0);
+    }
+
+    public static double lookingAt(LivingEntity entity, Vec3 lookTarget) {
+        Vec3 eyes = entity.getEyePosition();
+        Vec3 targetVector = lookTarget.subtract(eyes).normalize();
+        Vec3 lookVector = entity.getLookAngle();
+        return lookVector.dot(targetVector);
     }
 }

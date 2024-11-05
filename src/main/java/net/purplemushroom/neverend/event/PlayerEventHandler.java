@@ -58,6 +58,10 @@ public class PlayerEventHandler {
                         if (player.distanceTo(rift) > 16 || !EntityUtil.isHolding(player, NEItems.SHIFTERINE_ROD)) {
                             riftData.stopFishingFromRift();
                             playerCap.detectAndSendChanges();
+                        } else {
+                            float looking = (float) EntityUtil.lookingAt(player, EntityUtil.getCenterPos(rift));
+                            if (looking <= 0.0f) riftData.stopFishingFromRift();
+                            riftData.progressFishing(looking / 100);
                         }
                     }
                 }
@@ -67,7 +71,7 @@ public class PlayerEventHandler {
                     if (riftData.isActive(event.player.level())) { // FIXME: will break if you exit world while doing the rift thingie
                         Rift rift = riftData.getRift(level);
                         Vec3 playerPos = event.player.getEyePosition();
-                        Vec3 riftPos = rift.position().add(0, rift.getBbHeight() / 2, 0);
+                        Vec3 riftPos = EntityUtil.getCenterPos(rift);
                         Vec3 extraPoint = playerPos.add(player.getViewVector(0.0f).scale(10));
                         for (Vec3 node : MathUtil.createBezierCurve(playerPos, riftPos, extraPoint, 20)) {
                             level.addParticle(ParticleTypes.CRIT, node.x, node.y, node.z, 0, 0, 0);
