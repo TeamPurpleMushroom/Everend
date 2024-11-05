@@ -4,6 +4,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.content.items.EndPorterItem;
 import net.purplemushroom.neverend.content.items.NullberryItem;
 import net.purplemushroom.neverend.content.items.ShifterineItem;
 import net.purplemushroom.neverend.content.items.ShifterineRod;
@@ -37,7 +38,7 @@ public class NEItems {
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
         registerHandheldRod("shifterine_rod", "Shifterine Rod", ShifterineRod::new);
 
-        registerWithPresetModel("test", "Test", () -> new Item(baseProps().stacksTo(3).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
+        registerWithPresetModel("end_porter", "End Porter", () -> new EndPorterItem(baseProps().stacksTo(1).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
     }
 
     /**
