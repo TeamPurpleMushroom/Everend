@@ -6,7 +6,7 @@ import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
 import ru.timeconqueror.timecore.api.registry.BlockEntityRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 
-@AutoRegistrable.Entries("block_entity")
+@AutoRegistrable.Entries("block_entity_type")
 public class NEBlockEntities {
     public static BlockEntityType<DeathObeliskBlockEntity> DEATH_OBELISK;
 
