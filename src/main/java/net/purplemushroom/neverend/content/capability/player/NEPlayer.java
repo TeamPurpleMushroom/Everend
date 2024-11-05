@@ -21,9 +21,9 @@ public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlay
     public final PlayerTracker playerTracker = container("player_tracker", new PlayerTracker());
     public final RiftFishingData riftFishingData = container("rift_fishing_data", new RiftFishingData());
 
-    private final ServerPlayer player;
+    private final Player player;
 
-    public NEPlayer(ServerPlayer player) {
+    public NEPlayer(Player player) {
         this.player = player;
     }
 
@@ -41,7 +41,7 @@ public class NEPlayer extends CoffeeCapabilityInstance<Entity> implements NEPlay
 
     @Override
     public void sendChangesToClient(@NotNull SimpleChannel channel, @NotNull Object data) {
-        channel.send(PacketDistributor.PLAYER.with(() -> player), data);
+        channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), data);
     }
 
     public void detectAndSendChanges() {

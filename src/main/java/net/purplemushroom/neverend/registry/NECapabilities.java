@@ -1,6 +1,7 @@
 package net.purplemushroom.neverend.registry;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +22,6 @@ public class NECapabilities {
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> CapabilityManagerAPI.registerStaticCoffeeAttacher(CapabilityOwner.ENTITY, PLAYER, entity -> entity instanceof ServerPlayer, entity -> new NEPlayer((ServerPlayer) entity)));
+        event.enqueueWork(() -> CapabilityManagerAPI.registerStaticCoffeeAttacher(CapabilityOwner.ENTITY, PLAYER, entity -> entity instanceof Player, entity -> new NEPlayer((Player) entity))); // TODO: maybe there should be 2 capabilities, one for server-only stuff and one for synced stuff?
     }
 }

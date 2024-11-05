@@ -64,7 +64,7 @@ public class PlayerEventHandler {
                         Vec3 riftPos = rift.position().add(0, rift.getBbHeight() / 2, 0);
                         Vec3 extraPoint = playerPos.add(player.getViewVector(0.0f).scale(10));
                         for (Vec3 node : MathUtil.createBezierCurve(playerPos, riftPos, extraPoint, 20)) {
-                            level.addParticle(ParticleTypes.CRIT, node.x, node.y, node.z, 10, 0, 0);
+                            level.addParticle(ParticleTypes.CRIT, node.x, node.y, node.z, 0, 0, 0);
                         }
                     }
                 }

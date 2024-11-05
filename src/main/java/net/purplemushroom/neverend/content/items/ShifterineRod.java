@@ -38,7 +38,7 @@ public class ShifterineRod extends Item {
             if (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
                 Entity entity = ((EntityHitResult) hitResult).getEntity();
                 if (entity.getType() == NEEntities.RIFT_TYPE.get()) {
-                    NEPlayer playerCap = NEPlayer.from((ServerPlayer) player);
+                    NEPlayer playerCap = NEPlayer.from(player);
                     if (playerCap != null) {
                         RiftFishingData riftData = playerCap.riftFishingData;
                         if (!riftData.isActive(level)) {
@@ -47,11 +47,6 @@ public class ShifterineRod extends Item {
                             return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
                         }
                     }
-                    /*System.out.println("Hi 3");
-                    for (Vec3 node : MathUtil.createBezierCurve(vector1, vector1.add(0, 10, 0), vector1.add(5, 5, 0), 10)) {
-                        ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, node.x, node.y, node.z, 10, 0, 0, 0, 0);
-                        System.out.println("HIT!!!!");
-                    }*/
                 }
             }
         }
