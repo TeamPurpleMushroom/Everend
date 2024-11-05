@@ -1,12 +1,15 @@
 package net.purplemushroom.neverend.registry;
 
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.client.render.NEBlockStateResources;
 import net.purplemushroom.neverend.content.blocks.DeathObeliskBlock;
 import net.purplemushroom.neverend.content.blocks.EnchantmentShrineBlock;
 import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
+import ru.timeconqueror.timecore.api.client.resource.BlockModels;
 import ru.timeconqueror.timecore.api.registry.BlockRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 import ru.timeconqueror.timecore.api.registry.util.BlockPropsFactory;
@@ -72,9 +75,27 @@ public class NEBlocks {
                 .name("Enchantment Shrine");
         BLOCKS.register("death_obelisk", () -> new DeathObeliskBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
+                        .lightLevel((level) -> 4)
                         .requiresCorrectToolForDrops()).create(), DeathObeliskBlockEntity::new))
-                .oneVarStateAndCubeAllModel()
+
+                .renderLayer(() -> RenderTypeWrappers.TRANSLUCENT)
+                .state(NEBlockStateResources.halfState(Neverend.bml("block/death_obelisk_bottom"), Neverend.bml("block/death_obelisk_top")))
+
+                .model(Neverend.bml("block/death_obelisk_top"), () -> BlockModels.cubeColumnModel(
+                        Neverend.tl("block/death_obelisk_bottom"),
+                        Neverend.tl("block/death_obelisk_top_front")))
+
+                .model(Neverend.bml("block/death_obelisk_bottom"), BlockModels.cubeColumnModel(
+                        Neverend.tl("block/death_obelisk_bottom"),
+                        Neverend.tl("block/death_obelisk_bottom_side")))
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Death Obelisk");
+    }
+
+    public static class RenderTypeWrappers {
+        public static final BlockRegister.RenderTypeWrapper CUTOUT = new BlockRegister.RenderTypeWrapper(RenderType.cutout());
+        public static final BlockRegister.RenderTypeWrapper CUTOUT_MIPPED = new BlockRegister.RenderTypeWrapper(RenderType.cutoutMipped());
+        public static final BlockRegister.RenderTypeWrapper TRANSLUCENT = new BlockRegister.RenderTypeWrapper(RenderType.translucent());
+        public static final BlockRegister.RenderTypeWrapper TRANSLUCENT_NO_CRUMBLING = new BlockRegister.RenderTypeWrapper(RenderType.translucentNoCrumbling());
     }
 }

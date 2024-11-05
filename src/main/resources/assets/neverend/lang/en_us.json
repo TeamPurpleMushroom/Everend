@@ -1,6 +1,21 @@
 {
   "#MARK AUTO GEN START": "",
+  "block.neverend.aldores_ore": "Aldores Ore",
+  "block.neverend.death_obelisk": "Death Obelisk",
+  "block.neverend.dragonbone_ore": "Dragonbone Ore",
+  "block.neverend.enchantment_crystal_ore": "Enchantment Crystal Ore",
+  "block.neverend.enchantment_shrine": "Enchantment Shrine",
+  "block.neverend.ludunite_ore": "Ludunite Ore",
   "block.neverend.pale_end_stone": "Pale End Stone",
+  "block.neverend.shifterine_ore": "Shifterine Ore",
+  "item.neverend.aldores_thing": "Aldores Thing",
+  "item.neverend.dragonbone": "Dragonbone",
+  "item.neverend.enchantment_crystal": "Enchantment Crystal",
+  "item.neverend.end_porter": "End Porter",
+  "item.neverend.ludunite_thing": "Ludunite Thing",
+  "item.neverend.nullberry": "Nullberry",
+  "item.neverend.shifterine_crystal": "Shifterine Crystal",
+  "item.neverend.shifterine_rod": "Shifterine Rod",
   "#MARK AUTO GEN END": "",
   "container.neverend.death_obelisk": "Death Obelisk"
 }
