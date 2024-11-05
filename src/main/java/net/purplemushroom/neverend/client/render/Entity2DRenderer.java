@@ -23,9 +23,13 @@ public class Entity2DRenderer<T extends Entity> extends EntityRenderer<T> {
     private boolean projectile = false;
     private int blockLightLevel;
 
-    public Entity2DRenderer(EntityRendererProvider.Context pContext, TextureLocation textureLocation) {
+    public Entity2DRenderer(EntityRendererProvider.Context pContext, RenderType renderType) {
         super(pContext);
-        renderType = RenderType.entityCutoutNoCull(textureLocation.fullLocation());
+        this.renderType = renderType;
+    }
+
+    public Entity2DRenderer(EntityRendererProvider.Context pContext, TextureLocation textureLocation) {
+        this(pContext, RenderType.entityCutoutNoCull(textureLocation.fullLocation()));
     }
 
     @Override

@@ -18,7 +18,6 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import static net.purplemushroom.neverend.client.render.NERenderTypes.getRiftPortalRenderType;
-import static net.purplemushroom.neverend.client.render.NETextures.empty;
 
 public class RiftRenderer extends Entity2DRenderer<Rift> {
     private static final float PORTAL_RADIUS = 0.432f;
@@ -29,7 +28,7 @@ public class RiftRenderer extends Entity2DRenderer<Rift> {
     private final RenderType riftCloudOutsideRenderType;
 
     public RiftRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, empty());
+        super(pContext, (RenderType) null);
         riftCloudRenderType = RenderType.entityTranslucentCull(Neverend.tl("entity/rift.png").fullLocation());
         riftCloudOutsideRenderType = RenderType.entityTranslucentCull(Neverend.tl("entity/rift_outside.png").fullLocation());
     }
