@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.content.capability.player.data.serializers;
+package net.purplemushroom.neverend.capability.player.data.serializers;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

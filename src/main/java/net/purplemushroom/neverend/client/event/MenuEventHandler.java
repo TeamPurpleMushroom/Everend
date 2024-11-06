@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.event;
+package net.purplemushroom.neverend.client.event;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;

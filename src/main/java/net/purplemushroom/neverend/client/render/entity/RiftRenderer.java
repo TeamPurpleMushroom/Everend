@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.render;
+package net.purplemushroom.neverend.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.client.render.entity.Entity2DRenderer;
 import net.purplemushroom.neverend.content.entities.Rift;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;

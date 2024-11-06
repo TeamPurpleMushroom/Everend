@@ -1,19 +1,17 @@
-package net.purplemushroom.neverend.event;
+package net.purplemushroom.neverend.client.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.BossEvent;
-import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.purplemushroom.neverend.content.capability.player.NEPlayer;
+import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.capability.player.NEPlayer;
 import net.purplemushroom.neverend.util.BitUtil;
-import org.lwjgl.opengl.GL11;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid= Neverend.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GUIEventHandler {
     @SubscribeEvent
     public static void renderGUI(RegisterGuiOverlaysEvent event) {

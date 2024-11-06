@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.render;
+package net.purplemushroom.neverend.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -1,9 +1,7 @@
-package net.purplemushroom.neverend.content.capability.player.data;
+package net.purplemushroom.neverend.capability.player.data;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-import net.purplemushroom.neverend.content.capability.player.data.serializers.FloatSerializer;
-import net.purplemushroom.neverend.content.capability.player.data.serializers.IntegerSerializer;
 import net.purplemushroom.neverend.content.entities.Rift;
 import ru.timeconqueror.timecore.common.capability.property.CoffeeProperty;
 import ru.timeconqueror.timecore.common.capability.property.container.PropertyContainer;

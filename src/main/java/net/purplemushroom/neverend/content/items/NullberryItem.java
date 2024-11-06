@@ -16,8 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.content.capability.player.NEPlayer;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
+import net.purplemushroom.neverend.capability.player.NEPlayer;
+import net.purplemushroom.neverend.capability.player.data.PlayerTracker;
 import net.purplemushroom.neverend.util.EntityUtil;
 import org.jetbrains.annotations.NotNull;
 

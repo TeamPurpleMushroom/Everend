@@ -1,8 +1,5 @@
 package net.purplemushroom.neverend.content.items;
 
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -10,18 +7,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.purplemushroom.neverend.content.capability.player.NEPlayer;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
-import net.purplemushroom.neverend.content.capability.player.data.RiftFishingData;
+import net.purplemushroom.neverend.capability.player.NEPlayer;
+import net.purplemushroom.neverend.capability.player.data.RiftFishingData;
 import net.purplemushroom.neverend.content.entities.Rift;
 import net.purplemushroom.neverend.registry.NEEntities;
-import net.purplemushroom.neverend.util.MathUtil;
 
 public class ShifterineRod extends Item {
     public ShifterineRod() {

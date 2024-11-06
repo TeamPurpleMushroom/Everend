@@ -1,6 +1,5 @@
-package net.purplemushroom.neverend.content.capability.player;
+package net.purplemushroom.neverend.capability.player;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.util.LazyOptional;
 

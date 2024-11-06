@@ -1,9 +1,9 @@
-package net.purplemushroom.neverend.content.capability.player.data;
+package net.purplemushroom.neverend.capability.player.data;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.purplemushroom.neverend.content.capability.player.data.serializers.BlockPositionSerializer;
-import net.purplemushroom.neverend.content.capability.player.data.serializers.ResourceLocationSerializer;
+import net.purplemushroom.neverend.capability.player.data.serializers.BlockPositionSerializer;
+import net.purplemushroom.neverend.capability.player.data.serializers.ResourceLocationSerializer;
 import ru.timeconqueror.timecore.common.capability.property.CoffeeProperty;
 import ru.timeconqueror.timecore.common.capability.property.container.PropertyContainer;
 

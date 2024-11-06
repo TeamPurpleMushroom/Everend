@@ -1,7 +1,6 @@
-package net.purplemushroom.neverend.content.capability.player.data.serializers;
+package net.purplemushroom.neverend.capability.player.data.serializers;
 
 import net.minecraft.nbt.CompoundTag;
-import net.purplemushroom.neverend.content.capability.player.data.RiftFishingData;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.property.serializer.IPropertySerializer;
 

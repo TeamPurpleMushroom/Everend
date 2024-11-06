@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.content.capability.player;
+package net.purplemushroom.neverend.capability.player;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -7,8 +7,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.purplemushroom.neverend.content.capability.player.data.PlayerTracker;
-import net.purplemushroom.neverend.content.capability.player.data.RiftFishingData;
+import net.purplemushroom.neverend.capability.player.data.PlayerTracker;
+import net.purplemushroom.neverend.capability.player.data.RiftFishingData;
 import net.purplemushroom.neverend.registry.NECapabilities;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.CoffeeCapabilityInstance;

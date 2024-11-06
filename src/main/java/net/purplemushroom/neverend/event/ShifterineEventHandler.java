@@ -7,11 +7,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.purplemushroom.neverend.content.capability.player.NEPlayer;
+import net.purplemushroom.neverend.capability.player.NEPlayer;
 import net.purplemushroom.neverend.content.items.ShifterineItem;
 
 @Mod.EventBusSubscriber

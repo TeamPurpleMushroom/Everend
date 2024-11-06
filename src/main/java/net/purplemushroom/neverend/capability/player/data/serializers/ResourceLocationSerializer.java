@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.content.capability.player.data.serializers;
+package net.purplemushroom.neverend.capability.player.data.serializers;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
