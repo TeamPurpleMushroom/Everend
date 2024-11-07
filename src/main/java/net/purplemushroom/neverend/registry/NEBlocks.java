@@ -18,6 +18,8 @@ import ru.timeconqueror.timecore.api.registry.BlockRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 import ru.timeconqueror.timecore.api.registry.util.BlockPropsFactory;
 
+import java.util.function.Supplier;
+
 @AutoRegistrable.Entries("block")
 public class NEBlocks {
     public static Block PALE_END_STONE;
@@ -25,6 +27,7 @@ public class NEBlocks {
     public static Block LUDUNITE_ORE;
     public static Block RAW_ALDORES_ORE;
     public static Block ALDORES_ORE;
+    public static Block DRAGON_BONE;
     public static Block DRAGONBONE_ORE;
     public static Block ENCHANTMENT_CRYSTAL_ORE;
     public static Block ENCHANTMENT_SHRINE;
@@ -63,20 +66,22 @@ public class NEBlocks {
         BLOCKS.register("raw_aldores_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.ANCIENT_DEBRIS)
                         .lightLevel(light -> 20)
                         .emissiveRendering(NEBlocks::always)
-                        .strength(30.0F, 60.0F)
+                        .strength(30.0F, 50.0F)
                         .requiresCorrectToolForDrops()).create()))
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Raw Aldores Ore");
-        BLOCKS.register("dragonbone_ore", () -> new RotatedPillarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
-                        .strength(2.0F, 6.0F)
-                        .requiresCorrectToolForDrops()).create()))
-                .oneVariantState(Neverend.bml("block/dragonbone_ore"))
-                .model(Neverend.bml("block/dragonbone_ore"), () -> BlockModels.cubeColumnModel(
-                        Neverend.tl("block/dragonbone_ore_top"),
-                        Neverend.tl("block/dragonbone_ore_side")))
-                .defaultBlockItem(NECreativeTabs.BLOCKS)
-                .name("Dragonbone Ore");
+
+        registerColumnRenderedBlock("dragon_bone", "Dragon Bone", () -> new RotatedPillarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.BONE_BLOCK)
+                .sound(NESoundTypes.DRAGON_BONE)
+                .strength(5.0F, 10.0F)
+                .requiresCorrectToolForDrops()).create()), "dragon_bone_top", "dragon_bone_side");
+
+        registerColumnRenderedBlock("dragonbone_ore", "Dragonbone Ore", () -> new RotatedPillarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.ANCIENT_DEBRIS)
+                .sound(NESoundTypes.DRAGON_BONE)
+                .strength(20.0F, 40.0F)
+                .requiresCorrectToolForDrops()).create()), "dragonbone_ore_top", "dragonbone_ore_side");
+
         BLOCKS.register("enchantment_crystal_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .requiresCorrectToolForDrops()).create()))
@@ -106,6 +111,18 @@ public class NEBlocks {
                         Neverend.tl("block/death_obelisk_bottom_side")))
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Death Obelisk");
+    }
+
+    /**
+     * Registers a block with a "block/cube_column" model type
+     */
+    private static void registerColumnRenderedBlock(String name, String enName, Supplier<Block> blockSupplier, String topTexture, String sideTexture) {
+        BLOCKS.register(name, blockSupplier)
+                .name(enName)
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .state(NEBlockStateResources.rotatablePillarState(Neverend.bml("block/" + name)))
+                .model(Neverend.bml("block/" + name),
+                        () -> BlockModels.cubeColumnModel(Neverend.tl("block/" + topTexture), Neverend.tl("block/" + sideTexture)));
     }
 
     public static class RenderTypeWrappers {
