@@ -1,9 +1,12 @@
 package net.purplemushroom.neverend.registry;
 
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.client.render.NEBlockStateResources;
 import net.purplemushroom.neverend.content.blocks.DeathObeliskBlock;
@@ -19,6 +22,7 @@ public class NEBlocks {
     public static Block PALE_END_STONE;
     public static Block SHIFTERINE_ORE;
     public static Block LUDUNITE_ORE;
+    public static Block RAW_ALDORES_ORE;
     public static Block ALDORES_ORE;
     public static Block DRAGONBONE_ORE;
     public static Block ENCHANTMENT_CRYSTAL_ORE;
@@ -55,10 +59,20 @@ public class NEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Aldores Ore");
+        BLOCKS.register("raw_aldores_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.ANCIENT_DEBRIS)
+                        .lightLevel(light -> 20)
+                        .emissiveRendering(NEBlocks::always)
+                        .strength(30.0F, 60.0F)
+                        .requiresCorrectToolForDrops()).create()))
+                .oneVarStateAndCubeAllModel()
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("Raw Aldores Ore");
         BLOCKS.register("dragonbone_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .requiresCorrectToolForDrops()).create()))
-                .oneVarStateAndCubeAllModel()
+                .model(Neverend.bml("block/dragonbone_ore"), () -> BlockModels.cubeColumnModel(
+                        Neverend.tl("block/dragonbone_ore_top"),
+                        Neverend.tl("block/dragonbone_ore_side")))
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Dragonbone Ore");
         BLOCKS.register("enchantment_crystal_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
@@ -97,5 +111,9 @@ public class NEBlocks {
         public static final BlockRegister.RenderTypeWrapper CUTOUT_MIPPED = new BlockRegister.RenderTypeWrapper(RenderType.cutoutMipped());
         public static final BlockRegister.RenderTypeWrapper TRANSLUCENT = new BlockRegister.RenderTypeWrapper(RenderType.translucent());
         public static final BlockRegister.RenderTypeWrapper TRANSLUCENT_NO_CRUMBLING = new BlockRegister.RenderTypeWrapper(RenderType.translucentNoCrumbling());
+    }
+
+    private static boolean always(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return true;
     }
 }
