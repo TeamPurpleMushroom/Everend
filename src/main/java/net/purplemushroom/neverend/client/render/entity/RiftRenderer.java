@@ -17,13 +17,13 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import static net.purplemushroom.neverend.client.render.NERenderTypes.getVoidStarsQuadsRenderType;
+import static net.purplemushroom.neverend.client.render.NERenderTypes.getRiftPortalRenderType;
 
 public class RiftRenderer extends Entity2DRenderer<Rift> {
     private static final float PORTAL_RADIUS = 0.432f;
     private static final float PORTAL_SUBDIVISIONS = 10.0f;
 
-    private static final RenderType PORTAL_RENDER_TYPE = getVoidStarsQuadsRenderType();
+    private static final RenderType PORTAL_RENDER_TYPE = getRiftPortalRenderType();
     private final RenderType riftCloudRenderType;
     private final RenderType riftCloudOutsideRenderType;
 
