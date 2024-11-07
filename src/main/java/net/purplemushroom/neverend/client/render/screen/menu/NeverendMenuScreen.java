@@ -3,8 +3,8 @@ package net.purplemushroom.neverend.client.render.screen.menu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.purplemushroom.neverend.client.render.NERenderTypes;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;
@@ -35,7 +35,7 @@ public class NeverendMenuScreen extends TitleScreen {
         }
 
         shaderinstance.apply();
-        pGuiGraphics.fill(RenderType.endPortal(), 0, 0, width, height, 0);
+        pGuiGraphics.fill(NERenderTypes.getVoidStarsQuadsRenderType(), 0, 0, width, height, 0);
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 }
