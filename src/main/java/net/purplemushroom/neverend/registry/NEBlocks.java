@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.purplemushroom.neverend.Neverend;
@@ -67,9 +68,10 @@ public class NEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Raw Aldores Ore");
-        BLOCKS.register("dragonbone_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+        BLOCKS.register("dragonbone_ore", () -> new RotatedPillarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .requiresCorrectToolForDrops()).create()))
+                .oneVariantState(Neverend.bml("block/dragonbone_ore"))
                 .model(Neverend.bml("block/dragonbone_ore"), () -> BlockModels.cubeColumnModel(
                         Neverend.tl("block/dragonbone_ore_top"),
                         Neverend.tl("block/dragonbone_ore_side")))
