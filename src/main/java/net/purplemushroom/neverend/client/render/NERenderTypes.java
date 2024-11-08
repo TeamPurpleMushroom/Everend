@@ -58,6 +58,21 @@ public class NERenderTypes {
                             .build())
                     .createCompositeState(false));
 
+    public static final RenderType MENU_RENDER_TYPE = RenderType.create(
+            "main_menu",
+            DefaultVertexFormat.POSITION,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(new RenderStateShard.ShaderStateShard(Shaders::getShaderMenu))
+                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                            .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                            .add(Neverend.tl("entity/void_stars.png").fullLocation(), false, false)
+                            .build())
+                    .createCompositeState(false));
+
     public static RenderType getRiftPortalRenderType() {
         return RIFT_PORTAL_RENDER_TYPE;
     }
@@ -70,13 +85,25 @@ public class NERenderTypes {
         return VOID_STARS_QUADS_RENDER_TYPE;
     }
 
+    public static RenderType getMenuRenderType() {
+        return MENU_RENDER_TYPE;
+    }
+
     public static class Shaders {
         @Nullable
         public static ShaderInstance shaderVoidStars;
 
         @Nullable
+        public static ShaderInstance shaderMenu;
+
+        @Nullable
         public static ShaderInstance getShaderVoidStars() {
             return shaderVoidStars;
+        }
+
+        @Nullable
+        public static ShaderInstance getShaderMenu() {
+            return shaderMenu;
         }
     }
 }

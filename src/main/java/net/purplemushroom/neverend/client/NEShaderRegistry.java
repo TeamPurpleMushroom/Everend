@@ -21,5 +21,8 @@ public class NEShaderRegistry {
         ResourceProvider resourceProvider = event.getResourceProvider();
         event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Neverend.MODID, "rendertype_void_stars"), DefaultVertexFormat.POSITION),
                 shaderInstance -> NERenderTypes.Shaders.shaderVoidStars = shaderInstance);
+
+        event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Neverend.MODID, "rendertype_menu"), DefaultVertexFormat.POSITION),
+                shaderInstance -> NERenderTypes.Shaders.shaderMenu = shaderInstance);
     }
 }

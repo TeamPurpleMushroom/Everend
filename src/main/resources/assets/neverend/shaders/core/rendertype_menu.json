@@ -4,8 +4,8 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "neverend:rendertype_void_stars",
-  "fragment": "neverend:rendertype_void_stars",
+  "vertex": "neverend:rendertype_menu",
+  "fragment": "neverend:rendertype_menu",
   "attributes": [],
   "samplers": [
     {

@@ -35,7 +35,7 @@ public class NeverendMenuScreen extends TitleScreen {
         }
 
         shaderinstance.apply();
-        pGuiGraphics.fill(NERenderTypes.getVoidStarsQuadsRenderType(), 0, 0, width, height, 0);
+        pGuiGraphics.fill(NERenderTypes.getMenuRenderType(), 0, 0, width, height, 0);
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 }
