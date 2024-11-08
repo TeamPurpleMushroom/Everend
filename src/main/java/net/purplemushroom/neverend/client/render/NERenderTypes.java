@@ -70,6 +70,7 @@ public class NERenderTypes {
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
                             .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
                             .add(Neverend.tl("entity/void_stars.png").fullLocation(), false, false)
+                            .add(Neverend.tl("gui/menu_island.png").fullLocation(), false, false)
                             .build())
                     .createCompositeState(false));
 

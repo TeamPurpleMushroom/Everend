@@ -13,6 +13,9 @@
     },
     {
       "name": "Sampler1"
+    },
+    {
+      "name": "Sampler2"
     }
   ],
   "uniforms": [
@@ -76,6 +79,14 @@
       "count": 1,
       "values": [
         15
+      ]
+    },
+    {
+      "name": "IslandLayers",
+      "type": "int",
+      "count": 1,
+      "values": [
+        2
       ]
     }
   ]
