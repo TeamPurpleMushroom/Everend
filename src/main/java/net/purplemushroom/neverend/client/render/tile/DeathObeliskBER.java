@@ -26,10 +26,10 @@ public class DeathObeliskBER implements BlockEntityRenderer<DeathObeliskBlockEnt
         float size = 0.99F;
         float offset = 1.0F - size;
         //TODO: fix offset: make it only render for top half of double block, then have minY stretch down
-        this.renderFace(pBlockEntity, pPose, pConsumer, offset, size, offset - 0.02F, size, size, size, size, size, Direction.SOUTH);
-        this.renderFace(pBlockEntity, pPose, pConsumer, offset, size, size + 0.02F, offset, offset, offset, offset, offset, Direction.NORTH);
-        this.renderFace(pBlockEntity, pPose, pConsumer, size, size, size + 0.02F, offset, offset, size, size, offset, Direction.EAST);
-        this.renderFace(pBlockEntity, pPose, pConsumer, offset, offset, offset - 0.02F, size, offset, size, size, offset, Direction.WEST);
+        this.renderFace(pBlockEntity, pPose, pConsumer, offset, size, offset - size, size, size, size, size, size, Direction.SOUTH);
+        this.renderFace(pBlockEntity, pPose, pConsumer, offset, size, size, offset - size, offset, offset, offset, offset, Direction.NORTH);
+        this.renderFace(pBlockEntity, pPose, pConsumer, size, size, size, offset - size, offset, size, size, offset, Direction.EAST);
+        this.renderFace(pBlockEntity, pPose, pConsumer, offset, offset, offset - size, size, offset, size, size, offset, Direction.WEST);
     }
 
     private void renderFace(DeathObeliskBlockEntity pBlockEntity, Matrix4f pPose, VertexConsumer pConsumer, float pX0, float pX1, float pY0, float pY1, float pZ0, float pZ1, float pZ2, float pZ3, Direction pDirection) {

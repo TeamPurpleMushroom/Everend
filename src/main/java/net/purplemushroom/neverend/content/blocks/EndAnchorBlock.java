@@ -184,7 +184,7 @@ public class EndAnchorBlock extends Block implements EntityBlock {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         UnmodifiableIterator<Vec3i> var5 = RESPAWN_OFFSETS.iterator();
 
-        Vec3 $$6;
+        Vec3 vec3;
         do {
             if (!var5.hasNext()) {
                 return Optional.empty();
@@ -192,10 +192,10 @@ public class EndAnchorBlock extends Block implements EntityBlock {
 
             Vec3i $$5 = var5.next();
             mutableBlockPos.set(pPos).move($$5);
-            $$6 = DismountHelper.findSafeDismountLocation(pEntityType, pLevel, mutableBlockPos, pSimulate);
-        } while ($$6 == null);
+            vec3 = DismountHelper.findSafeDismountLocation(pEntityType, pLevel, mutableBlockPos, pSimulate);
+        } while (vec3 == null);
 
-        return Optional.of($$6);
+        return Optional.of(vec3);
     }
 
     @Override
@@ -210,7 +210,7 @@ public class EndAnchorBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public @org.jetbrains.annotations.Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return tileFactory.apply(blockPos, blockState);
     }
 }

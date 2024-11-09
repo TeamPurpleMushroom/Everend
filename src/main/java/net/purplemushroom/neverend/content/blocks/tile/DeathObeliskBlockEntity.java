@@ -11,10 +11,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.purplemushroom.neverend.registry.NEBlockEntities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+
+import static net.purplemushroom.neverend.content.blocks.DeathObeliskBlock.HALF;
 
 public class DeathObeliskBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -52,6 +55,7 @@ public class DeathObeliskBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     public boolean shouldRenderFace(Direction pFace) {
-        return Block.shouldRenderFace(this.getBlockState(), Objects.requireNonNull(this.getLevel()), this.getBlockPos(), pFace, this.getBlockPos().relative(pFace));
+        DoubleBlockHalf doubleblockhalf = getBlockState().getValue(HALF);
+        return doubleblockhalf == DoubleBlockHalf.UPPER && Block.shouldRenderFace(this.getBlockState(), Objects.requireNonNull(this.getLevel()), this.getBlockPos(), pFace, this.getBlockPos().relative(pFace));
     }
 }
