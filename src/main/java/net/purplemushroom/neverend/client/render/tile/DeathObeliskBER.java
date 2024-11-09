@@ -25,7 +25,6 @@ public class DeathObeliskBER implements BlockEntityRenderer<DeathObeliskBlockEnt
     private void renderCube(DeathObeliskBlockEntity pBlockEntity, Matrix4f pPose, VertexConsumer pConsumer) {
         float size = 0.99F;
         float offset = 1.0F - size;
-        //TODO: fix offset: make it only render for top half of double block, then have minY stretch down
         this.renderFace(pBlockEntity, pPose, pConsumer, offset, size, offset - size, size, size, size, size, size, Direction.SOUTH);
         this.renderFace(pBlockEntity, pPose, pConsumer, offset, size, size, offset - size, offset, offset, offset, offset, Direction.NORTH);
         this.renderFace(pBlockEntity, pPose, pConsumer, size, size, size, offset - size, offset, size, size, offset, Direction.EAST);
