@@ -29,11 +29,4 @@ public class Rift extends Entity {
     public boolean isPickable() {
         return true;
     }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.ATTACK_DAMAGE, 3.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D);
-    }
 }

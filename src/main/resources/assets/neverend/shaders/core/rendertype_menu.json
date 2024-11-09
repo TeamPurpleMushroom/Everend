@@ -13,9 +13,6 @@
     },
     {
       "name": "Sampler1"
-    },
-    {
-      "name": "Sampler2"
     }
   ],
   "uniforms": [
@@ -74,11 +71,11 @@
       ]
     },
     {
-      "name": "VoidStarLayers",
+      "name": "IsUpperLayer",
       "type": "int",
       "count": 1,
       "values": [
-        15
+        0
       ]
     },
     {

@@ -4,7 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.purplemushroom.neverend.client.NEShaderRegistry;
 import net.purplemushroom.neverend.client.render.NERenderTypes;
+
+import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;
@@ -27,11 +30,14 @@ public class NeverendMenuScreen extends TitleScreen {
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        RenderSystem.setShader(NERenderTypes.Shaders::getShaderMenu);
         RenderSystem.setShaderGameTime(time, pPartialTick);
         ShaderInstance shaderinstance = RenderSystem.getShader();
 
         if (shaderinstance.GAME_TIME != null) {
             shaderinstance.GAME_TIME.set(RenderSystem.getShaderGameTime());
+
+            shaderinstance.getUniform("IsUpperLayer").set(0);
         }
 
         shaderinstance.apply();

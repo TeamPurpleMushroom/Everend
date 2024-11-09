@@ -14,7 +14,7 @@ public class NEEntities {
     @AutoRegistrable
     private static final EntityRegister ENTITIES = new EntityRegister(Neverend.MODID);
 
-    public static final Promised<EntityType<Rift>> RIFT_TYPE = ENTITIES.register("rift", EntityType.Builder.of(Rift::new, MobCategory.UNDERGROUND_WATER_CREATURE).sized(5.0f, 5.0f)).asPromised();
+    public static final Promised<EntityType<Rift>> RIFT_TYPE = ENTITIES.register("rift", EntityType.Builder.of(Rift::new, MobCategory.MISC).sized(5.0f, 5.0f)).asPromised();
 }
 
 
