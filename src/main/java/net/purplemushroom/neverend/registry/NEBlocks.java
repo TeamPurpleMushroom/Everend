@@ -12,7 +12,9 @@ import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.client.render.NEBlockStateResources;
 import net.purplemushroom.neverend.content.blocks.DeathObeliskBlock;
 import net.purplemushroom.neverend.content.blocks.EnchantmentShrineBlock;
+import net.purplemushroom.neverend.content.blocks.EndAnchorBlock;
 import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
+import net.purplemushroom.neverend.content.blocks.tile.EndAnchorBlockEntity;
 import ru.timeconqueror.timecore.api.client.resource.BlockModels;
 import ru.timeconqueror.timecore.api.registry.BlockRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
@@ -32,6 +34,7 @@ public class NEBlocks {
     public static Block ENCHANTMENT_CRYSTAL_ORE;
     public static Block ENCHANTMENT_SHRINE;
     public static Block DEATH_OBELISK;
+    public static Block END_ANCHOR;
 
     @AutoRegistrable
     private static final BlockRegister BLOCKS = new BlockRegister(Neverend.MODID);
@@ -111,6 +114,40 @@ public class NEBlocks {
                         Neverend.tl("block/death_obelisk_bottom_side")))
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Death Obelisk");
+        BLOCKS.register("end_anchor", () -> new EndAnchorBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .strength(2.0F, 6.0F)
+                        .requiresCorrectToolForDrops()).create(), EndAnchorBlockEntity::new))
+
+                .renderLayer(() -> RenderTypeWrappers.TRANSLUCENT)
+                .state(NEBlockStateResources.anchorState(Neverend.bml(
+                        "block/end_anchor_0"), Neverend.bml(
+                        "block/end_anchor_1"), Neverend.bml(
+                        "block/end_anchor_2"), Neverend.bml(
+                        "block/end_anchor_3"), Neverend.bml(
+                        "block/end_anchor_4")))
+
+                .model(Neverend.bml("block/end_anchor_0"), () -> BlockModels.cubeOrientableModel(
+                        Neverend.tl("block/end_anchor_top"),
+                        Neverend.tl("block/end_anchor_front_0"),
+                        Neverend.tl("block/end_anchor_side")))
+                .model(Neverend.bml("block/end_anchor_1"), () -> BlockModels.cubeOrientableModel(
+                        Neverend.tl("block/end_anchor_top"),
+                        Neverend.tl("block/end_anchor_front_1"),
+                        Neverend.tl("block/end_anchor_side")))
+                .model(Neverend.bml("block/end_anchor_2"), () -> BlockModels.cubeOrientableModel(
+                        Neverend.tl("block/end_anchor_top"),
+                        Neverend.tl("block/end_anchor_front_2"),
+                        Neverend.tl("block/end_anchor_side")))
+                .model(Neverend.bml("block/end_anchor_3"), () -> BlockModels.cubeOrientableModel(
+                        Neverend.tl("block/end_anchor_top"),
+                        Neverend.tl("block/end_anchor_front_3"),
+                        Neverend.tl("block/end_anchor_side")))
+                .model(Neverend.bml("block/end_anchor_4"), () -> BlockModels.cubeOrientableModel(
+                        Neverend.tl("block/end_anchor_top"),
+                        Neverend.tl("block/end_anchor_front_4"),
+                        Neverend.tl("block/end_anchor_side")))
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("End Anchor");
     }
 
     /**

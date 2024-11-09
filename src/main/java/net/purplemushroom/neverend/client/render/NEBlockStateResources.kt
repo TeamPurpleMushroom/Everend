@@ -40,4 +40,33 @@ object NEBlockStateResources {
             }
         })
     }
+
+    @JvmStatic
+    fun anchorState(
+        charge0: BlockModelLocation,
+        charge1: BlockModelLocation,
+        charge2: BlockModelLocation,
+        charge3: BlockModelLocation,
+        charge4: BlockModelLocation
+    ): BlockStateResource {
+        return BlockStateResource.fromJson(json {
+            "variants" {
+                "charges=0" {
+                    "model" set charge0
+                }
+                "charges=1" {
+                    "model" set charge1
+                }
+                "charges=2" {
+                    "model" set charge2
+                }
+                "charges=3" {
+                    "model" set charge3
+                }
+                "charges=4" {
+                    "model" set charge4
+                }
+            }
+        })
+    }
 }
