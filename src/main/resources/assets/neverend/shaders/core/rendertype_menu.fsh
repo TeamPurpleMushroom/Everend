@@ -80,8 +80,8 @@ void main() {
     for (int i = 0; i < VoidStarLayers; i++) {
         color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
     }
-    for (int i = 0; i < IslandLayers; i++) {
-        color += textureProj(Sampler2, texProj0 * end_island_layer(float(i + 1))).rgb * ISLAND_COLORS[i];
-    }
+    //for (int i = 0; i < IslandLayers; i++) {
+    //    color += textureProj(Sampler2, texProj0 * end_island_layer(float(i + 1))).rgb * ISLAND_COLORS[i];
+    //}
     fragColor = vec4(color, 1.0);
 }

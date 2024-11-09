@@ -1,16 +1,20 @@
 package net.purplemushroom.neverend.content.blocks.tile;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.purplemushroom.neverend.registry.NEBlockEntities;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class DeathObeliskBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -45,5 +49,9 @@ public class DeathObeliskBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DeathObeliskBlockEntity blockEntity) {
+    }
+
+    public boolean shouldRenderFace(Direction pFace) {
+        return Block.shouldRenderFace(this.getBlockState(), Objects.requireNonNull(this.getLevel()), this.getBlockPos(), pFace, this.getBlockPos().relative(pFace));
     }
 }
