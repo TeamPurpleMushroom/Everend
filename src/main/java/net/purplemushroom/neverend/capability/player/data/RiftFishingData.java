@@ -2,31 +2,31 @@ package net.purplemushroom.neverend.capability.player.data;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.content.entities.FishingRift;
 import ru.timeconqueror.timecore.common.capability.property.CoffeeProperty;
 import ru.timeconqueror.timecore.common.capability.property.container.PropertyContainer;
 
 public class RiftFishingData extends PropertyContainer {
-    private final CoffeeProperty<Integer> rift = nullableProp("rift", (Integer) null).synced();
+    private final CoffeeProperty<Integer> fishingRift = nullableProp("rift", (Integer) null).synced();
     private final CoffeeProperty<Float> fishingProgress = nullableProp("rift_fishing_progress", (Float) null).synced();
 
     public boolean isActive() {
         return fishingProgress.get() != null;
     }
 
-    public Rift getRift(Level level) {
-        Entity entity = level.getEntity(rift.get());
-        if (entity instanceof Rift) return (Rift) entity;
+    public FishingRift getFishingRift(Level level) {
+        Entity entity = level.getEntity(fishingRift.get());
+        if (entity instanceof FishingRift) return (FishingRift) entity;
         return null;
     }
 
-    public void startFishingFromRift(Rift rift) {
-        this.rift.set(rift.getId());
+    public void startFishingFromRift(FishingRift fishingRift) {
+        this.fishingRift.set(fishingRift.getId());
         this.fishingProgress.set(0.0f);
     }
 
     public void stopFishingFromRift() {
-        rift.set(null);
+        fishingRift.set(null);
         fishingProgress.set(null);
     }
 

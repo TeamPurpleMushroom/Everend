@@ -13,7 +13,7 @@ public class NEEntityRenderRegistry {
 
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(NEEntities.RIFT_TYPE.get(), manager -> new RiftRenderer(manager)
+        event.registerEntityRenderer(NEEntities.FISHING_RIFT_TYPE.get(), manager -> new RiftRenderer(manager)
                 .fullbright(true)
                 .blockLightLevel(2)
                 .scale(5.5F));

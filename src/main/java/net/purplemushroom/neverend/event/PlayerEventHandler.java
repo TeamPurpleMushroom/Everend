@@ -16,7 +16,7 @@ import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.capability.player.NEPlayer;
 import net.purplemushroom.neverend.capability.player.data.PlayerTracker;
 import net.purplemushroom.neverend.capability.player.data.RiftFishingData;
-import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.content.entities.FishingRift;
 import net.purplemushroom.neverend.registry.NEItems;
 import net.purplemushroom.neverend.util.EntityUtil;
 import net.purplemushroom.neverend.util.MathUtil;
@@ -32,7 +32,9 @@ public class PlayerEventHandler {
             NEPlayer playerCap = NEPlayer.from(player);
             if (!event.player.level().isClientSide()) {
                 if (playerCap != null) {
-                    // nullberry/shifterine code
+                    /**
+                     * Nullberry and Shifterine Handler
+                     */
                     PlayerTracker fallTracker = playerCap.playerTracker;
                     if (level.getGameTime() % 20L == 0L) {
                         if (player.blockPosition() != fallTracker.getLastGroundPos()) {
@@ -46,28 +48,30 @@ public class PlayerEventHandler {
                         playerCap.detectAndSendChanges();
                     }
 
-                    // rift fishing code
-                    RiftFishingData riftData = playerCap.riftFishingData;
-                    if (riftData.isActive()) { // FIXME: will break if you exit world while doing the rift thingie
-                        Rift rift = riftData.getRift(level);
-                        if (player.distanceTo(rift) > 16 || !EntityUtil.isHolding(player, NEItems.SHIFTERINE_ROD)) {
-                            riftData.stopFishingFromRift();
+                    /**
+                     * Rift Fishing Handler
+                     */
+                    RiftFishingData riftFishingData = playerCap.riftFishingData;
+                    if (riftFishingData.isActive()) { // FIXME: will break if you exit world while doing the rift thingie
+                        FishingRift fishingRift = riftFishingData.getFishingRift(level);
+                        if (player.distanceTo(fishingRift) > 16 || !EntityUtil.isHolding(player, NEItems.SHIFTERINE_ROD)) {
+                            riftFishingData.stopFishingFromRift();
                             playerCap.detectAndSendChanges();
                         } else {
-                            float looking = (float) EntityUtil.lookingAt(player, EntityUtil.getCenterPos(rift));
-                            if (looking <= 0.0f) riftData.stopFishingFromRift();
-                            riftData.progressFishing(looking / 100);
-                            System.out.println(riftData.getProgress());
+                            float looking = (float) EntityUtil.lookingAt(player, EntityUtil.getCenterPos(fishingRift));
+                            if (looking <= 0.0f) riftFishingData.stopFishingFromRift();
+                            riftFishingData.progressFishing(looking / 100);
+                            System.out.println(riftFishingData.getProgress());
                         }
                     }
                 }
             } else {
                 if (playerCap != null) {
-                    RiftFishingData riftData = playerCap.riftFishingData;
-                    if (riftData.isActive()) { // FIXME: will break if you exit world while doing the rift thingie
-                        Rift rift = riftData.getRift(level);
+                    RiftFishingData riftFishingData = playerCap.riftFishingData;
+                    if (riftFishingData.isActive()) { // FIXME: will break if you exit world while doing the rift thingie
+                        FishingRift fishingRift = riftFishingData.getFishingRift(level);
                         Vec3 playerPos = event.player.getEyePosition();
-                        Vec3 riftPos = EntityUtil.getCenterPos(rift);
+                        Vec3 riftPos = EntityUtil.getCenterPos(fishingRift);
                         Vec3 extraPoint = playerPos.add(player.getViewVector(0.0f).scale(10));
                         for (Vec3 node : MathUtil.createBezierCurve(playerPos, riftPos, extraPoint, 20)) {
                             level.addParticle(ParticleTypes.CRIT, node.x, node.y, node.z, 0, 0, 0);

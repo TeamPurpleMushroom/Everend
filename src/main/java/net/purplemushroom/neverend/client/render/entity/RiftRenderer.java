@@ -12,14 +12,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.content.entities.FishingRift;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import static net.purplemushroom.neverend.client.render.NERenderTypes.getRiftPortalRenderType;
 
-public class RiftRenderer extends Entity2DRenderer<Rift> {
+public class RiftRenderer extends Entity2DRenderer<FishingRift> {
     private static final float PORTAL_RADIUS = 0.432f;
     private static final float PORTAL_SUBDIVISIONS = 10.0f;
 
@@ -34,7 +34,7 @@ public class RiftRenderer extends Entity2DRenderer<Rift> {
     }
 
     @Override
-    public void render(Rift pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(FishingRift pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
         pPoseStack.translate(0, pEntity.getBbHeight() / 2, 0);
         pPoseStack.scale(getScale(), getScale(), getScale());
@@ -88,7 +88,7 @@ public class RiftRenderer extends Entity2DRenderer<Rift> {
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Rift pEntity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull FishingRift pEntity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

@@ -13,7 +13,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.neverend.capability.player.NEPlayer;
 import net.purplemushroom.neverend.capability.player.data.RiftFishingData;
-import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.content.entities.FishingRift;
 import net.purplemushroom.neverend.registry.NEEntities;
 
 public class ShifterineRod extends Item {
@@ -30,12 +30,12 @@ public class ShifterineRod extends Item {
             HitResult hitResult = ProjectileUtil.getEntityHitResult(player, vector1, vector2, player.getBoundingBox().inflate(50), (p_234237_) -> !p_234237_.isSpectator() && p_234237_.isPickable(), 40.0); // TODO: this is a mess
             if (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
                 Entity entity = ((EntityHitResult) hitResult).getEntity();
-                if (entity.getType() == NEEntities.RIFT_TYPE.get()) {
+                if (entity.getType() == NEEntities.FISHING_RIFT_TYPE.get()) {
                     NEPlayer playerCap = NEPlayer.from(player);
                     if (playerCap != null) {
                         RiftFishingData riftData = playerCap.riftFishingData;
                         if (!riftData.isActive()) {
-                            riftData.startFishingFromRift((Rift) entity);
+                            riftData.startFishingFromRift((FishingRift) entity);
                             playerCap.detectAndSendChanges();
                             return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
                         }
