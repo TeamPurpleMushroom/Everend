@@ -2,11 +2,13 @@ package net.purplemushroom.neverend.event;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -16,10 +18,14 @@ import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.capability.player.NEPlayer;
 import net.purplemushroom.neverend.capability.player.data.PlayerTracker;
 import net.purplemushroom.neverend.capability.player.data.RiftFishingData;
+import net.purplemushroom.neverend.content.blocks.DeathObeliskBlock;
 import net.purplemushroom.neverend.content.entities.FishingRift;
+import net.purplemushroom.neverend.registry.NEBlocks;
 import net.purplemushroom.neverend.registry.NEItems;
 import net.purplemushroom.neverend.util.EntityUtil;
 import net.purplemushroom.neverend.util.MathUtil;
+
+import static net.purplemushroom.neverend.content.blocks.DeathObeliskBlock.HALF;
 
 @Mod.EventBusSubscriber(modid = Neverend.MODID)
 public class PlayerEventHandler {
@@ -33,7 +39,7 @@ public class PlayerEventHandler {
             if (!event.player.level().isClientSide()) {
                 if (playerCap != null) {
                     /**
-                     * Nullberry and Shifterine Handler
+                     * Player BlockPos Handler
                      */
                     PlayerTracker fallTracker = playerCap.playerTracker;
                     if (level.getGameTime() % 20L == 0L) {
@@ -86,10 +92,16 @@ public class PlayerEventHandler {
     public static void onPlayerDeath(LivingDeathEvent event) {
         DamageSource damageSource = event.getSource();
         Entity entity = event.getEntity();
+        Level level = event.getEntity().level();
         if (entity instanceof Player player) {
-            Inventory playerInventory = player.getInventory();
-            ListTag listTag = new ListTag();
-            playerInventory.save(listTag);
+            NEPlayer playerCap = NEPlayer.from(player);
+            if (playerCap != null) {
+                if (!player.level().isClientSide()) {
+                    PlayerTracker fallTracker = playerCap.playerTracker;
+                    level.setBlock(fallTracker.getLastGroundPos(), NEBlocks.DEATH_OBELISK.defaultBlockState(), 3);
+                }
+                playerCap.detectAndSendChanges();
+            }
         }
     }
 }
