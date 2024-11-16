@@ -4,11 +4,9 @@
 
 uniform sampler2D Sampler0;
 uniform sampler2D Sampler1;
-//uniform sampler2D Sampler2;
 
 uniform float GameTime;
 uniform int IsUpperLayer;
-//uniform int IslandLayers;
 
 in vec4 texProj0;
 
@@ -36,11 +34,6 @@ vec3(0.004, 0., 0.012),
 vec3(0.624, 0.482, 1.)
 );
 
-/*const vec3[] ISLAND_COLORS = vec3[](
-vec3(0.004, 0., 0.012),
-vec3(0.624, 0.482, 1.)
-);*/
-
 const mat4 SCALE_TRANSLATE = mat4(
 1.0, 0.0, 0.0, 0.5,
 0.0, 1.0, 0.0, 0.5,
@@ -63,31 +56,14 @@ mat4 end_portal_layer(float layer) {
     return mat4(scale * rotate) * translate * SCALE_TRANSLATE;
 }
 
-/*mat4 end_island_layer(float layer) {
-    mat4 translate_island = mat4(
-    1.0, 0.0, 0.0, 17.0 / layer,
-    0.0, 1.0, 0.0, (4.0 + layer / 2.5) * (GameTime * 1.5),
-    0.0, 0.0, 1.0, 0.0,
-    0.0, 0.0, 0.0, 1.0
-    );
-
-    mat2 rotate = mat2_rotate_z(radians((layer * layer * 4321.0 + layer * 9.0) * 2.0));
-
-    mat2 scale = mat2((1.5 - layer / 5.0) * 1.0);
-
-    return mat4(scale * rotate) * translate_island;
-}*/
-
 out vec4 fragColor;
 
 void main() {
     vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
-    ivec2 range = STAR_RANGES[IsUpperLayer];
+    color += textureProj(Sampler1, texProj0 * end_portal_layer(float(IsUpperLayer + 1))).rgb * COLORS[2]; // TODO: REMOVE!
+    /*ivec2 range = STAR_RANGES[IsUpperLayer];
     for (int i = range.x; i < range.y; i++) {
         color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
-    }
-    //for (int i = 0; i < IslandLayers; i++) {
-    //    color += textureProj(Sampler2, texProj0 * end_island_layer(float(i + 1))).rgb * ISLAND_COLORS[i];
-    //}
+    }*/
     fragColor = vec4(color, 1.0);
 }
