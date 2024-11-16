@@ -68,7 +68,7 @@ public class NERenderTypes {
             RenderType.CompositeState.builder()
                     .setShaderState(new RenderStateShard.ShaderStateShard(Shaders::getShaderMenu))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
-                            .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                            .add(Neverend.tl("gui/nebula.png").fullLocation(), false, false)
                             .add(Neverend.tl("entity/void_stars.png").fullLocation(), false, false)
                             //.add(Neverend.tl("gui/menu_island.png").fullLocation(), false, false)
                             .build())
