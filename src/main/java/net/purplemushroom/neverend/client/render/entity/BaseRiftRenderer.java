@@ -12,29 +12,35 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.content.entities.Rift;
+import net.purplemushroom.neverend.client.render.RiftType;
+import net.purplemushroom.neverend.content.entities.BaseRift;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import static net.purplemushroom.neverend.client.render.NERenderTypes.getRiftPortalRenderType;
+import static net.purplemushroom.neverend.client.render.NERenderTypes.getVoidStarsTriRenderType;
 
-public class RiftRenderer extends Entity2DRenderer<Rift> {
+public class BaseRiftRenderer<T extends BaseRift> extends Entity2DRenderer<T> {
     private static final float PORTAL_RADIUS = 0.432f;
     private static final float PORTAL_SUBDIVISIONS = 10.0f;
 
-    private static final RenderType PORTAL_RENDER_TYPE = getRiftPortalRenderType();
+    private static final RenderType FISHING_RENDER_TYPE = getRiftPortalRenderType();
+    private static final RenderType VOID_RENDER_TYPE = getVoidStarsTriRenderType();
+
     private final RenderType riftCloudRenderType;
     private final RenderType riftCloudOutsideRenderType;
+    private final RiftType riftType;
 
-    public RiftRenderer(EntityRendererProvider.Context pContext) {
+    public BaseRiftRenderer(EntityRendererProvider.Context pContext, RiftType riftType) {
         super(pContext, (RenderType) null);
         riftCloudRenderType = RenderType.entityTranslucentCull(Neverend.tl("entity/rift.png").fullLocation());
         riftCloudOutsideRenderType = RenderType.entityTranslucentCull(Neverend.tl("entity/rift_outside.png").fullLocation());
+        this.riftType = riftType;
     }
 
     @Override
-    public void render(Rift pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
         pPoseStack.translate(0, pEntity.getBbHeight() / 2, 0);
         pPoseStack.scale(getScale(), getScale(), getScale());
@@ -49,7 +55,9 @@ public class RiftRenderer extends Entity2DRenderer<Rift> {
         if (isFullBright()) packedLightLevel = 15728880;
         else packedLightLevel = pPackedLight;
 
-        vertexConsumer = pBuffer.getBuffer(PORTAL_RENDER_TYPE);
+        if (riftType == RiftType.FISHING) vertexConsumer = pBuffer.getBuffer(FISHING_RENDER_TYPE);
+        else vertexConsumer = pBuffer.getBuffer(VOID_RENDER_TYPE);
+
         float angleOffset = Mth.TWO_PI / PORTAL_SUBDIVISIONS;
         for (double f = 0.0f; f <= Mth.TWO_PI; f += angleOffset) {
             Vec2 vector = new Vec2((float) Math.cos(f), (float) Math.sin(f));
@@ -88,7 +96,7 @@ public class RiftRenderer extends Entity2DRenderer<Rift> {
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Rift pEntity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull T pEntity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }
