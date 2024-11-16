@@ -75,15 +75,17 @@ public class NeverendMenuScreen extends TitleScreen {
         if (shaderinstance.GAME_TIME != null) {
             shaderinstance.GAME_TIME.set(RenderSystem.getShaderGameTime());
 
-            int test = (int) (time / 120);
+            shaderinstance.getUniform("IsUpperLayer").set(0); // FIXME: due to the way I've coded it, this is actually reversed; value 0 is the upper layer & value 1 is the lower layer. Change name to be accurate
+            /*int test = (int) (time / 60);
             test = Math.max(0, test - 1);
             System.out.println(test);
             shaderinstance.getUniform("IsUpperLayer").set(test);
-            pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, String.valueOf(test), 100, 100, BitUtil.rgbToInt(255, 255, 255));
+            pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, String.valueOf(test), 100, 100, BitUtil.rgbToInt(255, 255, 255));*/
         }
 
         shaderinstance.apply();
         pGuiGraphics.fill(NERenderTypes.getMenuRenderType(), 0, 0, width, height, 0);
+
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 

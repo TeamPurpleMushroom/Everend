@@ -51,7 +51,7 @@ mat4 end_portal_layer(float layer) {
 
     mat2 rotate = mat2_rotate_z(radians((layer * layer * 4321.0 + layer * 9.0) * 2.0));
 
-    mat2 scale = mat2((3.5 - layer / 3.0) * 3.0);
+    mat2 scale = mat2(layer * 0.75); // TODO: consider tweaking these
 
     return mat4(scale * rotate) * translate * SCALE_TRANSLATE;
 }
@@ -60,10 +60,11 @@ out vec4 fragColor;
 
 void main() {
     vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
-    color += textureProj(Sampler1, texProj0 * end_portal_layer(float(IsUpperLayer + 1))).rgb * COLORS[2]; // TODO: REMOVE!
-    /*ivec2 range = STAR_RANGES[IsUpperLayer];
+    //color += textureProj(Sampler1, texProj0 * end_portal_layer(float(IsUpperLayer + 1))).rgb * COLORS[2]; // TODO: REMOVE!
+    ivec2 range = STAR_RANGES[IsUpperLayer];
     for (int i = range.x; i < range.y; i++) {
+        //FIXME: in the shader itself, make it so the upper layer doesn't have a black background that overrides the lower stuff
         color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
-    }*/
+    }
     fragColor = vec4(color, 1.0);
 }
