@@ -12,14 +12,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.client.render.RiftType;
 import net.purplemushroom.neverend.content.entities.BaseRift;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import static net.purplemushroom.neverend.client.render.NERenderTypes.getRiftPortalRenderType;
-import static net.purplemushroom.neverend.client.render.NERenderTypes.getVoidStarsTriRenderType;
+import static net.purplemushroom.neverend.client.registry.NERenderTypes.getRiftPortalRenderType;
+import static net.purplemushroom.neverend.client.registry.NERenderTypes.getVoidStarsTriRenderType;
 
 public class BaseRiftRenderer<T extends BaseRift> extends Entity2DRenderer<T> {
     private static final float PORTAL_RADIUS = 0.432f;
@@ -55,8 +54,7 @@ public class BaseRiftRenderer<T extends BaseRift> extends Entity2DRenderer<T> {
         if (isFullBright()) packedLightLevel = 15728880;
         else packedLightLevel = pPackedLight;
 
-        if (riftType == RiftType.FISHING) vertexConsumer = pBuffer.getBuffer(FISHING_RENDER_TYPE);
-        else vertexConsumer = pBuffer.getBuffer(VOID_RENDER_TYPE);
+        vertexConsumer = pBuffer.getBuffer(riftType == RiftType.FISHING ? FISHING_RENDER_TYPE : VOID_RENDER_TYPE);
 
         float angleOffset = Mth.TWO_PI / PORTAL_SUBDIVISIONS;
         for (double f = 0.0f; f <= Mth.TWO_PI; f += angleOffset) {
@@ -98,5 +96,11 @@ public class BaseRiftRenderer<T extends BaseRift> extends Entity2DRenderer<T> {
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull T pEntity) {
         return TextureAtlas.LOCATION_BLOCKS;
+    }
+
+    public enum RiftType {
+        FISHING,
+        VOID,
+        ENEMY
     }
 }

@@ -8,21 +8,4 @@ public class FishingRift extends BaseRift {
     public FishingRift(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
-
-    @Override
-    protected void defineSynchedData() {
-    }
-
-    @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
-    }
-
-    @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {
-    }
-
-    @Override
-    public boolean isPickable() {
-        return true;
-    }
 }

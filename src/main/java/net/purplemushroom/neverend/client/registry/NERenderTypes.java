@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.render;
+package net.purplemushroom.neverend.client.registry;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -36,7 +36,7 @@ public class NERenderTypes {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(Shaders::getShaderVoidStars))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(NEShaderRegistry::getShaderVoidStars))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
                             .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
                             .add(Neverend.tl("entity/void_stars.png").fullLocation(), false, false)
@@ -51,7 +51,7 @@ public class NERenderTypes {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(Shaders::getShaderVoidStars))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(NEShaderRegistry::getShaderVoidStars))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
                             .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
                             .add(Neverend.tl("entity/void_stars.png").fullLocation(), false, false)
@@ -66,7 +66,7 @@ public class NERenderTypes {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(Shaders::getShaderMenu))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(NEShaderRegistry::getShaderMenu))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
                             .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
                             .add(Neverend.tl("entity/void_stars.png").fullLocation(), false, false)
@@ -91,20 +91,6 @@ public class NERenderTypes {
     }
 
     public static class Shaders {
-        @Nullable
-        public static ShaderInstance shaderVoidStars;
 
-        @Nullable
-        public static ShaderInstance shaderMenu;
-
-        @Nullable
-        public static ShaderInstance getShaderVoidStars() {
-            return shaderVoidStars;
-        }
-
-        @Nullable
-        public static ShaderInstance getShaderMenu() {
-            return shaderMenu;
-        }
     }
 }

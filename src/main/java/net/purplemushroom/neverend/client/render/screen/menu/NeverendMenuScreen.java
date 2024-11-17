@@ -2,7 +2,6 @@ package net.purplemushroom.neverend.client.render.screen.menu;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
@@ -16,12 +15,9 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
-import net.purplemushroom.neverend.client.NEShaderRegistry;
-import net.purplemushroom.neverend.client.render.NERenderTypes;
-import net.purplemushroom.neverend.client.render.gui.NEButton;
-import net.purplemushroom.neverend.util.BitUtil;
-
-import java.util.Random;
+import net.purplemushroom.neverend.client.registry.NERenderTypes;
+import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
+import net.purplemushroom.neverend.client.render.screen.NEButton;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;
@@ -68,7 +64,7 @@ public class NeverendMenuScreen extends TitleScreen {
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        RenderSystem.setShader(NERenderTypes.Shaders::getShaderMenu);
+        RenderSystem.setShader(NEShaderRegistry::getShaderMenu);
         RenderSystem.setShaderGameTime(time, pPartialTick);
         ShaderInstance shaderinstance = RenderSystem.getShader();
 

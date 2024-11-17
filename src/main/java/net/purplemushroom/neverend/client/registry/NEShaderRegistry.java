@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client;
+package net.purplemushroom.neverend.client.registry;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -9,20 +9,31 @@ import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.client.render.NERenderTypes;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 
 @Mod.EventBusSubscriber(modid = Neverend.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class NEShaderRegistry {
+    public static ShaderInstance shaderVoidStars;
+
+    public static ShaderInstance shaderMenu;
+
+    public static ShaderInstance getShaderVoidStars() {
+        return shaderVoidStars;
+    }
+
+    public static ShaderInstance getShaderMenu() {
+        return shaderMenu;
+    }
 
     @SubscribeEvent
     public static void registerShaders(RegisterShadersEvent event) throws IOException {
         ResourceProvider resourceProvider = event.getResourceProvider();
         event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Neverend.MODID, "rendertype_void_stars"), DefaultVertexFormat.POSITION),
-                shaderInstance -> NERenderTypes.Shaders.shaderVoidStars = shaderInstance);
+                shaderInstance -> shaderVoidStars = shaderInstance);
 
         event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Neverend.MODID, "rendertype_menu"), DefaultVertexFormat.POSITION),
-                shaderInstance -> NERenderTypes.Shaders.shaderMenu = shaderInstance);
+                shaderInstance -> shaderMenu = shaderInstance);
     }
 }

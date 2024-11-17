@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.render;
+package net.purplemushroom.neverend.client.event;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
