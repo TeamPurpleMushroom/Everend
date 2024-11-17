@@ -13,8 +13,10 @@ import net.purplemushroom.neverend.client.render.NEBlockStateResources;
 import net.purplemushroom.neverend.content.blocks.DeathObeliskBlock;
 import net.purplemushroom.neverend.content.blocks.EnchantmentShrineBlock;
 import net.purplemushroom.neverend.content.blocks.EndAnchorBlock;
+import net.purplemushroom.neverend.content.blocks.GazeCrystalBlock;
 import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
 import net.purplemushroom.neverend.content.blocks.tile.EndAnchorBlockEntity;
+import net.purplemushroom.neverend.content.blocks.tile.GazeCrystalBlockEntity;
 import ru.timeconqueror.timecore.api.client.resource.BlockModels;
 import ru.timeconqueror.timecore.api.registry.BlockRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
@@ -35,6 +37,7 @@ public class NEBlocks {
     public static Block ENCHANTMENT_SHRINE;
     public static Block DEATH_OBELISK;
     public static Block END_ANCHOR;
+    public static Block GAZE_CRYSTAL;
 
     @AutoRegistrable
     private static final BlockRegister BLOCKS = new BlockRegister(Neverend.MODID);
@@ -148,6 +151,13 @@ public class NEBlocks {
                         Neverend.tl("block/end_anchor_side")))
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("End Anchor");
+        BLOCKS.register("gaze_crystal", () -> new GazeCrystalBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .strength(2.0F, 6.0F)
+                        .lightLevel((light) -> 4)
+                        .requiresCorrectToolForDrops()).create(), GazeCrystalBlockEntity::new))
+                .oneVarStateAndCubeAllModel()
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("Gaze Crystal");
     }
 
     /**

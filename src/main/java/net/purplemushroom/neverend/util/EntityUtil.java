@@ -6,11 +6,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeHooks;
 
 public class EntityUtil {
 
@@ -97,5 +101,24 @@ public class EntityUtil {
         Vec3 targetVector = lookTarget.subtract(eyes).normalize();
         Vec3 lookVector = entity.getLookAngle();
         return lookVector.dot(targetVector);
+    }
+
+    public static boolean isLookingAt(LivingEntity subject, BlockPos targetPos) {
+        Vec3 viewVector = subject.getViewVector(1.0F).normalize();
+        Vec3 distance = new Vec3(targetPos.getX() - subject.getX(), targetPos.getCenter().y() - subject.getEyeY(), targetPos.getZ() - subject.getZ());
+        double length = distance.length();
+        distance = distance.normalize();
+        double dotted = viewVector.dot(distance);
+        return dotted > 1.0 - 0.025 / length && hasLineOfSight(subject.level(), subject, targetPos);
+    }
+
+    public static boolean hasLineOfSight(Level level, LivingEntity subject, BlockPos targetPos) {
+        Vec3 subjectVector = new Vec3(subject.getX(), subject.getEyeY(), subject.getZ());
+        Vec3 targetVector = new Vec3(targetPos.getX(), targetPos.getY(), targetPos.getZ());
+        if (targetVector.distanceTo(subjectVector) > 128.0) {
+            return false;
+        } else {
+            return level.clip(new ClipContext(subjectVector, targetVector, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, subject)).getType() == HitResult.Type.MISS;
+        }
     }
 }
