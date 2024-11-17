@@ -90,19 +90,16 @@ public class NeverendMenuScreen extends TitleScreen {
     }
 
     private void createNormalMenuOptions(int pY, int pRowHeight) {
-        this.addRenderableWidget(NEButton.builder(Component.translatable("menu.singleplayer"), (NEButton.OnPress) (button) -> {
-            assert this.minecraft != null;
-            this.minecraft.setScreen(new SelectWorldScreen(this));
-        }).bounds(this.width / 2 - 100, pY, 200, 20).build());
+        assert this.minecraft != null;
+        this.addRenderableWidget(NEButton.builder(Component.translatable("menu.singleplayer"), (button) -> this.minecraft.setScreen(new SelectWorldScreen(this))).bounds(this.width / 2 - 100, pY, 200, 20).build());
         Component component = this.getMultiplayerDisabledReason();
         boolean flag = component == null;
         Tooltip tooltip = component != null ? Tooltip.create(component) : null;
-        this.addRenderableWidget(NEButton.builder(Component.translatable("menu.multiplayer"), (NEButton.OnPress) (button) -> {
-            assert this.minecraft != null;
+        this.addRenderableWidget(NEButton.builder(Component.translatable("menu.multiplayer"), (button) -> {
             Screen screen = this.minecraft.options.skipMultiplayerWarning ? new JoinMultiplayerScreen(this) : new SafetyScreen(this);
             this.minecraft.setScreen(screen);
         }).bounds(this.width / 2 - 100, pY + pRowHeight, 200, 20).tooltip(tooltip).build()).active = flag;
-        this.addRenderableWidget(NEButton.builder(Component.translatable("menu.online"), (NEButton.OnPress) (button) -> this.realmsButtonClicked()).bounds(this.width / 2 + 2, pY + pRowHeight * 2, 98, 20).tooltip(tooltip).build()).active = flag;
+        this.addRenderableWidget(NEButton.builder(Component.translatable("menu.online"), (button) -> this.realmsButtonClicked()).bounds(this.width / 2 + 2, pY + pRowHeight * 2, 98, 20).tooltip(tooltip).build()).active = flag;
     }
 }
 
