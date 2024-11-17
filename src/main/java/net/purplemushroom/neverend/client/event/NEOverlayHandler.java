@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.render;
+package net.purplemushroom.neverend.client.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

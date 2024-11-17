@@ -74,7 +74,8 @@ class NeverendSplash extends SplashRenderer {
             "It's a trap!",
             "Nothing personnel, kid!",
             "No swearing on Christian servers!",
-            "Human-generated!"
+            "Human-generated!",
+            "You love to see it!"
 
     };
 

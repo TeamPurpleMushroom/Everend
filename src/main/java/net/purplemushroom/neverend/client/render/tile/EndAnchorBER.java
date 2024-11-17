@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.purplemushroom.neverend.client.render.NERenderTypes;
+import net.purplemushroom.neverend.client.registry.NERenderTypes;
 import net.purplemushroom.neverend.content.blocks.tile.EndAnchorBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;

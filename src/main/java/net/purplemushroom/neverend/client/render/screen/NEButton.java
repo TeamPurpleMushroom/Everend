@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.render.gui;
+package net.purplemushroom.neverend.client.render.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
