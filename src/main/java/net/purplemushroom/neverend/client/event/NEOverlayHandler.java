@@ -11,6 +11,7 @@ import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.client.render.RenderUtils;
 import net.purplemushroom.neverend.client.render.overlay.RiftFishingOverlay;
 
 @Mod.EventBusSubscriber(modid= Neverend.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)

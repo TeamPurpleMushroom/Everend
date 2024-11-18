@@ -15,9 +15,11 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
+import net.minecraftforge.common.ForgeMod;
 import net.purplemushroom.neverend.client.registry.NERenderTypes;
 import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import net.purplemushroom.neverend.client.render.screen.NEButton;
+import net.purplemushroom.neverend.mixin.accessor.TitleScreenAccessor;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;
@@ -41,9 +43,7 @@ public class NeverendMenuScreen extends TitleScreen {
         this.addRenderableWidget(NEButton.builder(Component.translatable("menu.options"), (button) -> this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options))).bounds(this.width / 2 - 100, l + 72 + 12, 98, 20).build());
         this.addRenderableWidget(NEButton.builder(Component.translatable("menu.quit"), (button) -> this.minecraft.stop()).bounds(this.width / 2 + 2, l + 72 + 12, 98, 20).build());
         this.addRenderableWidget(new ImageButton(this.width / 2 + 104, l + 72 + 12, 20, 20, 0, 0, 20, Button.ACCESSIBILITY_TEXTURE, 32, 64, (button) -> this.minecraft.setScreen(new AccessibilityOptionsScreen(this, this.minecraft.options)), Component.translatable("narrator.button.accessibility")));
-        this.addRenderableWidget(new PlainTextButton(j, this.height - 10, i, 10, COPYRIGHT_TEXT, (p_280834_) -> {
-            this.minecraft.setScreen(new CreditsAndAttributionScreen(this));
-        }, this.font));
+        this.addRenderableWidget(new PlainTextButton(j, this.height - 10, i, 10, COPYRIGHT_TEXT, (button) -> this.minecraft.setScreen(new CreditsAndAttributionScreen(this)), this.font));
         this.minecraft.setConnectedToRealms(false);
         if (this.realmsNotificationsScreen == null) {
             this.realmsNotificationsScreen = new RealmsNotificationsScreen();
@@ -52,8 +52,6 @@ public class NeverendMenuScreen extends TitleScreen {
         if (this.realmsNotificationsEnabled()) {
             this.realmsNotificationsScreen.init(this.minecraft, this.width, this.height);
         }
-
-        //super.init();
     }
 
     @Override
