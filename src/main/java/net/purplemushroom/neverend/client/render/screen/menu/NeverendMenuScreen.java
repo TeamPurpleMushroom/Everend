@@ -38,8 +38,8 @@ public class NeverendMenuScreen extends TitleScreen {
         int l = this.height / 4 + 48;
         this.createNormalMenuOptions(l, 24);
 
-        //Button modButton = this.addRenderableWidget(Button.builder(Component.translatable("fml.menu.mods"), (button) -> this.minecraft.setScreen(new ModListScreen(this))).pos(this.width / 2 - 100, l + 48).size(98, 20).build());
-        //((TitleScreenAccessor) this).setModUpdateNotification(TitleScreenModUpdateIndicator.init(this, modButton));
+        Button modButton = this.addRenderableWidget(Button.builder(Component.translatable("fml.menu.mods"), (button) -> this.minecraft.setScreen(new ModListScreen(this))).pos(this.width / 2 - 100, l + 48).size(98, 20).build());
+        ((TitleScreenAccessor) this).setModUpdateNotification(TitleScreenModUpdateIndicator.init(this, modButton));
 
         this.addRenderableWidget(new ImageButton(this.width / 2 - 124, l + 72 + 12, 20, 20, 0, 106, 20, Button.WIDGETS_LOCATION, 256, 256, (button) -> this.minecraft.setScreen(new LanguageSelectScreen(this, this.minecraft.options, this.minecraft.getLanguageManager())), Component.translatable("narrator.button.language")));
         this.addRenderableWidget(NEButton.builder(Component.translatable("menu.options"), (button) -> this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options))).bounds(this.width / 2 - 100, l + 72 + 12, 98, 20).build());
@@ -54,7 +54,6 @@ public class NeverendMenuScreen extends TitleScreen {
         if (this.realmsNotificationsEnabled()) {
             this.realmsNotificationsScreen.init(this.minecraft, this.width, this.height);
         }
-        super.init();
     }
 
     @Override
