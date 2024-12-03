@@ -22,13 +22,11 @@ public class PlayerRespawnMixin {
     private static void respawnAtEndAnchor(ServerLevel serverLevel, BlockPos blockPos, float pPlayerOrientation, boolean isRespawnForced, boolean respawnAfterWinning, CallbackInfoReturnable<Optional<Vec3>> cir) {
         BlockState blockstate = serverLevel.getBlockState(blockPos);
         Block block = blockstate.getBlock();
-        Neverend.LOGGER.info("Anchor mixin fire");
         if (block instanceof EndAnchorBlock && (isRespawnForced || blockstate.getValue(EndAnchorBlock.CHARGE) > 0) && EndAnchorBlock.canSetSpawn(serverLevel)) {
             Optional<Vec3> playerPosOptional = EndAnchorBlock.findStandUpPosition(EntityType.PLAYER, serverLevel, blockPos);
             if (!isRespawnForced && !respawnAfterWinning && playerPosOptional.isPresent()) {
                 serverLevel.setBlock(blockPos, blockstate.setValue(EndAnchorBlock.CHARGE, blockstate.getValue(EndAnchorBlock.CHARGE) - 1), 3);
             }
-            Neverend.LOGGER.info("Anchor found");
             cir.setReturnValue(playerPosOptional);
         }
     }

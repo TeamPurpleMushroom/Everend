@@ -10,8 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.Neverend;
 import org.lwjgl.glfw.GLFW;
 
-import static net.purplemushroom.neverend.client.isometric.IsometricCameraHandler.handleIsometricCameraKeys;
-
 public class KeyInputEventHandler {
 
     @SubscribeEvent
@@ -23,7 +21,7 @@ public class KeyInputEventHandler {
             int action = event.getAction();
 
             if (action == GLFW.GLFW_PRESS) {
-                handleIsometricCameraKeys(key);
+                //Key actions here
             }
         }
     }

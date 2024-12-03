@@ -9,10 +9,6 @@
     "inject.PlayerRespawnMixin"
   ],
   "client": [
-    "client.accessor.CameraAccessor",
-    "client.accessor.GameRendererAccessor",
-    "client.accessor.TitleScreenAccessor",
-    "client.invoker.CameraMixin",
-    "client.invoker.LevelRendererMixin"
+    "client.accessor.TitleScreenAccessor"
   ]
 }
