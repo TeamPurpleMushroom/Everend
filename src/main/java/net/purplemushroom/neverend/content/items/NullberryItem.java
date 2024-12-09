@@ -64,7 +64,6 @@ public class NullberryItem extends Item {
                 entity.stopRiding();
                 teleport(serverLevel, entity, playerX, playerY, playerZ);
             }
-            //todo: stop mount from brutally dying?
             teleport(serverLevel, mount, playerX, playerY, playerZ);
         } else {
             teleport(serverLevel, serverPlayer, playerX, playerY, playerZ);

@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 
-public class NEContainerBlockEntity extends Block implements EntityBlock {
+public class NEContainerBlock extends Block implements EntityBlock {
     private final BiFunction<BlockPos, BlockState, BlockEntity> tileFactory;
 
-    public NEContainerBlockEntity(Properties properties, BiFunction<BlockPos, BlockState, BlockEntity> tileFactory) {
+    public NEContainerBlock(Properties properties, BiFunction<BlockPos, BlockState, BlockEntity> tileFactory) {
         super(properties);
         this.tileFactory = tileFactory;
     }

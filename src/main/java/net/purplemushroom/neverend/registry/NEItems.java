@@ -7,7 +7,7 @@ import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.content.items.EndPorterItem;
 import net.purplemushroom.neverend.content.items.NullberryItem;
 import net.purplemushroom.neverend.content.items.ShifterineItem;
-import net.purplemushroom.neverend.content.items.ShifterineRod;
+import net.purplemushroom.neverend.content.items.ShifterineRodItem;
 import ru.timeconqueror.timecore.api.client.resource.StandardItemModelParents;
 import ru.timeconqueror.timecore.api.registry.ItemRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
@@ -36,7 +36,7 @@ public class NEItems {
         register("dragonbone", "Dragonbone");
         register("enchantment_crystal", "Enchantment Crystal");
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
-        registerHandheldRod("shifterine_rod", "Shifterine Rod", ShifterineRod::new);
+        registerHandheldRod("shifterine_rod", "Shifterine Rod", ShifterineRodItem::new);
 
         registerWithPresetModel("end_porter", "End Porter", () -> new EndPorterItem(baseProps().stacksTo(1).rarity(Rarity.EPIC)), StandardItemModelParents.HANDHELD);
     }

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "net.purplemushroom.neverend.mixin",
+  "refmap": "mixins.neverend.refmap.json",
+  "setSourceFile": true,
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "inject.PlayerRespawnMixin"
+  ],
+  "client": [
+    "client.accessor.TitleScreenAccessor"
+  ]
+}

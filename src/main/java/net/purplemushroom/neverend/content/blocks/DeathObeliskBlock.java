@@ -29,7 +29,7 @@ import net.purplemushroom.neverend.registry.NEBlockEntities;
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 
-public class DeathObeliskBlock extends NEContainerBlockEntity {
+public class DeathObeliskBlock extends NEContainerBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public DeathObeliskBlock(Properties properties, BiFunction<BlockPos, BlockState, BlockEntity> tileFactory) {

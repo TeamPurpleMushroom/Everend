@@ -16,8 +16,8 @@ import net.purplemushroom.neverend.capability.player.data.RiftFishingData;
 import net.purplemushroom.neverend.content.entities.FishingRift;
 import net.purplemushroom.neverend.registry.NEEntities;
 
-public class ShifterineRod extends Item {
-    public ShifterineRod() {
+public class ShifterineRodItem extends Item {
+    public ShifterineRodItem() {
         super(new Properties().durability(100));
     }
 

@@ -17,5 +17,18 @@
   "item.neverend.shifterine_crystal": "Shifterine Crystal",
   "item.neverend.shifterine_rod": "Shifterine Rod",
   "#MARK AUTO GEN END": "",
-  "container.neverend.death_obelisk": "Death Obelisk"
+  "container.neverend.death_obelisk": "Death Obelisk",
+  "key.neverend.category": "Neverend Keys",
+  "key.neverend.toggle_iso_cam.desc": "Toggle Isometric Camera",
+  "key.neverend.lock_iso.desc": "Lock Isometric Perspective",
+  "key.neverend.move_cam_up.desc": "Move Isometric Camera Up",
+  "key.neverend.move_cam_down.desc": "Move Isometric Camera Down",
+  "key.neverend.move_cam_left.desc": "Move Isometric Camera Left",
+  "key.neverend.move_cam_right.desc": "Move Isometric Camera Right",
+  "key.neverend.rotate_cam_clockwise.desc": "Rotate Isometric Camera Clockwise",
+  "key.neverend.rotate_cam_anticlockwise.desc": "Rotate Isometric Camera Counter-Clockwise",
+  "key.neverend.reset_cam_rotation.desc": "Reset Isometric Camera Rotation",
+  "key.neverend.reset_cam_pos.desc": "Reset Isometric Camera Position",
+  "key.neverend.reset_all.desc": "Reset All Isometric Camera Settings",
+  "key.neverend.cycle_iso_snap_angle.desc": "Cycle Isometric Angle Snap"
 }
