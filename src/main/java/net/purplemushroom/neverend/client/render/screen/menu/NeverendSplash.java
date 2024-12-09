@@ -75,7 +75,8 @@ class NeverendSplash extends SplashRenderer {
             "Nothing personnel, kid!",
             "No swearing on Christian servers!",
             "Human-generated!",
-            "You love to see it!"
+            "You love to see it!",
+            "Wazzup!"
 
     };
 
@@ -140,11 +141,7 @@ class NeverendSplash extends SplashRenderer {
             case 3: // you're a wizard
                 return new NeverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
             case 4: // THE END IS NEVER THE END
-                StringBuilder endSplash = new StringBuilder("THE END IS NEVER");
-                for (int i = 0; i < 20; i++) {
-                    endSplash.append(" THE END IS NEVER");
-                }
-                return new NeverendSplash(endSplash.toString()).setType(SPECIAL_SPLASH_END_IS_NEVER);
+                return new NeverendSplash("THE END IS NEVER ".repeat(20)).setType(SPECIAL_SPLASH_END_IS_NEVER);
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
