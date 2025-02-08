@@ -77,7 +77,6 @@ class NeverendSplash extends SplashRenderer {
             "Human-generated!",
             "You love to see it!",
             "Wazzup!"
-
     };
 
     private int specialRenderType = SPECIAL_SPLASH_NONE;

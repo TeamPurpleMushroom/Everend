@@ -46,9 +46,12 @@ public class NullberryItem extends Item {
         if (playerCap != null) {
             PlayerTracker playerTracker = playerCap.playerTracker;
             if (playerTracker.getDimension() == serverLevel.dimension().location()) {
-                BlockPos lastGroundPos = playerTracker.getLastGroundPos();
+                BlockPos lastGroundPos;
+                do {
+                    lastGroundPos = playerTracker.getAndRemoveLastGroundPos();
+                } while (lastGroundPos != null && serverLevel.getBlockState(lastGroundPos.below()).isAir());
                 if (lastGroundPos != null) {
-                    playerPos = playerTracker.getLastGroundPos();
+                    playerPos = lastGroundPos;
                 } else {
                     Neverend.LOGGER.error("Last player position is null. Defaulting to spawn position at: {}", playerPos);
                 }
