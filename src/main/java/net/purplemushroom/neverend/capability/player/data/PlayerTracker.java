@@ -2,15 +2,13 @@ package net.purplemushroom.neverend.capability.player.data;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.purplemushroom.neverend.capability.player.data.serializers.BlockPositionSerializer;
 import net.purplemushroom.neverend.capability.player.data.serializers.ResourceLocationSerializer;
-import net.purplemushroom.neverend.util.datastructures.CircularQueue;
+import net.purplemushroom.neverend.util.datastructures.CircularStack;
 import ru.timeconqueror.timecore.common.capability.property.CoffeeProperty;
 import ru.timeconqueror.timecore.common.capability.property.container.PropertyContainer;
 
 public class PlayerTracker extends PropertyContainer {
-    private final CircularQueue<BlockPos> posCache = new CircularQueue<>(50);
-    private final CoffeeProperty<BlockPos> groundPos = prop("ground_pos", (BlockPos) null, BlockPositionSerializer.NULLABLE_INSTANCE).synced();
+    private final CircularStack<BlockPos> posCache = new CircularStack<>(50);
     private final CoffeeProperty<ResourceLocation> dimensionKey = prop("dimension", (ResourceLocation) null, ResourceLocationSerializer.NULLABLE_INSTANCE);
 
     public BlockPos getLastGroundPos() {
