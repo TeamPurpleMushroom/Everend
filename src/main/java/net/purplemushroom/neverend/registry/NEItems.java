@@ -1,13 +1,10 @@
 package net.purplemushroom.neverend.registry;
 
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.purplemushroom.neverend.Neverend;
-import net.purplemushroom.neverend.content.items.EndPorterItem;
-import net.purplemushroom.neverend.content.items.NullberryItem;
-import net.purplemushroom.neverend.content.items.ShifterineItem;
-import net.purplemushroom.neverend.content.items.ShifterineRodItem;
+import net.purplemushroom.neverend.content.items.*;
+import net.purplemushroom.neverend.content.items.gear.*;
 import ru.timeconqueror.timecore.api.client.resource.StandardItemModelParents;
 import ru.timeconqueror.timecore.api.registry.ItemRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
@@ -30,7 +27,20 @@ public class NEItems {
 
     @AutoRegistrable.Init
     private static void register() {
-        register("shifterine_crystal", "Shifterine Crystal", ShifterineItem::new);
+        register("shifterine_crystal", "Shifterine Crystal", () -> new NESpecialAbilityItem(new Item.Properties(), ShifterineItemAbility.INSTANCE));
+
+        // TODO: stats
+        register("shifterine_sword", "Shifterine Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_pickaxe", "Shifterine Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_axe", "Shifterine Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_shovel", "Shifterine Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_hoe", "Shifterine Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_helmet", "Shifterine Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_chestplate", "Shifterine Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_leggings", "Shifterine Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_boots", "Shifterine Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+
+
         register("ludunite_thing", "Ludunite Thing");
         register("aldores_thing", "Aldores Thing");
         register("dragonbone", "Dragonbone");

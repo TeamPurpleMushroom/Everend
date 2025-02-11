@@ -11,41 +11,32 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.capability.player.NEPlayer;
-import net.purplemushroom.neverend.content.items.ShifterineItem;
+import net.purplemushroom.neverend.content.items.NESpecialAbilityItem;
+import net.purplemushroom.neverend.content.items.ShifterineItemAbility;
 
 @Mod.EventBusSubscriber
-public class ShifterineEventHandler {
+public class ItemAbilityEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void playerPickupEvent(EntityItemPickupEvent event) { // WARNING: if another mod adds an equally low priority event handler that happens to cancel the event, the ability will break!
         ItemStack stack = event.getItem().getItem();
-        if (stack.getItem() instanceof ShifterineItem) {
-            ((ShifterineItem) stack.getItem()).removeTag(stack);
+        if (stack.getItem() instanceof NESpecialAbilityItem item) {
+            item.getAbility().pickupItem(event.getEntity(), stack);
         }
     }
 
     @SubscribeEvent
     public static void playerDropEvent(ItemTossEvent event) {
-        handleItemDrop(event.getPlayer(), event.getEntity());
+        if (event.getEntity().getItem().getItem() instanceof NESpecialAbilityItem item) {
+            item.getAbility().dropItem(event.getPlayer(), event.getEntity(), false);
+        }
     }
 
     @SubscribeEvent
     public static void dropsEvent(LivingDropsEvent event) {
-        for (ItemEntity item : event.getDrops()) {
-            handleItemDrop(event.getEntity(), item);
-        }
-    }
-
-    private static void handleItemDrop(LivingEntity dropper, ItemEntity itemEntity) {
-        ItemStack stack = itemEntity.getItem();
-        if (stack.getItem() instanceof ShifterineItem) {
-            int y;
-            NEPlayer playerCap;
-            if (dropper instanceof ServerPlayer && (playerCap = NEPlayer.from((ServerPlayer) dropper)) != null) {
-                y = playerCap.playerTracker.getLastGroundPos().getY();
-            } else {
-                y = (int) (dropper.getEyeY() + (double) dropper.fallDistance);
+        for (ItemEntity itemEntity : event.getDrops()) {
+            if (itemEntity.getItem().getItem() instanceof NESpecialAbilityItem item) {
+                item.getAbility().dropItem(event.getEntity(), itemEntity, true);
             }
-            ((ShifterineItem) stack.getItem()).setTag(stack, y);
         }
     }
 }
