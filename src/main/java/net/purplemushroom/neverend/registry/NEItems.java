@@ -27,7 +27,7 @@ public class NEItems {
 
     @AutoRegistrable.Init
     private static void register() {
-        register("shifterine_crystal", "Shifterine Crystal", () -> new NESpecialAbilityItem(new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_crystal", "Shifterine Crystal", () -> new NESpecialAbilityResource(new Item.Properties(), ShifterineItemAbility.INSTANCE));
 
         // TODO: stats
         register("shifterine_sword", "Shifterine Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));

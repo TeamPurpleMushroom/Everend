@@ -1,6 +1,7 @@
 package net.purplemushroom.neverend.content.items;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,17 +38,17 @@ public class ShifterineItemAbility extends NEItemAbility {
         ItemStack stack = droppedItem.getItem();
         int y;
         NEPlayer playerCap;
-        if (dropper instanceof ServerPlayer && (playerCap = NEPlayer.from((ServerPlayer) dropper)) != null) {
-            y = playerCap.playerTracker.getLastGroundPos().getY(); // FIXME: for some reason this can cause a nullpointerexception if you throw a shifterine crystal & haven't touched the ground since loading the world
+        if (dropper instanceof ServerPlayer && (playerCap = NEPlayer.from((ServerPlayer) dropper)) != null && playerCap.playerTracker.getLastGroundPos() != null) {
+            y = playerCap.playerTracker.getLastGroundPos().getY();
         } else {
-            y = (int) (dropper.getEyeY() + (double) dropper.fallDistance);
+            y = (int) (Mth.floor(dropper.getY()) + (double) dropper.fallDistance);
         }
         setTag(stack, y);
     }
 
     private void setTag(ItemStack stack, int y) {
         stack.getOrCreateTag()
-                .putInt("LastHolderY", y);
+                .putInt("LastHolderY", y + 1);
     }
 
     private void removeTag(ItemStack stack) {

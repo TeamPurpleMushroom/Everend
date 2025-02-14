@@ -4,10 +4,10 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class NESpecialAbilityItem extends Item implements INESpecialAbilityItem {
+public class NESpecialAbilityResource extends Item implements INESpecialAbilityItem {
     private final NEItemAbility ability;
 
-    public NESpecialAbilityItem(Properties pProperties, NEItemAbility ability) {
+    public NESpecialAbilityResource(Properties pProperties, NEItemAbility ability) {
         super(pProperties);
         this.ability = ability;
     }

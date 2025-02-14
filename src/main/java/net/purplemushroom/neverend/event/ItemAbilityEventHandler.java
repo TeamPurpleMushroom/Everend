@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.neverend.capability.player.NEPlayer;
-import net.purplemushroom.neverend.content.items.NESpecialAbilityItem;
+import net.purplemushroom.neverend.content.items.INESpecialAbilityItem;
 import net.purplemushroom.neverend.content.items.ShifterineItemAbility;
 
 @Mod.EventBusSubscriber
@@ -19,14 +19,14 @@ public class ItemAbilityEventHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void playerPickupEvent(EntityItemPickupEvent event) { // WARNING: if another mod adds an equally low priority event handler that happens to cancel the event, the ability will break!
         ItemStack stack = event.getItem().getItem();
-        if (stack.getItem() instanceof NESpecialAbilityItem item) {
+        if (stack.getItem() instanceof INESpecialAbilityItem item) {
             item.getAbility().pickupItem(event.getEntity(), stack);
         }
     }
 
     @SubscribeEvent
     public static void playerDropEvent(ItemTossEvent event) {
-        if (event.getEntity().getItem().getItem() instanceof NESpecialAbilityItem item) {
+        if (event.getEntity().getItem().getItem() instanceof INESpecialAbilityItem item) {
             item.getAbility().dropItem(event.getPlayer(), event.getEntity(), false);
         }
     }
@@ -34,7 +34,7 @@ public class ItemAbilityEventHandler {
     @SubscribeEvent
     public static void dropsEvent(LivingDropsEvent event) {
         for (ItemEntity itemEntity : event.getDrops()) {
-            if (itemEntity.getItem().getItem() instanceof NESpecialAbilityItem item) {
+            if (itemEntity.getItem().getItem() instanceof INESpecialAbilityItem item) {
                 item.getAbility().dropItem(event.getEntity(), itemEntity, true);
             }
         }
