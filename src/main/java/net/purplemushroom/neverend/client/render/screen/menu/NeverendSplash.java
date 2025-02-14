@@ -82,7 +82,12 @@ class NeverendSplash extends SplashRenderer {
             "Weirdmageddon!",
             "I'M A' FIRIN' MAH LAZER!",
             "Noncontroversial!",
-            "Welcome to WHITE SPACE."
+            "Welcome to WHITE SPACE.",
+            "We've been trying to reach you about your car's extended warranty!",
+            "This! Is! MINECRAFT!!!",
+            "Which of the pickwick triplets did it?",
+            "Modern!",
+            "Street-savvy!"
     };
 
     private int specialRenderType = SPECIAL_SPLASH_NONE;
