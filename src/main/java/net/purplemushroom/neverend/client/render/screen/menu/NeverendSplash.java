@@ -76,7 +76,13 @@ class NeverendSplash extends SplashRenderer {
             "No swearing on Christian servers!",
             "Human-generated!",
             "You love to see it!",
-            "Wazzup!"
+            "Wazzup!",
+            "Down the witches' road!",
+            "You should have gone for the head!",
+            "Weirdmageddon!",
+            "I'M A' FIRIN' MAH LAZER!",
+            "Noncontroversial!",
+            "Welcome to WHITE SPACE."
     };
 
     private int specialRenderType = SPECIAL_SPLASH_NONE;
