@@ -20,7 +20,6 @@ public class CircularStack<T> {
         currentIndex = getPreviousIndex();
         count--;
         T val = data[currentIndex];
-        data[currentIndex] = null;
         return val;
     }
 
