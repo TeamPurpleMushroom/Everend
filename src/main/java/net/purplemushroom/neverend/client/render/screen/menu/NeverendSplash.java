@@ -14,11 +14,13 @@ import java.util.Date;
 import java.util.Random;
 
 class NeverendSplash extends SplashRenderer {
-    private static final int SPECIAL_SPLASHES = 5;
+    private static final int SPECIAL_SPLASHES = 6;
 
     public static final int SPECIAL_SPLASH_NONE = 0;
     public static final int SPECIAL_SPLASH_DOUBLE_TROUBLE = 1;
     public static final int SPECIAL_SPLASH_END_IS_NEVER = 2;
+    public static final int SPECIAL_SPLASH_LAUNCH_SEQUENCE = 3;
+    protected static long launchStart = -1;
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
@@ -100,10 +102,26 @@ class NeverendSplash extends SplashRenderer {
             "By using this software, you rescind your right to life.",
             "Ask again later.",
             "Totally radical!",
-            "Stay in school, kids!"
+            "Stay in school, kids!",
+            "I love you, you love me, we're a happy family!",
+            "I hate you, you hate me, we're an unhappy family!"
     };
 
-    private int specialRenderType = SPECIAL_SPLASH_NONE;
+    public static final String[] HOLIDAY_SPLASHES = {
+            "§aMerry §cChristmas!",
+            "§aHappy §cHolidays!",
+            "§aHappy §cHanukkah!",
+            "§aJoyous §cKwanzaa!",
+            "§aYule§ctide!",
+            "§aFes§ctive!",
+            "§aChristmas is the time §cto say \'I love you\'!",
+            "§aIt's the most wonderful §ctime of the year!",
+            "§aGrandma got §crun over!",
+            "§aSanta Claus i§cs coming to town!",
+            "§aGuard §cthe chimneys!"
+    };
+
+    protected static int specialRenderType = SPECIAL_SPLASH_NONE;
 
     private NeverendSplash(String pSplash) {
         super(pSplash);
@@ -114,6 +132,7 @@ class NeverendSplash extends SplashRenderer {
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
         pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
+
         float f = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
         int textWidth = pFont.width(this.splash);
         if (specialRenderType == SPECIAL_SPLASH_END_IS_NEVER) textWidth /= 10;
@@ -122,6 +141,17 @@ class NeverendSplash extends SplashRenderer {
         if (specialRenderType == SPECIAL_SPLASH_DOUBLE_TROUBLE) {
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -3, BitUtil.rgbToInt(13, 82, 60) | pColor);
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -13, BitUtil.rgbToInt(197, 54, 201) | pColor);
+        } else if (specialRenderType == SPECIAL_SPLASH_LAUNCH_SEQUENCE) {
+            long elapsedTime = System.nanoTime() - launchStart;
+            int secondsLeft = 10 - (int) (elapsedTime / 1E9);
+            if (secondsLeft > 0) {
+                String msg = String.valueOf(secondsLeft) + '!';
+                if (secondsLeft <= 3) {
+                    pGuiGraphics.drawCenteredString(pFont, msg, 0, -8, BitUtil.rgbToInt(120, 0, 0) | pColor);
+                } else {
+                    pGuiGraphics.drawCenteredString(pFont, msg, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
+                }
+            }
         } else {
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
         }
@@ -134,6 +164,10 @@ class NeverendSplash extends SplashRenderer {
     }
 
     public static NeverendSplash getRandomSplash() {
+        Calendar calendar = Calendar.getInstance();
+        if (calendar.get(2) + 1 == 2 && calendar.get(5) >= 15) {
+            return new NeverendSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
+        }
         int pick = new Random().nextInt(SPLASHES.length + SPECIAL_SPLASHES);
         if (pick < SPECIAL_SPLASHES) {
             return getSpecialSplash(pick);
@@ -165,6 +199,9 @@ class NeverendSplash extends SplashRenderer {
                 return new NeverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
             case 4: // THE END IS NEVER THE END
                 return new NeverendSplash("THE END IS NEVER ".repeat(20)).setType(SPECIAL_SPLASH_END_IS_NEVER);
+            case 5:
+                launchStart = System.nanoTime();
+                return new NeverendSplash("Liftoff!").setType(SPECIAL_SPLASH_LAUNCH_SEQUENCE);
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
