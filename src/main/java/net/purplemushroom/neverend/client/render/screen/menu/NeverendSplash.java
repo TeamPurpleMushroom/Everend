@@ -20,10 +20,11 @@ class NeverendSplash extends SplashRenderer {
     public static final int SPECIAL_SPLASH_DOUBLE_TROUBLE = 1;
     public static final int SPECIAL_SPLASH_END_IS_NEVER = 2;
     public static final int SPECIAL_SPLASH_LAUNCH_SEQUENCE = 3;
+    public static final int SPECIAL_SPLASH_HOLIDAY = 4;
     protected static long launchStart = -1;
 
     public static final String[] SPLASHES = {
-            "Purple is the new black!",
+            /*"Purple is the new black!",
             "Nevermine in the End!",
             "A friendly perdition!",
             "Subjectively good!",
@@ -103,22 +104,21 @@ class NeverendSplash extends SplashRenderer {
             "Ask again later.",
             "Totally radical!",
             "Stay in school, kids!",
-            "I love you, you love me, we're a happy family!",
-            "I hate you, you hate me, we're an unhappy family!"
+            "I hate you, you hate me, we're an unhappy family!"*/
     };
 
     public static final String[] HOLIDAY_SPLASHES = {
-            "§aMerry §cChristmas!",
-            "§aHappy §cHolidays!",
-            "§aHappy §cHanukkah!",
-            "§aJoyous §cKwanzaa!",
-            "§aYule§ctide!",
-            "§aFes§ctive!",
-            "§aChristmas is the time §cto say \'I love you\'!",
-            "§aIt's the most wonderful §ctime of the year!",
-            "§aGrandma got §crun over!",
-            "§aSanta Claus i§cs coming to town!",
-            "§aGuard §cthe chimneys!"
+            "Merry Christmas!",
+            "Happy Holidays!",
+            "Happy Hanukkah!",
+            "Joyous Kwanzaa!",
+            "Yuletide!",
+            "Festive!",
+            "Christmas is the time to say \'I love you\'!",
+            "It's the most wonderful time of the year!",
+            "Grandma got run over!",
+            "Santa Claus is coming to town!",
+            "Guard the chimneys!"
     };
 
     protected static int specialRenderType = SPECIAL_SPLASH_NONE;
@@ -133,10 +133,11 @@ class NeverendSplash extends SplashRenderer {
         pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
         pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
 
-        float f = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
+        float f = 1.8F - Mth.sin((float) (Util.getMillis() % 4000L) / 4000.0F * ((float) Math.PI * 2F)) * 0.1F;
         int textWidth = pFont.width(this.splash);
         if (specialRenderType == SPECIAL_SPLASH_END_IS_NEVER) textWidth /= 10;
         f = f * 100.0F / (float) (textWidth + 32);
+        pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees((1 + Mth.sin((float) Util.getMillis() / 1500L)) * 2.5f));
         pGuiGraphics.pose().scale(f, f, f);
         if (specialRenderType == SPECIAL_SPLASH_DOUBLE_TROUBLE) {
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -3, BitUtil.rgbToInt(13, 82, 60) | pColor);
@@ -152,8 +153,23 @@ class NeverendSplash extends SplashRenderer {
                     pGuiGraphics.drawCenteredString(pFont, msg, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
                 }
             }
+        } else if (specialRenderType == SPECIAL_SPLASH_HOLIDAY) {
+            StringBuilder builder = new StringBuilder();
+            boolean color = (2 * Util.getMillis() / 1000L) % 2 == 0;
+            int count = 0;
+            for (char c : this.splash.toCharArray()) {
+                builder.append(color ? "§a" : "§c").append(c);
+                if (!Character.isWhitespace(c)) {
+                    if (++count >= 3) {
+                        count = 0;
+                        color = !color;
+                    }
+                }
+            }
+            pGuiGraphics.drawCenteredString(pFont, builder.toString(), 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
         } else {
             pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
+
         }
         pGuiGraphics.pose().popPose();
     }
@@ -165,8 +181,8 @@ class NeverendSplash extends SplashRenderer {
 
     public static NeverendSplash getRandomSplash() {
         Calendar calendar = Calendar.getInstance();
-        if (calendar.get(2) + 1 == 2 && calendar.get(5) >= 15) {
-            return new NeverendSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
+        if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 15) {
+            return new NeverendSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]).setType(SPECIAL_SPLASH_HOLIDAY);
         }
         int pick = new Random().nextInt(SPLASHES.length + SPECIAL_SPLASHES);
         if (pick < SPECIAL_SPLASHES) {
