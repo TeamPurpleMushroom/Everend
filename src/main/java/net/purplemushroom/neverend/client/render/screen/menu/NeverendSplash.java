@@ -121,7 +121,7 @@ class NeverendSplash extends SplashRenderer {
             "Guard the chimneys!"
     };
 
-    protected static int specialRenderType = SPECIAL_SPLASH_NONE;
+    protected int specialRenderType = SPECIAL_SPLASH_NONE;
 
     private NeverendSplash(String pSplash) {
         super(pSplash);

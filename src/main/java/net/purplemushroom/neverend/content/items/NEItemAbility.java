@@ -20,10 +20,6 @@ public abstract class NEItemAbility {
         return true;
     }
 
-    public boolean canRepair() {
-        return true;
-    }
-
     public int getDurabilityBar() {
         return -1;
     }

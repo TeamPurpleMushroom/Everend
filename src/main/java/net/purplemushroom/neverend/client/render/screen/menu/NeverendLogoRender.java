@@ -1,5 +1,6 @@
 package net.purplemushroom.neverend.client.render.screen.menu;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,7 @@ class NeverendLogoRender extends LogoRenderer {
 
     @Override
     public void renderLogo(GuiGraphics pGuiGraphics, int pScreenWidth, float pTransparency, int pHeight) {
-        if (NeverendSplash.specialRenderType == NeverendSplash.SPECIAL_SPLASH_LAUNCH_SEQUENCE) {
+        if (((NeverendMenuScreen) Minecraft.getInstance().screen).getSplash().specialRenderType == NeverendSplash.SPECIAL_SPLASH_LAUNCH_SEQUENCE) {
             long elapsedTime = System.nanoTime() - NeverendSplash.launchStart;
             boolean flag = 10 - (int) (elapsedTime / 1E9) <= 0;
             if (flag) {

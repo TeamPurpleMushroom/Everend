@@ -3,10 +3,7 @@ package net.purplemushroom.neverend.client.render.screen.menu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.components.PlainTextButton;
-import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.multiplayer.SafetyScreen;
@@ -60,6 +57,10 @@ public class NeverendMenuScreen extends TitleScreen {
     public void tick() {
         super.tick();
         time++;
+    }
+
+    protected NeverendSplash getSplash() {
+        return (NeverendSplash) splash;
     }
 
     @Override

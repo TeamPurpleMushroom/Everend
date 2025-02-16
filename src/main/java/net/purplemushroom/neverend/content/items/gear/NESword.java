@@ -30,11 +30,6 @@ public class NESword extends SwordItem implements INESpecialAbilityItem {
     }
 
     @Override
-    public boolean isRepairable(ItemStack stack) {
-        return ability.canRepair() && super.isRepairable(stack);
-    }
-
-    @Override
     public int getBarColor(ItemStack pStack) {
         int custom = ability.getDurabilityBar();
         if (custom >= 0) return custom;

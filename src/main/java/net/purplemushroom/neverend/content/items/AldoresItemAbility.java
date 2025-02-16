@@ -14,7 +14,7 @@ public class AldoresItemAbility extends NEItemAbility {
 
     @Override
     public void onInventoryTick(Entity entity, ItemStack stack) {
-        if (entity instanceof LivingEntity living) {
+        if (entity.tickCount % 20 == 0 && entity instanceof LivingEntity living) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 if (living.getItemBySlot(slot) == stack) {
                     stack.hurtAndBreak(1, living, (player) -> {
@@ -29,13 +29,7 @@ public class AldoresItemAbility extends NEItemAbility {
 
     @Override
     public boolean acceptsEnchantment(Enchantment enchant) {
-        if (enchant == Enchantments.UNBREAKING || enchant == Enchantments.MENDING) return false;
-        return true;
-    }
-
-    @Override
-    public boolean canRepair() {
-        return false;
+        return enchant != Enchantments.MENDING;
     }
 
     @Override
