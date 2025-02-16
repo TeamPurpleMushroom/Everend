@@ -24,7 +24,7 @@ class NeverendSplash extends SplashRenderer {
     protected static long launchStart = -1;
 
     public static final String[] SPLASHES = {
-            /*"Purple is the new black!",
+            "Purple is the new black!",
             "Nevermine in the End!",
             "A friendly perdition!",
             "Subjectively good!",
@@ -104,7 +104,7 @@ class NeverendSplash extends SplashRenderer {
             "Ask again later.",
             "Totally radical!",
             "Stay in school, kids!",
-            "I hate you, you hate me, we're an unhappy family!"*/
+            "I hate you, you hate me, we're an unhappy family!"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {

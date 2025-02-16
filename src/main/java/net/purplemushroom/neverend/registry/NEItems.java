@@ -43,6 +43,18 @@ public class NEItems {
 
         register("ludunite_thing", "Ludunite Thing");
         register("aldores_thing", "Aldores Thing");
+
+        //TODO: stats
+        register("aldores_sword", "Aldores Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_pickaxe", "Aldores Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_axe", "Aldores Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_shovel", "Aldores Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_hoe", "Aldores Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_helmet", "Aldores Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_chestplate", "Aldores Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_leggings", "Aldores Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        register("aldores_boots", "Aldores Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), AldoresItemAbility.INSTANCE));
+
         register("dragonbone", "Dragonbone");
         register("enchantment_crystal", "Enchantment Crystal");
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
