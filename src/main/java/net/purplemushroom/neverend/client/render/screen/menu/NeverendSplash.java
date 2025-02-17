@@ -90,7 +90,7 @@ class NeverendSplash extends SplashRenderer {
             "This! Is! MINECRAFT!!!",
             "Which of the Pickwick triplets did it?",
             "Modern!",
-            "Street-savvy!",
+            "Cowabunga!",
             "Be sure to like and subscribe!",
             "Extraterrestrial!",
             "Surreal!",

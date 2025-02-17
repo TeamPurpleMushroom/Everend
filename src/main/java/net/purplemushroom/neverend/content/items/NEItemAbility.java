@@ -20,8 +20,24 @@ public abstract class NEItemAbility {
         return true;
     }
 
-    public int getDurabilityBar() {
-        return -1;
+    public boolean canRepair() {
+        return true;
+    }
+
+    public int handleItemDamage(LivingEntity entity, ItemStack stack, int amount) {
+        return amount;
+    }
+
+    public boolean applyAttributes(ItemStack stack) {
+        return true;
+    }
+
+    public boolean isDurabilityBarVisible(ItemStack stack, boolean originallyVisible) {return originallyVisible;}
+
+    public int getDurabilityBarWidth(ItemStack stack, int originalWidth) {return originalWidth;}
+
+    public int getDurabilityBarColor(int originalColor) {
+        return originalColor;
     }
 
     public void onDroppedTick(ItemStack stack, ItemEntity entity) {}

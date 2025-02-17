@@ -42,6 +42,17 @@ public class NEItems {
 
 
         register("ludunite_thing", "Ludunite Thing");
+
+        register("ludunite_sword", "Ludunite Sword", () -> new NESword(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_pickaxe", "Ludunite Pickaxe", () -> new NEPickaxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_axe", "Ludunite Axe", () -> new NEAxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_shovel", "Ludunite Shovel", () -> new NEShovel(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_hoe", "Ludunite Hoe", () -> new NEHoe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_helmet", "Ludunite Helmet", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.HELMET, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_chestplate", "Ludunite Chestplate", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.CHESTPLATE, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_leggings", "Ludunite Leggings", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.LEGGINGS, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        register("ludunite_boots", "Ludunite Boots", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.BOOTS, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+
         register("aldores_thing", "Aldores Thing");
 
         //TODO: stats

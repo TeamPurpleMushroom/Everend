@@ -33,7 +33,7 @@ public class AldoresItemAbility extends NEItemAbility {
     }
 
     @Override
-    public int getDurabilityBar() {
+    public int getDurabilityBarColor(int originalColor) {
         return BitUtil.rgbToInt(237, 191, 64);
     }
 }
