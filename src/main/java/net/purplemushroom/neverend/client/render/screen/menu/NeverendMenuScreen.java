@@ -2,6 +2,7 @@ package net.purplemushroom.neverend.client.render.screen.menu;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -16,6 +17,7 @@ import net.purplemushroom.neverend.client.registry.NERenderTypes;
 import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import net.purplemushroom.neverend.client.render.screen.NEButton;
 import net.purplemushroom.neverend.mixin.client.accessor.TitleScreenAccessor;
+import net.purplemushroom.neverend.util.BitUtil;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;
@@ -71,13 +73,6 @@ public class NeverendMenuScreen extends TitleScreen {
 
         if (shaderinstance.GAME_TIME != null) {
             shaderinstance.GAME_TIME.set(RenderSystem.getShaderGameTime());
-
-            shaderinstance.getUniform("IsUpperLayer").set(0); // FIXME: due to the way I've coded it, this is actually reversed; value 0 is the upper layer & value 1 is the lower layer. Change name to be accurate
-            /*int test = (int) (time / 60);
-            test = Math.max(0, test - 1);
-            System.out.println(test);
-            shaderinstance.getUniform("IsUpperLayer").set(test);
-            pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, String.valueOf(test), 100, 100, BitUtil.rgbToInt(255, 255, 255));*/
         }
 
         shaderinstance.apply();
