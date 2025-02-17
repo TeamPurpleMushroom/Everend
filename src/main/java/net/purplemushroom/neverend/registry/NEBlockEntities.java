@@ -5,6 +5,7 @@ import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.client.render.tile.DeathObeliskBER;
 import net.purplemushroom.neverend.client.render.tile.EndAnchorBER;
 import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
+import net.purplemushroom.neverend.content.blocks.tile.EndAltarBlockEntity;
 import net.purplemushroom.neverend.content.blocks.tile.EndAnchorBlockEntity;
 import net.purplemushroom.neverend.content.blocks.tile.GazeCrystalBlockEntity;
 import ru.timeconqueror.timecore.api.registry.BlockEntityRegister;
@@ -15,6 +16,7 @@ public class NEBlockEntities {
     public static BlockEntityType<DeathObeliskBlockEntity> DEATH_OBELISK;
     public static BlockEntityType<EndAnchorBlockEntity> END_ANCHOR;
     public static BlockEntityType<GazeCrystalBlockEntity> GAZE_CRYSTAL;
+    public static BlockEntityType<EndAltarBlockEntity> END_ALTAR;
 
     @AutoRegistrable
     private static final BlockEntityRegister REGISTER = new BlockEntityRegister(Neverend.MODID);
@@ -24,5 +26,6 @@ public class NEBlockEntities {
         REGISTER.registerSingleBound("death_obelisk", DeathObeliskBlockEntity::new, () -> NEBlocks.DEATH_OBELISK).regCustomRenderer(() -> DeathObeliskBER::new);
         REGISTER.registerSingleBound("end_anchor", EndAnchorBlockEntity::new, () -> NEBlocks.END_ANCHOR).regCustomRenderer(() -> EndAnchorBER::new);
         REGISTER.registerSingleBound("gaze_crystal", GazeCrystalBlockEntity::new, () -> NEBlocks.GAZE_CRYSTAL);
+        REGISTER.registerSingleBound("end_altar", EndAltarBlockEntity::new, () -> NEBlocks.END_ALTAR);
     }
 }

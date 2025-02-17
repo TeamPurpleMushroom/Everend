@@ -10,11 +10,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.client.render.NEBlockStateResources;
-import net.purplemushroom.neverend.content.blocks.DeathObeliskBlock;
-import net.purplemushroom.neverend.content.blocks.EnchantmentShrineBlock;
-import net.purplemushroom.neverend.content.blocks.EndAnchorBlock;
-import net.purplemushroom.neverend.content.blocks.GazeCrystalBlock;
+import net.purplemushroom.neverend.content.blocks.*;
 import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
+import net.purplemushroom.neverend.content.blocks.tile.EndAltarBlockEntity;
 import net.purplemushroom.neverend.content.blocks.tile.EndAnchorBlockEntity;
 import net.purplemushroom.neverend.content.blocks.tile.GazeCrystalBlockEntity;
 import ru.timeconqueror.timecore.api.client.resource.BlockModels;
@@ -34,6 +32,7 @@ public class NEBlocks {
     public static Block DRAGON_BONE;
     public static Block DRAGONBONE_ORE;
     public static Block ENCHANTMENT_CRYSTAL_ORE;
+    public static Block END_ALTAR;
     public static Block ENCHANTMENT_SHRINE;
     public static Block DEATH_OBELISK;
     public static Block END_ANCHOR;
@@ -94,6 +93,12 @@ public class NEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Enchantment Crystal Ore");
+        BLOCKS.register("end_altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .strength(2.0F, 6.0F)
+                        .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new))
+                .oneVarStateAndCubeAllModel()
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("End Altar");
         BLOCKS.register("enchantment_shrine", () -> new EnchantmentShrineBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .requiresCorrectToolForDrops()).create()))

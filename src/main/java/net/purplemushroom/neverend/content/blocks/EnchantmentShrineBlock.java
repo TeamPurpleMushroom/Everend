@@ -32,11 +32,6 @@ public class EnchantmentShrineBlock extends Block {
     public @NotNull InteractionResult use(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         ItemStack item = player.getMainHandItem();
         CompoundTag tag = item.getTag();
-        if (item.getItem() instanceof INESpecialAbilityItem abilityItem) {
-            if (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE) {
-                tag.putInt("Charge", item.getMaxDamage());
-            }
-        }
         if (item.isEnchanted() && !(item.hasTag() && tag != null && tag.getBoolean("ShrineEnchanted"))) {
             if (InventoryUtil.consumeItem(player, NEItems.ENCHANTMENT_CRYSTAL)) {
                 if (!level.isClientSide()) {

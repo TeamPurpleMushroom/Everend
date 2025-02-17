@@ -19,6 +19,7 @@ public class NEItems {
     public static Item ALDORES_THING;
     public static Item DRAGONBONE;
     public static Item ENCHANTMENT_CRYSTAL;
+    public static Item ENDERIUM_DUST;
 
     public static Item SHIFTERINE_ROD;
 
@@ -68,6 +69,7 @@ public class NEItems {
 
         register("dragonbone", "Dragonbone");
         register("enchantment_crystal", "Enchantment Crystal");
+        register("enderium_dust", "Enderium Dust");
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));
         registerHandheldRod("shifterine_rod", "Shifterine Rod", ShifterineRodItem::new);
 
