@@ -37,6 +37,7 @@ public class NEBlocks {
     public static Block DEATH_OBELISK;
     public static Block END_ANCHOR;
     public static Block GAZE_CRYSTAL;
+    public static Block QUANTUM_CAKE;
 
     @AutoRegistrable
     private static final BlockRegister BLOCKS = new BlockRegister(Neverend.MODID);
@@ -163,6 +164,11 @@ public class NEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(NECreativeTabs.BLOCKS)
                 .name("Gaze Crystal");
+
+        BLOCKS.register("quantum_cake", () -> new QuantumCakeBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.CAKE)
+        ).create()))
+                .defaultBlockItem(NECreativeTabs.BLOCKS)
+                .name("Quantum Cake");
     }
 
     /**

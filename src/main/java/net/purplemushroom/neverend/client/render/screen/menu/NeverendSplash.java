@@ -104,7 +104,9 @@ class NeverendSplash extends SplashRenderer {
             "Ask again later.",
             "Totally radical!",
             "Stay in school, kids!",
-            "I hate you, you hate me, we're an unhappy family!"
+            "I hate you, you hate me, we're an unhappy family!",
+            "Git gud!",
+            "Skill issue!"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {
