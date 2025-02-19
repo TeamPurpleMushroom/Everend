@@ -106,7 +106,20 @@ class NeverendSplash extends SplashRenderer {
             "Stay in school, kids!",
             "I hate you, you hate me, we're an unhappy family!",
             "Git gud!",
-            "Skill issue!"
+            "Skill issue!",
+            "Porsche with no brakes!",
+            "Does whatever a spider can!",
+            "Trololo!",
+            "Cannot make bricks without clay!",
+            "Banger!",
+            "Minecraft is love, Minecraft is life!",
+            "The Green Lives club!",
+            "You are The Boogeyman!",
+            "You are NOT The Boogeyman!",
+            "Infinite cake!",
+            "Breaking Block!",
+            "Get the banana!",
+            "You have failed this city!"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {

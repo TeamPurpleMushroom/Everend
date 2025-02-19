@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.purplemushroom.neverend.content.blocks.tile.EndAltarBlockEntity;
 import net.purplemushroom.neverend.registry.NEBlockEntities;
-import net.purplemushroom.neverend.registry.NEItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiFunction;
@@ -31,9 +30,13 @@ public class EndAltarBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pPlayer.level().isClientSide() && pPlayer.level().getBlockEntity(pPos) instanceof EndAltarBlockEntity entity) {
             if (pHand == InteractionHand.MAIN_HAND && !pPlayer.getMainHandItem().isEmpty()) {
-                entity.useItem(pPlayer.getMainHandItem());
+                entity.addItem(pPlayer.getMainHandItem());
+                return InteractionResult.CONSUME;
             } else if (pPlayer.getMainHandItem().isEmpty() && !pPlayer.getOffhandItem().isEmpty()) {
-                entity.useItem(pPlayer.getOffhandItem());
+                entity.addItem(pPlayer.getOffhandItem());
+                return InteractionResult.CONSUME;
+            } else if (pHand == InteractionHand.MAIN_HAND) {
+                entity.dropItem();
             }
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
