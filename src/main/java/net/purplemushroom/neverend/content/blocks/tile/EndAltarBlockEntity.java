@@ -3,6 +3,7 @@ package net.purplemushroom.neverend.content.blocks.tile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -11,14 +12,25 @@ import net.purplemushroom.neverend.content.items.INESpecialAbilityItem;
 import net.purplemushroom.neverend.content.items.LuduniteItemAbility;
 import net.purplemushroom.neverend.registry.NEBlockEntities;
 import net.purplemushroom.neverend.registry.NEItems;
+import net.purplemushroom.neverend.util.MathUtil;
+
+import java.util.HashMap;
 
 public class EndAltarBlockEntity extends BlockEntity {
     //TODO: correct interaction results for clicking this block
     //TODO: fix weird placement behavior (i.e. when you try adding blocks to the altar)
-    //TODO: make sure dust can only be added for the appropriate items
+    //TODO: make dust requirement for ludunium charge depend on the amount of durability used
     //TODO: remove debug ticking code when done
     private ItemStack placedItem = ItemStack.EMPTY;
     private int dustCount = 0;
+
+    private static final HashMap<Item, AltarRecipe> recipes = new HashMap<>();
+
+    public static void registerRecipes() {
+        if (!recipes.isEmpty()) throw new IllegalStateException("Altar recipes have already be initialized!");
+        recipes.put(NEItems.DULL_SHIFTERINE, new AltarRecipe(NEItems.SHIFTERINE_CRYSTAL, 2));
+        recipes.put(NEItems.DULL_ALDORES, new AltarRecipe(NEItems.ALDORES_THING, 4));
+    }
 
     public EndAltarBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(NEBlockEntities.END_ALTAR, pPos, pBlockState);
@@ -34,19 +46,45 @@ public class EndAltarBlockEntity extends BlockEntity {
 
     public void addItem(ItemStack stack) {
         if (stack.getItem() != NEItems.ENDERIUM_DUST) {
-            if (!placedItem.isEmpty()) dropItem();
-            placedItem = stack.copyWithCount(1);
-            stack.shrink(1);
-        } else if (!placedItem.isEmpty()) {
-            if (dustCount < 10) {
+            if (!placedItem.isEmpty()) {
+                if (!ItemStack.isSameItemSameTags(stack, placedItem)) {
+                    dropItem();
+                }
+            } else {
+                placedItem = stack.copyWithCount(1);
                 stack.shrink(1);
-                dustCount++;
+            }
+        }
 
-                if (dustCount == 10 && placedItem.getItem() instanceof INESpecialAbilityItem abilityItem && abilityItem.getAbility() == LuduniteItemAbility.INSTANCE && placedItem.isDamageableItem()) {
-                    if (placedItem.hasTag() && placedItem.getTag().getInt("Charge") == placedItem.getMaxDamage()) return;
+        if (!placedItem.isEmpty()) {
+            int requiredDust = -1;
+            if (recipes.containsKey(placedItem.getItem())) {
+                requiredDust = recipes.get(placedItem.getItem()).dust;
+            } else if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
+                    abilityItem.getAbility() == LuduniteItemAbility.INSTANCE &&
+                    placedItem.getTag() != null &&
+                    placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
+                requiredDust = 10;
+            }
+            if (requiredDust > 0) {
+                if (dustCount < requiredDust && stack.getItem() == NEItems.ENDERIUM_DUST) {
+                    stack.shrink(1);
+                    dustCount++;
+                }
 
-                    placedItem.getOrCreateTag().putInt("Charge", placedItem.getMaxDamage());
-                    dustCount = 0;
+                if (dustCount >= requiredDust) {
+                    if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
+                            abilityItem.getAbility() == LuduniteItemAbility.INSTANCE &&
+                            placedItem.getTag() != null &&
+                            placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
+                        placedItem.getOrCreateTag().putInt("Charge", placedItem.getMaxDamage());
+                    } else if (recipes.containsKey(placedItem.getItem())) {
+                        placedItem = new ItemStack(recipes.get(placedItem.getItem()).result, placedItem.getCount());
+                    } else {
+                        throw new RuntimeException("Itemstack should not have recipe on altar, yet somehow it's using dust?");
+                    }
+
+                    dustCount -= requiredDust;
                 }
             }
         }
@@ -74,5 +112,15 @@ public class EndAltarBlockEntity extends BlockEntity {
         super.load(pTag);
         placedItem = ItemStack.of((CompoundTag) pTag.get("Item"));
         dustCount = pTag.getInt("Dust");
+    }
+
+    private static class AltarRecipe {
+        private Item result;
+        private int dust;
+
+        private AltarRecipe(Item result, int count) {
+            this.result = result;
+            this.dust = count;
+        }
     }
 }

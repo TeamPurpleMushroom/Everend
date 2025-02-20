@@ -14,4 +14,24 @@ public class MathUtil {
         }
         return nodes;
     }
+
+    public static int min(int... nums) {
+        int result = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] < result) {
+                result = nums[i];
+            }
+        }
+        return result;
+    }
+
+    public static int max(int... nums) {
+        int result = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > result) {
+                result = nums[i];
+            }
+        }
+        return result;
+    }
 }

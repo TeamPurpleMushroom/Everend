@@ -14,8 +14,10 @@ import java.util.function.Supplier;
 
 @AutoRegistrable.Entries("item")
 public class NEItems {
+    public static Item DULL_SHIFTERINE;
     public static Item SHIFTERINE_CRYSTAL;
     public static Item LUDUNITE_THING;
+    public static Item DULL_ALDORES;
     public static Item ALDORES_THING;
     public static Item DRAGONBONE;
     public static Item ENCHANTMENT_CRYSTAL;
@@ -28,6 +30,7 @@ public class NEItems {
 
     @AutoRegistrable.Init
     private static void register() {
+        register("dull_shifterine", "Dull Shifterine");
         register("shifterine_crystal", "Shifterine Crystal", () -> new NESpecialAbilityResource(new Item.Properties(), ShifterineItemAbility.INSTANCE));
 
         // TODO: stats
@@ -54,6 +57,7 @@ public class NEItems {
         register("ludunite_leggings", "Ludunite Leggings", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.LEGGINGS, new Item.Properties(), LuduniteItemAbility.INSTANCE));
         register("ludunite_boots", "Ludunite Boots", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.BOOTS, new Item.Properties(), LuduniteItemAbility.INSTANCE));
 
+        register("dull_aldores", "Dull Aldores");
         register("aldores_thing", "Aldores Thing");
 
         //TODO: stats
