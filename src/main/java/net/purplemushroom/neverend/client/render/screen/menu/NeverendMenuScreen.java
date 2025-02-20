@@ -1,7 +1,9 @@
 package net.purplemushroom.neverend.client.render.screen.menu;
 
+import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
@@ -18,6 +20,8 @@ import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import net.purplemushroom.neverend.client.render.screen.NEButton;
 import net.purplemushroom.neverend.mixin.client.accessor.TitleScreenAccessor;
 import net.purplemushroom.neverend.util.BitUtil;
+
+import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
     private long time = 0;
@@ -53,6 +57,12 @@ public class NeverendMenuScreen extends TitleScreen {
         if (this.realmsNotificationsEnabled()) {
             this.realmsNotificationsScreen.init(this.minecraft, this.width, this.height);
         }
+
+        RenderSystem.setShader(NEShaderRegistry::getShaderMenu);
+        ShaderInstance shaderinstance = RenderSystem.getShader();
+
+        Uniform seedUniform = shaderinstance.getUniform("Seed");
+        if (seedUniform != null) seedUniform.set(new Random().nextFloat(1024.0f));
     }
 
     @Override

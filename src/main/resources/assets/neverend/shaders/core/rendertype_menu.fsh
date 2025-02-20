@@ -6,6 +6,7 @@ uniform sampler2D Sampler0;
 uniform sampler2D Sampler1;
 
 uniform float GameTime;
+uniform float Seed;
 
 in vec4 texProj0;
 
@@ -37,7 +38,7 @@ mat4 end_portal_layer(float layer) {
     0.0, 0.0, 0.0, 1.0
     );
 
-    mat2 rotate = mat2_rotate_z(radians((layer * layer * 4321.0 + layer * 9.0) * 2.0));
+    mat2 rotate = mat2_rotate_z(radians((layer * layer * 4321.0 + layer * 9.0) * 2.0 * Seed));
 
     mat2 scale = mat2(layer * 0.75);
 

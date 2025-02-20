@@ -71,8 +71,8 @@
       ]
     },
     {
-      "name": "IsUpperLayer",
-      "type": "int",
+      "name": "Seed",
+      "type": "float",
       "count": 1,
       "values": [
         0
