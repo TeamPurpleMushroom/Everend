@@ -119,7 +119,11 @@ class NeverendSplash extends SplashRenderer {
             "Infinite cake!",
             "Breaking Block!",
             "Get the banana!",
-            "You have failed this city!"
+            "You have failed this city!",
+            "§1A blue house with a blue window!",
+            "YouTube is where the poop is!",
+            "Starships were meant to fly!",
+            "A rift? Localized entirely within your kitchen?"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {
@@ -133,7 +137,8 @@ class NeverendSplash extends SplashRenderer {
             "It's the most wonderful time of the year!",
             "Grandma got run over!",
             "Santa Claus is coming to town!",
-            "Guard the chimneys!"
+            "A home invader is coming down the chimney!",
+            "The nightmare before Christmas!" // TODO: maybe this should be a Halloween splash?
     };
 
     protected int specialRenderType = SPECIAL_SPLASH_NONE;
