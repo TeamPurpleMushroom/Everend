@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Random;
 
 class NeverendSplash extends SplashRenderer {
-    private static final int SPECIAL_SPLASHES = 6;
+    private static final int SPECIAL_SPLASHES = 7;
 
     public static final int SPECIAL_SPLASH_NONE = 0;
     public static final int SPECIAL_SPLASH_DOUBLE_TROUBLE = 1;
@@ -113,9 +113,7 @@ class NeverendSplash extends SplashRenderer {
             "Cannot make bricks without clay!",
             "Banger!",
             "Minecraft is love, Minecraft is life!",
-            "The Green Lives club!",
             "You are The Boogeyman!",
-            "You are NOT The Boogeyman!",
             "Infinite cake!",
             "Breaking Block!",
             "Get the banana!",
@@ -123,7 +121,22 @@ class NeverendSplash extends SplashRenderer {
             "§1A blue house with a blue window!",
             "YouTube is where the poop is!",
             "Starships were meant to fly!",
-            "A rift? Localized entirely within your kitchen?"
+            "A rift? Localized entirely within your kitchen?",
+            "This is my message to my master!",
+            "Death by snu snu!",
+            "Hello World!",
+            "Hey! Listen!",
+            "Not educational!",
+            "Welcome!",
+            "Hi!",
+            "Hey!",
+            "Heya!",
+            "Hello!",
+            "Made by nerds, for nerds!",
+            "The (unofficial) End Update!",
+            "Over 100 custom splashes!",
+            "This statement is false!",
+            "Sample Text"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {
@@ -238,6 +251,41 @@ class NeverendSplash extends SplashRenderer {
             case 5:
                 launchStart = System.nanoTime();
                 return new NeverendSplash("Liftoff!").setType(SPECIAL_SPLASH_LAUNCH_SEQUENCE);
+            case 6: // this text is color
+                switch (new Random().nextInt(10 + 6)) {
+                    case 0:
+                        return new NeverendSplash("§0This splash is black!");
+                    case 1:
+                        return new NeverendSplash("§1This splash is dark blue!");
+                    case 2:
+                        return new NeverendSplash("§2This splash is dark green!");
+                    case 3:
+                        return new NeverendSplash("§3This splash is dark aqua!");
+                    case 4:
+                        return new NeverendSplash("§4This splash is dark red!");
+                    case 5:
+                        return new NeverendSplash("§5This splash is dark purple!");
+                    case 6:
+                        return new NeverendSplash("§6This splash is golden!");
+                    case 7:
+                        return new NeverendSplash("§7This splash is grey!");
+                    case 8:
+                        return new NeverendSplash("§8This splash is dark grey!");
+                    case 9:
+                        return new NeverendSplash("§9This splash is blue!");
+                    case 10:
+                        return new NeverendSplash("§aThis splash is green!");
+                    case 11:
+                        return new NeverendSplash("§bThis splash is aqua!");
+                    case 12:
+                        return new NeverendSplash("§cThis splash is red!");
+                    case 13:
+                        return new NeverendSplash("§dThis splash is light purple!");
+                    case 14:
+                        return new NeverendSplash("§eThis splash is yellow!");
+                    case 15:
+                        return new NeverendSplash("§fThis splash is white!");
+                }
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
