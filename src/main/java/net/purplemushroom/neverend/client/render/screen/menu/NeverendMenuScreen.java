@@ -3,8 +3,6 @@ package net.purplemushroom.neverend.client.render.screen.menu;
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -18,8 +16,9 @@ import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.purplemushroom.neverend.client.registry.NERenderTypes;
 import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import net.purplemushroom.neverend.client.render.screen.NEButton;
+import net.purplemushroom.neverend.client.render.screen.menu.splash.NeverendSplash;
+import net.purplemushroom.neverend.client.render.screen.menu.splash.SplashProvider;
 import net.purplemushroom.neverend.mixin.client.accessor.TitleScreenAccessor;
-import net.purplemushroom.neverend.util.BitUtil;
 
 import java.util.Random;
 
@@ -33,7 +32,7 @@ public class NeverendMenuScreen extends TitleScreen {
 
     @Override
     protected void init() {
-        if (splash == null) splash = NeverendSplash.getRandomSplash();
+        if (splash == null) splash = SplashProvider.getRandomSplash();
         if (!(panorama instanceof NeverendMenuBackground)) panorama = new NeverendMenuBackground();
         assert this.minecraft != null;
         int i = this.font.width(COPYRIGHT_TEXT);

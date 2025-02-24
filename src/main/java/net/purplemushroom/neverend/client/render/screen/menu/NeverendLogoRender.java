@@ -4,8 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.purplemushroom.neverend.Neverend;
+import net.purplemushroom.neverend.client.render.screen.menu.splash.CountdownSplash;
+import net.purplemushroom.neverend.client.render.screen.menu.splash.NeverendSplash;
 
 class NeverendLogoRender extends LogoRenderer {
     public static final ResourceLocation NEVEREND_LOGO = Neverend.rl("textures/gui/logo.png");
@@ -16,8 +17,8 @@ class NeverendLogoRender extends LogoRenderer {
 
     @Override
     public void renderLogo(GuiGraphics pGuiGraphics, int pScreenWidth, float pTransparency, int pHeight) {
-        if (((NeverendMenuScreen) Minecraft.getInstance().screen).getSplash().specialRenderType == NeverendSplash.SPECIAL_SPLASH_LAUNCH_SEQUENCE) {
-            long elapsedTime = System.nanoTime() - NeverendSplash.launchStart;
+        if (((NeverendMenuScreen) Minecraft.getInstance().screen).getSplash() instanceof CountdownSplash countdownSplash) {
+            long elapsedTime = countdownSplash.getElapsedTime();
             boolean flag = 10 - (int) (elapsedTime / 1E9) <= 0;
             if (flag) {
                 double y = ((double) elapsedTime) / 1E9 - 10;

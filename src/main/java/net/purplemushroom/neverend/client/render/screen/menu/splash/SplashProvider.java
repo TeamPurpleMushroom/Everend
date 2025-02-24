@@ -1,27 +1,13 @@
-package net.purplemushroom.neverend.client.render.screen.menu;
+package net.purplemushroom.neverend.client.render.screen.menu.splash;
 
-import com.mojang.math.Axis;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.SplashRenderer;
-import net.minecraft.util.Mth;
-import net.purplemushroom.neverend.util.BitUtil;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-class NeverendSplash extends SplashRenderer {
+public class SplashProvider {
     private static final int SPECIAL_SPLASHES = 7;
-
-    public static final int SPECIAL_SPLASH_NONE = 0;
-    public static final int SPECIAL_SPLASH_DOUBLE_TROUBLE = 1;
-    public static final int SPECIAL_SPLASH_END_IS_NEVER = 2;
-    public static final int SPECIAL_SPLASH_LAUNCH_SEQUENCE = 3;
-    public static final int SPECIAL_SPLASH_HOLIDAY = 4;
-    protected static long launchStart = -1;
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
@@ -136,7 +122,31 @@ class NeverendSplash extends SplashRenderer {
             "The (unofficial) End Update!",
             "Over 100 custom splashes!",
             "This statement is false!",
-            "Sample Text"
+            "Sample Text",
+            "Writing these is fun!",
+            "Quoth the raven, \"Wacka wacka wacka wah.\"",
+            "Bazinga!",
+            "Epic!",
+            //"Enchanting grom fright!",
+            "Only on PC!",
+            "America, heck yeah!",
+            "Didn't see you come in!",
+            "UwU",
+            "How are you feeling today?",
+            "How does that make you feel?",
+            "Self-conscious Endermen!",
+            "Scopophobia!",
+            "Waiting for something to happen?",
+            "Dead memes!",
+            "What mouth?",
+            "Flying pop-tart rainbow cat of awesomeness!",
+            "Order of the Stone!",
+            "Thou shalt not commit perjury!",
+            "The police investigate crime and the district attorneys prosecute the offenders!",
+            "Objection!",
+            "010000100110100101101110011000010111001001111001!",
+            "Behold the man who is a bean!",
+            "That '20s mod!"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {
@@ -154,68 +164,10 @@ class NeverendSplash extends SplashRenderer {
             "The nightmare before Christmas!" // TODO: maybe this should be a Halloween splash?
     };
 
-    protected int specialRenderType = SPECIAL_SPLASH_NONE;
-
-    private NeverendSplash(String pSplash) {
-        super(pSplash);
-    }
-
-    @Override
-    public void render(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
-        pGuiGraphics.pose().pushPose();
-        pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
-        pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
-
-        float f = 1.8F - Mth.sin((float) (Util.getMillis() % 4000L) / 4000.0F * ((float) Math.PI * 2F)) * 0.1F;
-        int textWidth = pFont.width(this.splash);
-        if (specialRenderType == SPECIAL_SPLASH_END_IS_NEVER) textWidth /= 10;
-        f = f * 100.0F / (float) (textWidth + 32);
-        pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees((1 + Mth.sin((float) Util.getMillis() / 1500L)) * 2.5f));
-        pGuiGraphics.pose().scale(f, f, f);
-        if (specialRenderType == SPECIAL_SPLASH_DOUBLE_TROUBLE) {
-            pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -3, BitUtil.rgbToInt(13, 82, 60) | pColor);
-            pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -13, BitUtil.rgbToInt(197, 54, 201) | pColor);
-        } else if (specialRenderType == SPECIAL_SPLASH_LAUNCH_SEQUENCE) {
-            long elapsedTime = System.nanoTime() - launchStart;
-            int secondsLeft = 10 - (int) (elapsedTime / 1E9);
-            if (secondsLeft > 0) {
-                String msg = String.valueOf(secondsLeft) + '!';
-                if (secondsLeft <= 3) {
-                    pGuiGraphics.drawCenteredString(pFont, msg, 0, -8, BitUtil.rgbToInt(120, 0, 0) | pColor);
-                } else {
-                    pGuiGraphics.drawCenteredString(pFont, msg, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
-                }
-            }
-        } else if (specialRenderType == SPECIAL_SPLASH_HOLIDAY) {
-            StringBuilder builder = new StringBuilder();
-            boolean color = (2 * Util.getMillis() / 1000L) % 2 == 0;
-            int count = 0;
-            for (char c : this.splash.toCharArray()) {
-                builder.append(color ? "§a" : "§c").append(c);
-                if (!Character.isWhitespace(c)) {
-                    if (++count >= 3) {
-                        count = 0;
-                        color = !color;
-                    }
-                }
-            }
-            pGuiGraphics.drawCenteredString(pFont, builder.toString(), 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
-        } else {
-            pGuiGraphics.drawCenteredString(pFont, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | pColor);
-
-        }
-        pGuiGraphics.pose().popPose();
-    }
-
-    private NeverendSplash setType(int type) {
-        specialRenderType = type;
-        return this;
-    }
-
     public static NeverendSplash getRandomSplash() {
         Calendar calendar = Calendar.getInstance();
-        if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 15) {
-            return new NeverendSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]).setType(SPECIAL_SPLASH_HOLIDAY);
+        if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
+            return new FestiveSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
         }
         int pick = new Random().nextInt(SPLASHES.length + SPECIAL_SPLASHES);
         if (pick < SPECIAL_SPLASHES) {
@@ -243,14 +195,13 @@ class NeverendSplash extends SplashRenderer {
                 }
                 return new NeverendSplash("Good " + greeting + "!");
             case 2: // double trouble
-                return new NeverendSplash("Double trouble!").setType(SPECIAL_SPLASH_DOUBLE_TROUBLE);
+                return new DoubleSplash("Double trouble!");
             case 3: // you're a wizard
                 return new NeverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
             case 4: // THE END IS NEVER THE END
-                return new NeverendSplash("THE END IS NEVER ".repeat(20)).setType(SPECIAL_SPLASH_END_IS_NEVER);
+                return new EndIsNeverSplash("THE END IS NEVER ".repeat(20));
             case 5:
-                launchStart = System.nanoTime();
-                return new NeverendSplash("Liftoff!").setType(SPECIAL_SPLASH_LAUNCH_SEQUENCE);
+                return new CountdownSplash("Liftoff!");
             case 6: // this text is color
                 switch (new Random().nextInt(10 + 6)) {
                     case 0:
