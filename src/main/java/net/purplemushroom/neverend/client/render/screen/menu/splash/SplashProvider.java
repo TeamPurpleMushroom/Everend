@@ -149,6 +149,17 @@ public class SplashProvider {
             "That '20s mod!"
     };
 
+    public static final String[] SPOOKY_SPLASHES = {
+            "Spooky!",
+            "Boo!",
+            "The nightmare before Christmas!",
+            "Haunted!",
+            "Beware!",
+            "Spooky scary skeletons!",
+            "Ghosts and ghouls!",
+            "Contains ghasts!"
+    };
+
     public static final String[] HOLIDAY_SPLASHES = {
             "Merry Christmas!",
             "Happy Holidays!",
@@ -160,14 +171,19 @@ public class SplashProvider {
             "It's the most wonderful time of the year!",
             "Grandma got run over!",
             "Santa Claus is coming to town!",
-            "A home invader is coming down the chimney!",
-            "The nightmare before Christmas!" // TODO: maybe this should be a Halloween splash?
+            "A home invader is coming down the chimney!"
     };
 
     public static NeverendSplash getRandomSplash() {
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
             return new FestiveSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
+        }
+        if (calendar.get(Calendar.MONTH) == Calendar.OCTOBER && calendar.get(Calendar.DATE) >= 15) {
+            return new SpookySplash(SPOOKY_SPLASHES[new Random().nextInt(SPOOKY_SPLASHES.length)]);
+        }
+        if (calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DATE) == 1) {
+            return new FoolsSplash();
         }
         int pick = new Random().nextInt(SPLASHES.length + SPECIAL_SPLASHES);
         if (pick < SPECIAL_SPLASHES) {
