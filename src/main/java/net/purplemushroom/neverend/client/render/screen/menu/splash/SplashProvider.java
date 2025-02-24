@@ -146,7 +146,9 @@ public class SplashProvider {
             "Objection!",
             "010000100110100101101110011000010111001001111001!",
             "Behold the man who is a bean!",
-            "That '20s mod!"
+            "That '20s mod!",
+            "Get rekt scrub!",
+            "Kids, ask your parents where babies come from!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {

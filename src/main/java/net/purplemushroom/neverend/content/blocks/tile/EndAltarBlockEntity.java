@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.purplemushroom.neverend.content.items.DragonboneItemAbility;
 import net.purplemushroom.neverend.content.items.INESpecialAbilityItem;
 import net.purplemushroom.neverend.content.items.LuduniteItemAbility;
 import net.purplemushroom.neverend.registry.NEBlockEntities;
@@ -17,8 +18,6 @@ import net.purplemushroom.neverend.util.MathUtil;
 import java.util.HashMap;
 
 public class EndAltarBlockEntity extends BlockEntity {
-    //TODO: correct interaction results for clicking this block
-    //TODO: fix weird placement behavior (i.e. when you try adding blocks to the altar)
     //TODO: make dust requirement for ludunium charge depend on the amount of durability used
     //TODO: remove debug ticking code when done
     private ItemStack placedItem = ItemStack.EMPTY;
@@ -61,7 +60,7 @@ public class EndAltarBlockEntity extends BlockEntity {
             if (recipes.containsKey(placedItem.getItem())) {
                 requiredDust = recipes.get(placedItem.getItem()).dust;
             } else if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
-                    abilityItem.getAbility() == LuduniteItemAbility.INSTANCE &&
+                    (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE || abilityItem.getAbility() == DragonboneItemAbility.INSTANCE) &&
                     placedItem.getTag() != null &&
                     placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
                 requiredDust = 10;
@@ -74,7 +73,7 @@ public class EndAltarBlockEntity extends BlockEntity {
 
                 if (dustCount >= requiredDust) {
                     if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
-                            abilityItem.getAbility() == LuduniteItemAbility.INSTANCE &&
+                            (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE || abilityItem.getAbility() == DragonboneItemAbility.INSTANCE) &&
                             placedItem.getTag() != null &&
                             placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
                         placedItem.getOrCreateTag().putInt("Charge", placedItem.getMaxDamage());

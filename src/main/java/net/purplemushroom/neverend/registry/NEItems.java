@@ -47,6 +47,7 @@ public class NEItems {
 
         register("ludunite_thing", "Ludunite Thing");
 
+        //TODO: stats
         register("ludunite_sword", "Ludunite Sword", () -> new NESword(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
         register("ludunite_pickaxe", "Ludunite Pickaxe", () -> new NEPickaxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
         register("ludunite_axe", "Ludunite Axe", () -> new NEAxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
@@ -72,6 +73,18 @@ public class NEItems {
         register("aldores_boots", "Aldores Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), AldoresItemAbility.INSTANCE));
 
         register("dragonbone", "Dragonbone");
+
+        //TODO: stats
+        register("dragonbone_sword", "Dragonbone Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_pickaxe", "Dragonbone Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_axe", "Dragonbone Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_shovel", "Dragonbone Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_hoe", "Dragonbone Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_helmet", "Dragonbone Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_chestplate", "Dragonbone Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_leggings", "Dragonbone Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        register("dragonbone_boots", "Dragonbone Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+
         register("enchantment_crystal", "Enchantment Crystal");
         register("enderium_dust", "Enderium Dust");
         register("nullberry", "Nullberry", () -> new NullberryItem(baseProps().food(new FoodProperties.Builder().alwaysEat().nutrition(2).fast().saturationMod(1.0F).build())));

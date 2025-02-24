@@ -31,15 +31,13 @@ public class EndAltarBlock extends Block implements EntityBlock {
         if (!pPlayer.level().isClientSide() && pPlayer.level().getBlockEntity(pPos) instanceof EndAltarBlockEntity entity) {
             if (pHand == InteractionHand.MAIN_HAND && !pPlayer.getMainHandItem().isEmpty()) {
                 entity.addItem(pPlayer.getMainHandItem());
-                return InteractionResult.CONSUME;
             } else if (pPlayer.getMainHandItem().isEmpty() && !pPlayer.getOffhandItem().isEmpty()) {
                 entity.addItem(pPlayer.getOffhandItem());
-                return InteractionResult.CONSUME;
             } else if (pHand == InteractionHand.MAIN_HAND) {
                 entity.dropItem();
             }
         }
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable
