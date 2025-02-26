@@ -151,7 +151,14 @@ public class SplashProvider {
             "Now with blackjack and hookers!",
             "Only '90s kids will remember!",
             "Peace and love!",
-            "Trendy!"
+            "Trendy!",
+            "Requires a very particular set of skills!",
+            "Let the bodies hit the floor!",
+            "Batteries not included!",
+            "Free shipping!",
+            "No refunds!",
+            "TODO: get milk, destroy humanity",
+            "No animals were harmed in the making of this mod!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
