@@ -7,7 +7,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.purplemushroom.neverend.client.event.KeyInputEventHandler;
 import net.purplemushroom.neverend.content.blocks.tile.EndAltarBlockEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +34,7 @@ public class Neverend {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(KeyInputEventHandler.class);
+        //MinecraftForge.EVENT_BUS.register(KeyInputEventHandler.class);
     }
 
     private void enqueue(InterModEnqueueEvent event) { }

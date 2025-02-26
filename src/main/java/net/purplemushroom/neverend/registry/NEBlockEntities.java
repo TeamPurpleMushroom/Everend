@@ -3,6 +3,7 @@ package net.purplemushroom.neverend.registry;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.purplemushroom.neverend.Neverend;
 import net.purplemushroom.neverend.client.render.tile.DeathObeliskBER;
+import net.purplemushroom.neverend.client.render.tile.EndAltarBER;
 import net.purplemushroom.neverend.client.render.tile.EndAnchorBER;
 import net.purplemushroom.neverend.content.blocks.tile.DeathObeliskBlockEntity;
 import net.purplemushroom.neverend.content.blocks.tile.EndAltarBlockEntity;
@@ -26,6 +27,6 @@ public class NEBlockEntities {
         REGISTER.registerSingleBound("death_obelisk", DeathObeliskBlockEntity::new, () -> NEBlocks.DEATH_OBELISK).regCustomRenderer(() -> DeathObeliskBER::new);
         REGISTER.registerSingleBound("end_anchor", EndAnchorBlockEntity::new, () -> NEBlocks.END_ANCHOR).regCustomRenderer(() -> EndAnchorBER::new);
         REGISTER.registerSingleBound("gaze_crystal", GazeCrystalBlockEntity::new, () -> NEBlocks.GAZE_CRYSTAL);
-        REGISTER.registerSingleBound("end_altar", EndAltarBlockEntity::new, () -> NEBlocks.END_ALTAR);
+        REGISTER.registerSingleBound("end_altar", EndAltarBlockEntity::new, () -> NEBlocks.END_ALTAR).regCustomRenderer(() -> EndAltarBER::new);
     }
 }

@@ -1,4 +1,4 @@
-package net.purplemushroom.neverend.client.event;
+/*package net.purplemushroom.neverend.client.event;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
@@ -25,4 +25,4 @@ public class KeyInputEventHandler {
             }
         }
     }
-}
+}*/

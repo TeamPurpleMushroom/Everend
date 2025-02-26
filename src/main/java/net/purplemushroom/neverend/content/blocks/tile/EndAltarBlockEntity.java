@@ -2,10 +2,14 @@ package net.purplemushroom.neverend.content.blocks.tile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.purplemushroom.neverend.content.items.DragonboneItemAbility;
@@ -14,6 +18,7 @@ import net.purplemushroom.neverend.content.items.LuduniteItemAbility;
 import net.purplemushroom.neverend.registry.NEBlockEntities;
 import net.purplemushroom.neverend.registry.NEItems;
 import net.purplemushroom.neverend.util.MathUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
@@ -40,7 +45,7 @@ public class EndAltarBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        System.out.println(dustCount);
+        System.out.println("Dust: " + dustCount);
     }
 
     public void addItem(ItemStack stack) {
@@ -87,6 +92,8 @@ public class EndAltarBlockEntity extends BlockEntity {
                 }
             }
         }
+
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
     }
 
     public void dropItem() {
@@ -96,8 +103,33 @@ public class EndAltarBlockEntity extends BlockEntity {
             entity.setDefaultPickUpDelay();
             this.level.addFreshEntity(entity);
             placedItem = ItemStack.EMPTY;
+            level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
         }
     }
+
+    public ItemStack getItem() {
+        return placedItem;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = super.getUpdateTag();
+        nbt.put("Item", placedItem.serializeNBT());
+        nbt.putInt("Dust", dustCount);
+        return nbt;
+    }
+
+    /*@Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+        //placedItem = ItemStack.of(tag);
+    }*/
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
