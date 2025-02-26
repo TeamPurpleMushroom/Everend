@@ -158,7 +158,21 @@ public class SplashProvider {
             "Free shipping!",
             "No refunds!",
             "TODO: get milk, destroy humanity",
-            "No animals were harmed in the making of this mod!"
+            "No animals were harmed in the making of this mod!",
+            "Your skin is freezing; let me help you take it off!",
+            "Undead cat inside a box!",
+            "Creeper no creeping!",
+            "Non-biodegradable!",
+            "It exists!",
+            "90% of gamblers quit right before they hit it big!",
+            "Bank error in your favor!",
+            "Uno!",
+            "Crop circles are just alien emojis!",
+            "Sensual!",
+            "Wahoo!",
+            "1-Up!",
+            "Tower of pimps!",
+            "Let's play!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
