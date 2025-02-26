@@ -3,26 +3,19 @@ package net.purplemushroom.neverend.client.render.world;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.minecraft.world.phys.Vec3;
-import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import org.joml.Matrix4f;
 
 public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
-    private VertexBuffer starBuffer;
+    private VertexBuffer neOverlayBuffer;
     private static final int DIVISIONS = 20;
     private static final ResourceLocation END_SKY_LOCATION = new ResourceLocation("textures/environment/end_sky.png");
 
@@ -31,47 +24,38 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionShader);
-        if (this.starBuffer != null) {
-            this.starBuffer.close();
+        if (this.neOverlayBuffer != null) {
+            this.neOverlayBuffer.close();
         }
 
-        this.starBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
-        BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = this.drawStars(bufferbuilder);
-        this.starBuffer.bind();
-        this.starBuffer.upload(bufferbuilder$renderedbuffer);
+        this.neOverlayBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+        BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = this.generateNEOverlayBuffer(bufferbuilder);
+        this.neOverlayBuffer.bind();
+        this.neOverlayBuffer.upload(bufferbuilder$renderedbuffer);
         VertexBuffer.unbind();
     }
 
-    private BufferBuilder.RenderedBuffer drawStars(BufferBuilder pBuilder) {
+    private BufferBuilder.RenderedBuffer generateNEOverlayBuffer(BufferBuilder pBuilder) {
         pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
+        Vec3 vector;
         for (float phi = Mth.PI; phi < Mth.TWO_PI; phi += Mth.PI / DIVISIONS) {
             for (float theta = 0.0f; theta < Mth.TWO_PI; theta += Mth.TWO_PI / DIVISIONS) {
-                Vec3 vector = new Vec3(
-                        Mth.sin(phi) * Mth.cos(theta),
-                        Mth.sin(phi) * Mth.sin(theta),
-                        Mth.cos(phi));
+                float nextPhi = phi + Mth.PI / DIVISIONS, nextTheta = theta + Mth.TWO_PI / DIVISIONS;
+
+                vector = new Vec3(Mth.sin(phi) * Mth.cos(theta), Mth.sin(phi) * Mth.sin(theta), Mth.cos(phi));
                 vector = vector.normalize().scale(100);
                 pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();
 
-                vector = new Vec3(
-                        Mth.sin(phi + Mth.PI / DIVISIONS) * Mth.cos(theta),
-                        Mth.sin(phi + Mth.PI / DIVISIONS) * Mth.sin(theta),
-                        Mth.cos(phi + Mth.PI / DIVISIONS));
+                vector = new Vec3(Mth.sin(nextPhi) * Mth.cos(theta), Mth.sin(nextPhi) * Mth.sin(theta), Mth.cos(nextPhi));
                 vector = vector.normalize().scale(100);
                 pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();
 
-                vector = new Vec3(
-                        Mth.sin(phi + Mth.PI / DIVISIONS) * Mth.cos(theta + Mth.TWO_PI / DIVISIONS),
-                        Mth.sin(phi + Mth.PI / DIVISIONS) * Mth.sin(theta + Mth.TWO_PI / DIVISIONS),
-                        Mth.cos(phi + Mth.PI / DIVISIONS));
+                vector = new Vec3(Mth.sin(nextPhi) * Mth.cos(nextTheta), Mth.sin(nextPhi) * Mth.sin(nextTheta), Mth.cos(nextPhi));
                 vector = vector.normalize().scale(100);
                 pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();
 
-                vector = new Vec3(
-                        Mth.sin(phi) * Mth.cos(theta + Mth.TWO_PI / DIVISIONS),
-                        Mth.sin(phi) * Mth.sin(theta + Mth.TWO_PI / DIVISIONS),
-                        Mth.cos(phi));
+                vector = new Vec3(Mth.sin(phi) * Mth.cos(nextTheta), Mth.sin(phi) * Mth.sin(nextTheta), Mth.cos(phi));
                 vector = vector.normalize().scale(100);
                 pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();
             }
@@ -124,24 +108,27 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
         }
 
         // render NE overlay
-        Entity player = Minecraft.getInstance().getCameraEntity();
-        if (player != null) {
-            Vec3 pos = player.getPosition(partialTick);
-            if (Math.sqrt(pos.x * pos.x + pos.z * pos.z) > 500) {
-                poseStack.pushPose();
-                RenderSystem.setShaderColor(0.08f, 0.35f, 0.34f, 0.3f);
-                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-                //FogRenderer.setupNoFog();
+        Vec3 cameraPos = camera.getPosition();
+        if (Math.sqrt(cameraPos.x * cameraPos.x + cameraPos.z * cameraPos.z) > 700) { // ensure player is at the outer islands
+            Vec3 skyColor = level.getSkyColor(cameraPos, partialTick); // if we give biomes their own sky colors, they'll affect this!
 
-                this.starBuffer.bind();
-                this.starBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
-                VertexBuffer.unbind();
+            // TODO: maybe have a datapack or smth to give the vanilla end biomes the below color?
+            if (skyColor.equals(Vec3.ZERO)) skyColor = new Vec3(0.08, 0.35, 0.34); // default to this color. If we decide not to keep the tint then ¯\_(ツ)_/¯
 
-                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-                poseStack.popPose();
-            }
+            poseStack.pushPose();
+            RenderSystem.setShaderColor((float) skyColor.x, (float) skyColor.y, (float) skyColor.z, 0.3f);
+            poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+            //FogRenderer.setupNoFog();
+
+            this.neOverlayBuffer.bind();
+            this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+            VertexBuffer.unbind();
+
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+            poseStack.popPose();
         }
         RenderSystem.depthMask(true);
+
         RenderSystem.disableBlend();
 
         return true;

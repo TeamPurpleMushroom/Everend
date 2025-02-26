@@ -127,7 +127,6 @@ public class SplashProvider {
             "Quoth the raven, \"Wacka wacka wacka wah.\"",
             "Bazinga!",
             "Epic!",
-            //"Enchanting grom fright!",
             "Only on PC!",
             "America, heck yeah!",
             "Didn't see you come in!",
@@ -148,7 +147,11 @@ public class SplashProvider {
             "Behold the man who is a bean!",
             "That '20s mod!",
             "Get rekt scrub!",
-            "Kids, ask your parents where babies come from!"
+            "Kids, ask your parents where babies come from!",
+            "Now with blackjack and hookers!",
+            "Only '90s kids will remember!",
+            "Peace and love!",
+            "Trendy!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
