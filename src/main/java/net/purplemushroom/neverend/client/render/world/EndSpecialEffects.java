@@ -5,7 +5,9 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.Util;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -13,6 +15,8 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import org.joml.Matrix4f;
@@ -120,16 +124,25 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
         }
 
         // render NE overlay
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, (Mth.sin((partialTick + ticks) / 50) + 1) / 2);
-        //FogRenderer.setupNoFog();
+        Entity player = Minecraft.getInstance().getCameraEntity();
+        if (player != null) {
+            Vec3 pos = player.getPosition(partialTick);
+            if (Math.sqrt(pos.x * pos.x + pos.z * pos.z) > 500) {
+                poseStack.pushPose();
+                RenderSystem.setShaderColor(0.08f, 0.35f, 0.34f, 0.3f);
+                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+                //FogRenderer.setupNoFog();
 
-        this.starBuffer.bind();
-        this.starBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
-        VertexBuffer.unbind();
+                this.starBuffer.bind();
+                this.starBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+                VertexBuffer.unbind();
 
+                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                poseStack.popPose();
+            }
+        }
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         return true;
     }
