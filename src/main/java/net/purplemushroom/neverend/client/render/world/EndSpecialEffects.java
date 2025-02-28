@@ -1,5 +1,6 @@
 package net.purplemushroom.neverend.client.render.world;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -12,11 +13,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+import net.purplemushroom.neverend.client.registry.NEShaderRegistry;
 import org.joml.Matrix4f;
 
 public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
     private VertexBuffer neOverlayBuffer;
-    private static final int DIVISIONS = 20;
+    private static final int DIVISIONS = 50;
     private static final ResourceLocation END_SKY_LOCATION = new ResourceLocation("textures/environment/end_sky.png");
 
     public EndSpecialEffects() {
@@ -35,15 +37,27 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
         VertexBuffer.unbind();
     }
 
-    private BufferBuilder.RenderedBuffer generateNEOverlayBuffer(BufferBuilder pBuilder) {
-        pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+    private void addSkyboxVertex(BufferBuilder builder, float phi, float theta) {
+        Vec3 vector = new Vec3(Mth.sin(phi) * Mth.cos(theta), Mth.sin(phi) * Mth.sin(theta), Mth.cos(phi));
+        vector = vector.normalize().scale(100);
+        builder
+                .vertex(vector.x, vector.y, vector.z)
+                .uv((phi - Mth.PI) / Mth.PI, theta / Mth.TWO_PI)
+                .endVertex();
+    }
 
-        Vec3 vector;
+    private BufferBuilder.RenderedBuffer generateNEOverlayBuffer(BufferBuilder builder) {
+        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+
         for (float phi = Mth.PI; phi < Mth.TWO_PI; phi += Mth.PI / DIVISIONS) {
             for (float theta = 0.0f; theta < Mth.TWO_PI; theta += Mth.TWO_PI / DIVISIONS) {
                 float nextPhi = phi + Mth.PI / DIVISIONS, nextTheta = theta + Mth.TWO_PI / DIVISIONS;
 
-                vector = new Vec3(Mth.sin(phi) * Mth.cos(theta), Mth.sin(phi) * Mth.sin(theta), Mth.cos(phi));
+                addSkyboxVertex(builder, phi, theta);
+                addSkyboxVertex(builder, nextPhi, theta);
+                addSkyboxVertex(builder, nextPhi, nextTheta);
+                addSkyboxVertex(builder, phi, nextTheta);
+                /*vector = new Vec3(Mth.sin(phi) * Mth.cos(theta), Mth.sin(phi) * Mth.sin(theta), Mth.cos(phi));
                 vector = vector.normalize().scale(100);
                 pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();
 
@@ -57,11 +71,11 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
 
                 vector = new Vec3(Mth.sin(phi) * Mth.cos(nextTheta), Mth.sin(phi) * Mth.sin(nextTheta), Mth.cos(phi));
                 vector = vector.normalize().scale(100);
-                pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();
+                pBuilder.vertex(vector.x, vector.y, vector.z).endVertex();*/
             }
         }
 
-        return pBuilder.end();
+        return builder.end();
     }
 
     @Override
@@ -121,7 +135,9 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
             //FogRenderer.setupNoFog();
 
             this.neOverlayBuffer.bind();
-            this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+            this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, NEShaderRegistry.getShaderEndSky());
+
+            //this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
             VertexBuffer.unbind();
 
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);

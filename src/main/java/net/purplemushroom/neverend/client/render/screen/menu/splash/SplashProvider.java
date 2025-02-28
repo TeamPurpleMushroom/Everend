@@ -172,7 +172,9 @@ public class SplashProvider {
             "Wahoo!",
             "1-Up!",
             "Tower of pimps!",
-            "Let's play!"
+            "Let's play!",
+            "In a galaxy far, far away!",
+            "You've won two free iPod Nanos!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {

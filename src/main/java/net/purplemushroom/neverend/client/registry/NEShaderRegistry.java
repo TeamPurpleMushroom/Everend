@@ -19,6 +19,8 @@ public class NEShaderRegistry {
 
     public static ShaderInstance shaderMenu;
 
+    public static ShaderInstance shaderEndSky;
+
     public static ShaderInstance getShaderVoidStars() {
         return shaderVoidStars;
     }
@@ -26,6 +28,8 @@ public class NEShaderRegistry {
     public static ShaderInstance getShaderMenu() {
         return shaderMenu;
     }
+
+    public static ShaderInstance getShaderEndSky() {return shaderEndSky;}
 
     @SubscribeEvent
     public static void registerShaders(RegisterShadersEvent event) throws IOException {
@@ -35,5 +39,8 @@ public class NEShaderRegistry {
 
         event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Neverend.MODID, "rendertype_menu"), DefaultVertexFormat.POSITION),
                 shaderInstance -> shaderMenu = shaderInstance);
+
+        event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Neverend.MODID, "end_sky"), DefaultVertexFormat.POSITION_TEX),
+                shaderInstance -> shaderEndSky = shaderInstance);
     }
 }
