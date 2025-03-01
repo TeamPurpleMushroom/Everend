@@ -11,7 +11,7 @@ public class SplashProvider {
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
-            "Nevermine in the End!", //"\"Neverend\"" was taken!",
+            "Nevermine in the End!",
             "A friendly perdition!",
             "Subjectively good!",
             "Woo, Discord!",
@@ -25,7 +25,7 @@ public class SplashProvider {
             "Also try Advent of Ascension!",
             "Family friendly!",
             "Remember the cows!",
-            "It never ends!", // Will it ever end?!
+            "It never ends!",
             "Powered by TimeCore!",
             "Powered by NeoForge!",
             "The effect affects the picture!",
@@ -173,6 +173,8 @@ public class SplashProvider {
             "1-Up!",
             "Tower of pimps!",
             "Let's play!",
+            "A series of unfortunate events!",
+            "A neverending story!",
             "In a galaxy far, far away!",
             "You've won two free iPod Nanos!",
             "Cheaper than eggs!",
