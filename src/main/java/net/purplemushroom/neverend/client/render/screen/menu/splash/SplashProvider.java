@@ -66,6 +66,7 @@ public class SplashProvider {
             "Human-generated!",
             "You love to see it!",
             "Wazzup!",
+            "Deja vu!",
             "Down the witches' road!",
             "You should have gone for the head!",
             "Weirdmageddon!",
@@ -182,9 +183,18 @@ public class SplashProvider {
             "Confusion and delay!",
             "Why so uptight, Mr. Cox?",
             "Look behind you.",
-            "Watch 'The Owl House'!",
+            //"'The Owl House' is a fun show!",
             "This message will self-destruct in five seconds!", // TODO: maybe make this a special splash?
-            "It is grammar is great!" // TODO: maybe change to something that makes more sense?
+            "This message has errors in it is grammar!", // TODO: maybe change to something that makes more sense?
+            "Deja vu!",
+            "One man's \"cringe\" is another man's \"cool\"!",
+            "Ores that spawn!",
+            "De gustibus non est disputandum!",
+            "Don't murder people!",
+            "Hic textus latine scriptus est, ut debet esse valde profundus!",
+            "This message is almost certainly qualified!",
+            "Uses custom shaders!",
+            "Thanks Mr. Perlin!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -195,7 +205,8 @@ public class SplashProvider {
             "Beware!",
             "Spooky scary skeletons!",
             "Ghosts and ghouls!",
-            "Contains ghasts!"
+            "Contains ghasts!",
+            "There is a skeleton inside of you!"
     };
 
     public static final String[] HOLIDAY_SPLASHES = {
@@ -257,40 +268,29 @@ public class SplashProvider {
             case 5:
                 return new CountdownSplash("Liftoff!");
             case 6: // this text is color
-                switch (new Random().nextInt(10 + 6)) {
+                switch (new Random().nextInt(10)) {
                     case 0:
                         return new NeverendSplash("§0This splash is black!");
                     case 1:
-                        return new NeverendSplash("§1This splash is dark blue!");
+                        return new NeverendSplash("§1This splash is blue!");
                     case 2:
-                        return new NeverendSplash("§2This splash is dark green!");
+                        return new NeverendSplash("§2This splash is green!");
                     case 3:
-                        return new NeverendSplash("§3This splash is dark aqua!");
+                        return new NeverendSplash("§4This splash is red!");
                     case 4:
-                        return new NeverendSplash("§4This splash is dark red!");
+                        return new NeverendSplash("§5This splash is purple!");
                     case 5:
-                        return new NeverendSplash("§5This splash is dark purple!");
-                    case 6:
                         return new NeverendSplash("§6This splash is golden!");
-                    case 7:
+                    case 6:
                         return new NeverendSplash("§7This splash is grey!");
+                    case 7:
+                        return new NeverendSplash("§dThis splash is pink!");
                     case 8:
-                        return new NeverendSplash("§8This splash is dark grey!");
-                    case 9:
-                        return new NeverendSplash("§9This splash is blue!");
-                    case 10:
-                        return new NeverendSplash("§aThis splash is green!");
-                    case 11:
-                        return new NeverendSplash("§bThis splash is aqua!");
-                    case 12:
-                        return new NeverendSplash("§cThis splash is red!");
-                    case 13:
-                        return new NeverendSplash("§dThis splash is light purple!");
-                    case 14:
                         return new NeverendSplash("§eThis splash is yellow!");
-                    case 15:
+                    case 9:
                         return new NeverendSplash("§fThis splash is white!");
                 }
+                throw new IllegalArgumentException("Could not pick a valid color for color splash!");
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
