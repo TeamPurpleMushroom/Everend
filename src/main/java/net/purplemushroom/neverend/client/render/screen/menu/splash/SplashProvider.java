@@ -11,7 +11,7 @@ public class SplashProvider {
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
-            "Nevermine in the End!",
+            "Nevermine in the End!", //"\"Neverend\"" was taken!",
             "A friendly perdition!",
             "Subjectively good!",
             "Woo, Discord!",
@@ -25,7 +25,7 @@ public class SplashProvider {
             "Also try Advent of Ascension!",
             "Family friendly!",
             "Remember the cows!",
-            "It never ends!",
+            "It never ends!", // Will it ever end?!
             "Powered by TimeCore!",
             "Powered by NeoForge!",
             "The effect affects the picture!",
@@ -180,7 +180,6 @@ public class SplashProvider {
             "Confusion and delay!",
             "Why so uptight, Mr. Cox?",
             "Look behind you.",
-            //"\"Neverend\"" was taken!",
             "Watch 'The Owl House'!",
             "This message will self-destruct in five seconds!", // TODO: maybe make this a special splash?
             "It is grammar is great!" // TODO: maybe change to something that makes more sense?
