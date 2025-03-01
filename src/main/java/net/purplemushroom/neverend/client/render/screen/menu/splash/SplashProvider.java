@@ -174,7 +174,16 @@ public class SplashProvider {
             "Tower of pimps!",
             "Let's play!",
             "In a galaxy far, far away!",
-            "You've won two free iPod Nanos!"
+            "You've won two free iPod Nanos!",
+            "Cheaper than eggs!",
+            "Slow and tranquil!",
+            "Confusion and delay!",
+            "Why so uptight, Mr. Cox?",
+            "Look behind you.",
+            //"\"Neverend\"" was taken!",
+            "Watch 'The Owl House'!",
+            "This message will self-destruct in five seconds!", // TODO: maybe make this a special splash?
+            "It is grammar is great!" // TODO: maybe change to something that makes more sense?
     };
 
     public static final String[] SPOOKY_SPLASHES = {
