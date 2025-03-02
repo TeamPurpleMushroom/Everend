@@ -38,18 +38,21 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
     }
 
     private void addSkyboxVertex(BufferBuilder builder, float phi, float theta) {
-        Vec3 vector = new Vec3(Mth.sin(phi) * Mth.cos(theta), Mth.sin(phi) * Mth.sin(theta), Mth.cos(phi));
+        float u = theta / Mth.TWO_PI;
+        float v = phi / Mth.PI;
+
+        Vec3 vector = new Vec3(Mth.sin(phi) * Mth.cos(theta), Mth.cos(phi), Mth.sin(phi) * Mth.sin(theta));
         vector = vector.normalize().scale(100);
         builder
                 .vertex(vector.x, vector.y, vector.z)
-                .uv((phi - Mth.PI) / Mth.PI, theta / Mth.TWO_PI)
+                .uv(u, v)
                 .endVertex();
     }
 
     private BufferBuilder.RenderedBuffer generateNEOverlayBuffer(BufferBuilder builder) {
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        for (float phi = Mth.PI; phi < Mth.TWO_PI; phi += Mth.PI / DIVISIONS) {
+        for (float phi = 0.0f; phi < Mth.PI; phi += Mth.PI / DIVISIONS) {
             for (float theta = 0.0f; theta < Mth.TWO_PI; theta += Mth.TWO_PI / DIVISIONS) {
                 float nextPhi = phi + Mth.PI / DIVISIONS, nextTheta = theta + Mth.TWO_PI / DIVISIONS;
 
@@ -121,6 +124,26 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
             poseStack.popPose();
         }
 
+
+
+
+        /*
+        THIS IS DEBUG CODE THAT CONSTANTLY REFRESHES THE SKYBOX BUFFER
+        tesselator = Tesselator.getInstance();
+        bufferbuilder = tesselator.getBuilder();
+        RenderSystem.setShader(GameRenderer::getPositionShader);
+        if (this.neOverlayBuffer != null) {
+            this.neOverlayBuffer.close();
+        }
+
+        this.neOverlayBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
+        BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = this.generateNEOverlayBuffer(bufferbuilder);
+        this.neOverlayBuffer.bind();
+        this.neOverlayBuffer.upload(bufferbuilder$renderedbuffer);
+        VertexBuffer.unbind();*/
+
+
+
         // render NE overlay
         Vec3 cameraPos = camera.getPosition();
         if (Math.sqrt(cameraPos.x * cameraPos.x + cameraPos.z * cameraPos.z) > 700) { // ensure player is at the outer islands
@@ -131,7 +154,7 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
 
             poseStack.pushPose();
             RenderSystem.setShaderColor((float) skyColor.x, (float) skyColor.y, (float) skyColor.z, 0.3f);
-            poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+            //poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
             //FogRenderer.setupNoFog();
 
             this.neOverlayBuffer.bind();
