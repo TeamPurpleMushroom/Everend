@@ -1,4 +1,9 @@
 {
+    "blend": {
+        "func": "add",
+        "srcrgb": "srcalpha",
+        "dstrgb": "1-srcalpha"
+    },
     "vertex": "neverend:end_sky",
     "fragment": "neverend:end_sky",
     "samplers": [

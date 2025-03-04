@@ -23,6 +23,7 @@ public class SplashProvider {
             "Also try The Betweenlands!",
             "Also try Eternalcraft!",
             "Also try Advent of Ascension!",
+            "Also try Hexxit!",
             "Family friendly!",
             "Remember the cows!",
             "It never ends!", // "Will it ever end?!" TODO: swap if name changed to "Everend"
@@ -65,7 +66,7 @@ public class SplashProvider {
             "No swearing on Christian servers!",
             "Human-generated!",
             "You love to see it!",
-            "Wazzup!",
+            "Wazzaaaap!",
             "Deja vu!",
             "Down the witches' road!",
             "You should have gone for the head!",
@@ -183,7 +184,7 @@ public class SplashProvider {
             "Confusion and delay!",
             "Why so uptight, Mr. Cox?",
             "Look behind you.",
-            //"'The Owl House' is a fun show!",
+            "'The Owl House' is a fun show!",
             "This message will self-destruct in five seconds!", // TODO: maybe make this a special splash?
             "This message has errors in it is grammar!", // TODO: maybe change to something that makes more sense?
             "Deja vu!",
@@ -193,8 +194,19 @@ public class SplashProvider {
             "Don't murder people!",
             "Hic textus latine scriptus est, ut debet esse valde profundus!",
             "This message is almost certainly qualified!",
-            "Uses custom shaders!",
-            "Thanks Mr. Perlin!"
+            "Custom shaders!",
+            "Thanks Mr. Perlin!",
+            "Pokemon go to the polls!",
+            "World's only antivirus with data recovery software!",
+            "I see love!",
+            "Skibidi!",
+            "On the floor!",
+            "Diablo El Pollo!",
+            "Be protected from mayhem!",
+            "Colorful mushrooms!",
+            "You rule!",
+            "Take back the night!",
+            "Some assembly required!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {

@@ -158,9 +158,9 @@ public class EndSpecialEffects extends DimensionSpecialEffects.EndEffects {
             //FogRenderer.setupNoFog();
 
             this.neOverlayBuffer.bind();
+            this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
             this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, NEShaderRegistry.getShaderEndSky());
 
-            //this.neOverlayBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
             VertexBuffer.unbind();
 
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
