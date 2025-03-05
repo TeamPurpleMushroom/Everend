@@ -122,7 +122,7 @@ public class SplashProvider {
             "Hello!",
             "Made by nerds, for nerds!",
             "The (unofficial) End Update!",
-            "Over 100 custom splashes!",
+            "Over 200 custom splashes!",
             "This statement is false!",
             "Sample Text",
             "Writing these is fun!",
@@ -189,7 +189,7 @@ public class SplashProvider {
             "This message has errors in it is grammar!", // TODO: maybe change to something that makes more sense?
             "Deja vu!",
             "One man's \"cringe\" is another man's \"cool\"!",
-            "Ores that spawn!",
+            "Ores spawn!",
             "De gustibus non est disputandum!",
             "Don't murder people!",
             "Hic textus latine scriptus est, ut debet esse valde profundus!",
@@ -206,7 +206,22 @@ public class SplashProvider {
             "Colorful mushrooms!",
             "You rule!",
             "Take back the night!",
-            "Some assembly required!"
+            "Some assembly required!",
+            "Diary of a blocky man!",
+            "Illuminati confirmed!",
+            "...and then one with the crowbar!",
+            "§mJumpscare Mansion§r House of Jumpscares!",
+            "Elytras give you wiiings!",
+            "May I take your order?",
+            "Cities & Dragons!",
+            "Fun fact: aldores gives you cancer!",
+            "Dumbledore speaks calmly!",
+            "I'm the least evil person I know!",
+            "Hallelujah!",
+            "Suspicious looking eyes!",
+            "Budget of $0!",
+            "OP enchantments!",
+            "Teal skies!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
