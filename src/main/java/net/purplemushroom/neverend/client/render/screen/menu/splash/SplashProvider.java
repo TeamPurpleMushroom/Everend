@@ -214,14 +214,17 @@ public class SplashProvider {
             "Elytras give you wiiings!",
             "May I take your order?",
             "Cities & Dragons!",
-            "Fun fact: aldores gives you cancer!",
             "Dumbledore speaks calmly!",
             "I'm the least evil person I know!",
             "Hallelujah!",
             "Suspicious looking eyes!",
             "Budget of $0!",
             "OP enchantments!",
-            "Teal skies!"
+            "Teal skies!",
+            "SFW!",
+            "Based on a true story!",
+            "Fun for all ages!",
+            "Very odd!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
