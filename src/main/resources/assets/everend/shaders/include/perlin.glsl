@@ -63,8 +63,8 @@ float perlin2D(vec2 coords, float frequency, float amplitude) {
     int permY = (int(floor(coords.y))) % PERMS.length();
     int permY2 = (permY + 1) % PERMS.length();
 
-    int valueTopRight = PERMS[PERMS[permX + 1] + permY + 1];
-    int valueTopLeft = PERMS[PERMS[permX] + permY + 1];
+    int valueTopRight = PERMS[PERMS[permX + 1] + permY2];
+    int valueTopLeft = PERMS[PERMS[permX] + permY2];
     int valueBottomRight = PERMS[PERMS[permX + 1] + permY];
     int valueBottomLeft = PERMS[PERMS[permX] + permY];
 
@@ -87,8 +87,11 @@ float perlin2D(vec2 coords, float frequency, float amplitude) {
     return lerp(lerp(dotBottomLeft, dotTopLeft, v), lerp(dotBottomRight, dotTopRight, v), u) * amplitude;
 }
 
-float perlin2DLoop(vec2 coords, float frequency, float amplitude, float limit) {
-    int loopPoint = min(int(floor(limit * frequency)), PERMS.length());
+float perlin2DLoop(vec2 coords, float frequency, float amplitude, vec2 limits) {
+    int loopX = PERMS.length();
+    if (limits.x > 0.0) loopX = min(int(floor(limits.x * frequency)), loopX);
+    int loopY = PERMS.length();
+    if (limits.y > 0.0) loopY = min(int(floor(limits.y * frequency)), loopY);
 
     coords = coords * frequency;
     vec2 coordsf = vec2(coords.x - floor(coords.x), coords.y - floor(coords.y));
@@ -111,10 +114,10 @@ float perlin2DLoop(vec2 coords, float frequency, float amplitude, float limit) {
         First we use the bitwise & operator (in this case works like % 256) to obtain indexes for the permutation table.
         Keep in mind we can also access permX + 1 and permY + 1 due to the fact that we duplicated the table.
      */
-    int permX = (int(floor(coords.x))) % loopPoint;
-    int permX2 = (permX + 1) % loopPoint;
-    int permY = (int(floor(coords.y))) % loopPoint;
-    int permY2 = (permY + 1) % loopPoint;
+    int permX = (int(floor(coords.x))) % loopX;
+    int permX2 = (permX + 1) % loopX;
+    int permY = (int(floor(coords.y))) % loopY;
+    int permY2 = (permY + 1) % loopY;
 
     int valueTopRight = PERMS[PERMS[permX2] + permY2];
     int valueTopLeft = PERMS[PERMS[permX] + permY2];
@@ -141,7 +144,7 @@ float perlin2DLoop(vec2 coords, float frequency, float amplitude, float limit) {
 }
 
 /*
-    uses 2D perlin noise to generate values in the range (-amplitude, amplitude)
+    uses 3D perlin noise to generate values in the range (-amplitude, amplitude)
     higher frequency means the image is "compressed"
 */
 float perlin3D(vec3 coords, float frequency, float amplitude) {
@@ -177,13 +180,90 @@ float perlin3D(vec3 coords, float frequency, float amplitude) {
     int permZ = (int(floor(coords.z))) % PERMS.length();
     int permZ2 = (permZ + 1) % PERMS.length();
 
-    int valueyPxPzP = PERMS[PERMS[PERMS[permX + 1] + permY + 1] + permZ + 1];
-    int valueyPxNzP = PERMS[PERMS[PERMS[permX] + permY + 1] + permZ + 1];
-    int valueyNxPzP = PERMS[PERMS[PERMS[permX + 1] + permY] + permZ + 1];
-    int valueyNxNzP = PERMS[PERMS[PERMS[permX] + permY] + permZ + 1];
-    int valueyPxPzN = PERMS[PERMS[PERMS[permX + 1] + permY + 1] + permZ];
-    int valueyPxNzN = PERMS[PERMS[PERMS[permX] + permY + 1] + permZ];
-    int valueyNxPzN = PERMS[PERMS[PERMS[permX + 1] + permY] + permZ];
+    int valueyPxPzP = PERMS[PERMS[PERMS[permX2] + permY2] + permZ2];
+    int valueyPxNzP = PERMS[PERMS[PERMS[permX] + permY2] + permZ2];
+    int valueyNxPzP = PERMS[PERMS[PERMS[permX2] + permY] + permZ2];
+    int valueyNxNzP = PERMS[PERMS[PERMS[permX] + permY] + permZ2];
+    int valueyPxPzN = PERMS[PERMS[PERMS[permX2] + permY2] + permZ];
+    int valueyPxNzN = PERMS[PERMS[PERMS[permX] + permY2] + permZ];
+    int valueyNxPzN = PERMS[PERMS[PERMS[permX2] + permY] + permZ];
+    int valueyNxNzN = PERMS[PERMS[PERMS[permX] + permY] + permZ];
+
+    /*
+        Calculate the dot products. We finally have the special values for each grid corner.
+     */
+    float dotyPxPzP = dot(yPxPzP, getVector3D(valueyPxPzP));
+    float dotyPxNzP = dot(yPxNzP, getVector3D(valueyPxNzP));
+    float dotyNxPzP = dot(yNxPzP, getVector3D(valueyNxPzP));
+    float dotyNxNzP = dot(yNxNzP, getVector3D(valueyNxNzP));
+    float dotyPxPzN = dot(yPxPzN, getVector3D(valueyPxPzN));
+    float dotyPxNzN = dot(yPxNzN, getVector3D(valueyPxNzN));
+    float dotyNxPzN = dot(yNxPzN, getVector3D(valueyNxPzN));
+    float dotyNxNzN = dot(yNxNzN, getVector3D(valueyNxNzN));
+
+    /*
+        Finally, we begin interpolating these values.
+        Since we can only interpolate two numbers at a time, we interpolate 2 pairs and then interpolate their results.
+        Also, using linear interpolation will produce sharp edges.
+        We use the ease function to improve our inputs to the interpolation function.
+     */
+    float u = ease(coordsf.x);
+    float v = ease(coordsf.y);
+    float w = ease(coordsf.z);
+
+    float zP = lerp(lerp(dotyNxNzP, dotyPxNzP, v), lerp(dotyNxPzP, dotyPxPzP, v), u);
+    float zN = lerp(lerp(dotyNxNzN, dotyPxNzN, v), lerp(dotyNxPzN, dotyPxPzN, v), u);
+
+    return lerp(zN, zP, w) * amplitude;
+}
+
+float perlin3DLoop(vec3 coords, float frequency, float amplitude, vec3 limits) {
+    int loopX = PERMS.length();
+    if (limits.x > 0.0) loopX = min(int(floor(limits.x * frequency)), loopX);
+    int loopY = PERMS.length();
+    if (limits.y > 0.0) loopY = min(int(floor(limits.y * frequency)), loopY);
+    int loopZ = PERMS.length();
+    if (limits.z > 0.0) loopZ = min(int(floor(limits.z * frequency)), loopZ);
+
+    coords = coords * frequency;
+    vec3 coordsf = vec3(coords.x - floor(coords.x), coords.y - floor(coords.y), coords.z - floor(coords.z));
+
+    /*
+        Input values are said to be on an integer grid. Decimal values lie inside a square in that grid.
+        For each of the corners where the input lies, a value is generated.
+        This value is the dot product of 2 vectors.
+        The first vector comes from a grid point to the input value.
+     */
+    vec3 yPxPzP = vec3(coordsf.x - 1.0, coordsf.y - 1.0, coordsf.z - 1.0);
+    vec3 yPxNzP = vec3(coordsf.x, coordsf.y - 1.0, coordsf.z - 1.0);
+    vec3 yNxPzP = vec3(coordsf.x - 1.0, coordsf.y, coordsf.z - 1.0);
+    vec3 yNxNzP = vec3(coordsf.x, coordsf.y, coordsf.z - 1.0);
+    vec3 yPxPzN = vec3(coordsf.x - 1.0, coordsf.y - 1.0, coordsf.z);
+    vec3 yPxNzN = vec3(coordsf.x, coordsf.y - 1.0, coordsf.z);
+    vec3 yNxPzN = vec3(coordsf.x - 1.0, coordsf.y, coordsf.z);
+    vec3 yNxNzN = vec3(coordsf.x, coordsf.y, coordsf.z);
+
+    /*
+        The second vector should be "random", but consistent for each grid point.
+        We use the permutation table to obtain it (RNG could be used, but is more expensive).
+
+        First we use the bitwise & operator (in this case works like % 256) to obtain indexes for the permutation table.
+        Keep in mind we can also access permX + 1 and permY + 1 due to the fact that we duplicated the table.
+     */
+    int permX = (int(floor(coords.x))) % loopX;
+    int permX2 = (permX + 1) % loopX;
+    int permY = (int(floor(coords.y))) % loopY;
+    int permY2 = (permY + 1) % loopY;
+    int permZ = (int(floor(coords.z))) % loopZ;
+    int permZ2 = (permZ + 1) % loopZ;
+
+    int valueyPxPzP = PERMS[PERMS[PERMS[permX2] + permY2] + permZ2];
+    int valueyPxNzP = PERMS[PERMS[PERMS[permX] + permY2] + permZ2];
+    int valueyNxPzP = PERMS[PERMS[PERMS[permX2] + permY] + permZ2];
+    int valueyNxNzP = PERMS[PERMS[PERMS[permX] + permY] + permZ2];
+    int valueyPxPzN = PERMS[PERMS[PERMS[permX2] + permY2] + permZ];
+    int valueyPxNzN = PERMS[PERMS[PERMS[permX] + permY2] + permZ];
+    int valueyNxPzN = PERMS[PERMS[PERMS[permX2] + permY] + permZ];
     int valueyNxNzN = PERMS[PERMS[PERMS[permX] + permY] + permZ];
 
     /*

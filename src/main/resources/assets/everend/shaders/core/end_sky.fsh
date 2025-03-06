@@ -16,14 +16,23 @@ const float fadeoffDistance = fadeoffEnd - fadeoffStart; // represents the range
 
 void main() {
     // generate the base noise
-    vec3 p = vec3(uv, GameTime * 5.0);
+    vec3 sampleCoords = vec3(uv, GameTime * 5.0);
+    vec3 loopConfig = vec3(1.0, -1.0, -1.0);
+    float col = perlin3DLoop(sampleCoords, 5.0, 1.0, loopConfig);
+    col += perlin3DLoop(sampleCoords, 10.0, 0.5, loopConfig);
+    col += perlin3DLoop(sampleCoords, 20.0, 0.25, loopConfig);
+    col += perlin3DLoop(sampleCoords, 40.0, 0.125, loopConfig);
+    col += perlin3DLoop(sampleCoords, 80.0, 0.0625, loopConfig);
+    col += perlin3DLoop(sampleCoords, 160.0, 0.03125, loopConfig);
+    col += perlin3DLoop(sampleCoords, 320.0, 0.015625, loopConfig);
+    /*vec3 p = vec3(uv, GameTime * 5.0);
     float col = perlin3D(p, 5.0, 1.0);
     col += perlin3D(p, 10.0, 0.5);
     col += perlin3D(p, 20.0, 0.25);
     col += perlin3D(p, 40.0, 0.125);
     col += perlin3D(p, 80.0, 0.0625);
     col += perlin3D(p, 160.0, 0.03125);
-    col += perlin3D(p, 320.0, 0.015625);
+    col += perlin3D(p, 320.0, 0.015625);*/
     /*float col = perlin2DLoop(uv, 5.0, 1.0, 1.0);
     col += perlin2DLoop(uv, 10.0, 0.5, 1.0);
     col += perlin2DLoop(uv, 20.0, 0.25, 1.0);
