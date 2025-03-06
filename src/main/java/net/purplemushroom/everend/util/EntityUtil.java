@@ -13,6 +13,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.Supplier;
+
 public class EntityUtil {
 
     /**
@@ -85,7 +87,7 @@ public class EntityUtil {
         return !isOverVoid(entity) && entity.onGround() && !entity.level().getBlockState(entity.blockPosition().below()).isAir();
     }
 
-    public static boolean isHolding(LivingEntity entity, Item item) {
+    public static boolean isHolding(LivingEntity entity, Supplier<Item> item) {
         return entity.getMainHandItem().getItem() == item || entity.getOffhandItem().getItem() == item;
     }
 

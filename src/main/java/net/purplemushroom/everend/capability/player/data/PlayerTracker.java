@@ -29,8 +29,6 @@ public class PlayerTracker extends PropertyContainer {
             this.posCache.clear();
         }
         this.posCache.enqueue(posOnGround);
-        //this.groundPos.set(posOnGround);
-        //this.dimensionKey.set(dimension);
     }
 
     public boolean isCacheEmpty() {
