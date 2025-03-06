@@ -11,7 +11,7 @@ public class SplashProvider {
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
-            "Nevermine in the End!", //"\"Neverend\" was taken!" TODO: swap if name change
+            "\"Neverend\" was taken!",
             "A friendly perdition!",
             "Subjectively good!",
             "Woo, Discord!",
@@ -26,7 +26,7 @@ public class SplashProvider {
             "Also try Hexxit!",
             "Family friendly!",
             "Remember the cows!",
-            "It never ends!", // "Will it ever end?!" TODO: swap if name changed to "Everend"
+            "Will it ever end?!",
             "Powered by TimeCore!",
             "Powered by NeoForge!",
             "The effect affects the picture!",
@@ -176,7 +176,6 @@ public class SplashProvider {
             "Tower of pimps!",
             "Let's play!",
             "A series of unfortunate events!",
-            "A neverending story!", // TODO: remove if name change
             "In a galaxy far, far away!",
             "You've won two free iPod Nanos!",
             "Cheaper than eggs!",
