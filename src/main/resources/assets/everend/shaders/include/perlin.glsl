@@ -177,14 +177,14 @@ float perlin3D(vec3 coords, float frequency, float amplitude) {
     int permZ = (int(floor(coords.z))) % PERMS.length();
     int permZ2 = (permZ + 1) % PERMS.length();
 
-    int valueyPxPzP = PERMS[PERMS[PERMS[permX + 1] + permY + 1] + 1];
-    int valueyPxNzP = PERMS[PERMS[PERMS[permX] + permY + 1] + 1];
-    int valueyNxPzP = PERMS[PERMS[PERMS[permX + 1] + permY] + 1];
-    int valueyNxNzP = PERMS[PERMS[PERMS[permX] + permY] + 1];
-    int valueyPxPzN = PERMS[PERMS[PERMS[permX + 1] + permY + 1]];
-    int valueyPxNzN = PERMS[PERMS[PERMS[permX] + permY + 1]];
-    int valueyNxPzN = PERMS[PERMS[PERMS[permX + 1] + permY]];
-    int valueyNxNzN = PERMS[PERMS[PERMS[permX] + permY]];
+    int valueyPxPzP = PERMS[PERMS[PERMS[permX + 1] + permY + 1] + permZ + 1];
+    int valueyPxNzP = PERMS[PERMS[PERMS[permX] + permY + 1] + permZ + 1];
+    int valueyNxPzP = PERMS[PERMS[PERMS[permX + 1] + permY] + permZ + 1];
+    int valueyNxNzP = PERMS[PERMS[PERMS[permX] + permY] + permZ + 1];
+    int valueyPxPzN = PERMS[PERMS[PERMS[permX + 1] + permY + 1] + permZ];
+    int valueyPxNzN = PERMS[PERMS[PERMS[permX] + permY + 1] + permZ];
+    int valueyNxPzN = PERMS[PERMS[PERMS[permX + 1] + permY] + permZ];
+    int valueyNxNzN = PERMS[PERMS[PERMS[permX] + permY] + permZ];
 
     /*
         Calculate the dot products. We finally have the special values for each grid corner.
