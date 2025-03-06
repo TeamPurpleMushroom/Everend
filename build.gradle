@@ -61,8 +61,8 @@ minecraft {
 }
 
 mixin {
-    add sourceSets.main, 'mixins.neverend.refmap.json'
-    config 'mixins.neverend.json'
+    add sourceSets.main, 'mixins.everend.refmap.json'
+    config 'mixins.everend.json'
     debug = true
     debug.verbose = true
     debug.export = true
