@@ -77,14 +77,6 @@
       "values": [
         0
       ]
-    },
-    {
-      "name": "IslandLayers",
-      "type": "int",
-      "count": 1,
-      "values": [
-        2
-      ]
     }
   ]
 }

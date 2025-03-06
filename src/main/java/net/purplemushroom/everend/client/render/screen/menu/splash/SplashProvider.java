@@ -224,7 +224,8 @@ public class SplashProvider {
             "Based on a true story!",
             "Fun for all ages!",
             "Very odd!",
-            "The hottest thing north of Havana!"
+            "The hottest thing north of Havana!",
+            "Spaghetti clouds!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {

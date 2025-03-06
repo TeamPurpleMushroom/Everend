@@ -2,8 +2,6 @@
 
 #moj_import <everend:perlin.glsl>
 
-uniform vec4 ColorModulator;
-
 in vec2 uv;
 
 uniform float GameTime;
