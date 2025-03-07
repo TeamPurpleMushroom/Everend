@@ -13,6 +13,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class EntityUtil {
@@ -76,14 +77,6 @@ public class EntityUtil {
         }
     }
 
-    /**
-     * Checks if the provided entity is above the void by testing all blocks under it down to the minimum build height, then checking if they are all "air".
-     * We do this first by copying the entity's bounding box as a new AABB.
-     * Then, the `Minimum Y` value of the bounding box is set to the minimum build height, and its width is then inflated just barely -
-     * - this is to ensure that even blocks slightly outside the entity bounds are detected.
-     * @param entity The subject entity being tested to validate that its position is over the void, and that all blocks under it are "air".
-     * @return Returns "true" if all blocks below the entity - from its BlockPos to the minimum build height - are all "air" blocks.
-     */
     public static boolean isOverVoid(Entity entity) {
         Level level = entity.level();
         AABB belowBB = entity.getBoundingBox().setMinY(level.getMinBuildHeight()).inflate(0.1D, 0, 0.1D);
@@ -91,23 +84,16 @@ public class EntityUtil {
         return entity.level().getBlockStatesIfLoaded(belowBB).allMatch(BlockBehaviour.BlockStateBase::isAir);
     }
 
-    /**
-     * Checks if the provided entity is at a stable location by first checking if it's over the void, then validating that the block at its foot position is solid.
-     * @param entity The subject entity being tested to validate that its position is above a stable location, and that it's touching the ground.
-     * @return Returns "true" if the entity is not above the void and is touching stable ground.
-     */
     public static boolean isAtStableLocation(Entity entity) {
         return !isOverVoid(entity) && entity.onGround() && !entity.level().getBlockState(entity.blockPosition().below()).isAir();
     }
 
-    /**
-     * Tests if the items held by either the main hand or offhand of the supplied entity are of the supplied item type.
-     * @param entity The entity whose hands we want to test and gaze upon
-     * @param item The item we are testing both hands for
-     * @return Returns true if either or both hands are holding the supplied item
-     */
-    public static boolean isHolding(LivingEntity entity, Supplier<Item> item) {
-        return entity.getMainHandItem().getItem() == item || entity.getOffhandItem().getItem() == item;
+    public static boolean isHolding(LivingEntity entity, Item item) {
+        return isHolding(entity, (Item heldItem) -> heldItem == item);
+    }
+
+    public static boolean isHolding(LivingEntity entity, Predicate<Item> predicate) {
+        return predicate.test(entity.getMainHandItem().getItem()) || predicate.test(entity.getOffhandItem().getItem());
     }
 
     public static Vec3 getCenterPos(Entity entity) {
@@ -130,7 +116,6 @@ public class EntityUtil {
         return dotted > 1.0 - 0.025 / length && hasLineOfSight(subject.level(), subject, targetPos);
     }
 
-    //FIXME
     public static boolean hasLineOfSight(Level level, LivingEntity subject, BlockPos targetPos) {
         Vec3 subjectVector = new Vec3(subject.getX(), subject.getEyeY(), subject.getZ());
         Vec3 targetVector = new Vec3(targetPos.getX(), targetPos.getY(), targetPos.getZ());
