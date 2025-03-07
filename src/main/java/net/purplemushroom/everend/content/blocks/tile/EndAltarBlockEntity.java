@@ -12,11 +12,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.purplemushroom.everend.Everend;
+import net.purplemushroom.everend.content.blocks.EndAltarBlock;
 import net.purplemushroom.everend.content.items.DragonboneItemAbility;
 import net.purplemushroom.everend.content.items.INESpecialAbilityItem;
 import net.purplemushroom.everend.content.items.LuduniteItemAbility;
 import net.purplemushroom.everend.registry.EEBlockEntities;
 import net.purplemushroom.everend.registry.EEItems;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -39,12 +43,57 @@ public class EndAltarBlockEntity extends BlockEntity {
         super(EEBlockEntities.END_ALTAR, pPos, pBlockState);
     }
 
+    public IntegerProperty getStageProperty() {
+        return EndAltarBlock.ALTAR_STAGE;
+    }
+
+    public int getMaxStages() {
+        return EndAltarBlock.MAX_STAGES;
+    }
+
+    public int getStage(BlockState pState) {
+        return pState.getValue(this.getStageProperty());
+    }
+
+    public BlockState setStateForStage(int stage) {
+        return this.getBlockState().setValue(this.getStageProperty(), stage);
+    }
+
+    //TODO: divide stages uniformly based on required dust, so that recipes with less required dust (i.e, 3 req. dust) "round up" to show stage 5, to show that the recipe is almost done.
+    //      (need it to always offset the final stage by 1, so recipes with less required dust still change blockstate to stage 5 if mostly complete. im not good at math, so idk)
+    public int getStageFromDust() {
+        return Math.max(0, Math.min(5, ((int) Math.floor(((float) getDustCount() / getRequiredDustCount()) * (getMaxStages() + 1)))));
+    }
+
+    public void setUpdatedStageState(Level level, BlockPos blockPos) {
+        if (getDustCount() >= getRequiredDustCount()) level.setBlock(blockPos, this.getBlockState().setValue(this.getStageProperty(), 0), 2);
+        else level.setBlock(blockPos, this.setStateForStage(getStageFromDust()), 2);
+    }
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, EndAltarBlockEntity blockEntity) {
         blockEntity.tick();
     }
 
     public void tick() {
-        System.out.println("Dust: " + dustCount);
+        Everend.LOGGER.info("Stage from Dust: {}", getStageFromDust());
+        //System.out.println("Dust: " + dustCount);
+    }
+
+    public int getDustCount() {
+        return dustCount;
+    }
+
+    public int getRequiredDustCount() {
+        int requiredDust = -1;
+        if (recipes.containsKey(placedItem.getItem())) {
+            requiredDust = recipes.get(placedItem.getItem()).dust;
+        } else if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
+                (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE || abilityItem.getAbility() == DragonboneItemAbility.INSTANCE) &&
+                placedItem.getTag() != null &&
+                placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
+            requiredDust = 10;
+        }
+        return requiredDust;
     }
 
     public void addItem(ItemStack stack) {
@@ -60,15 +109,7 @@ public class EndAltarBlockEntity extends BlockEntity {
         }
 
         if (!placedItem.isEmpty()) {
-            int requiredDust = -1;
-            if (recipes.containsKey(placedItem.getItem())) {
-                requiredDust = recipes.get(placedItem.getItem()).dust;
-            } else if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
-                    (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE || abilityItem.getAbility() == DragonboneItemAbility.INSTANCE) &&
-                    placedItem.getTag() != null &&
-                    placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
-                requiredDust = 10;
-            }
+            int requiredDust = getRequiredDustCount();
             if (requiredDust > 0) {
                 if (dustCount < requiredDust && stack.getItem() == EEItems.ENDERIUM_DUST) {
                     stack.shrink(1);
@@ -117,7 +158,7 @@ public class EndAltarBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag() {
         CompoundTag nbt = super.getUpdateTag();
         nbt.put("Item", placedItem.serializeNBT());
         nbt.putInt("Dust", dustCount);
@@ -131,14 +172,14 @@ public class EndAltarBlockEntity extends BlockEntity {
     }*/
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(@NotNull CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.put("Item", placedItem.serializeNBT());
         pTag.putInt("Dust", dustCount);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
+    public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
         placedItem = ItemStack.of((CompoundTag) pTag.get("Item"));
         dustCount = pTag.getInt("Dust");

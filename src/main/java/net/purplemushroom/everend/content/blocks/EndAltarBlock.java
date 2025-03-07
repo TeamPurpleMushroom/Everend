@@ -2,12 +2,9 @@ package net.purplemushroom.everend.content.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -17,9 +14,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.content.blocks.tile.EndAltarBlockEntity;
 import net.purplemushroom.everend.registry.EEBlockEntities;
 import org.jetbrains.annotations.NotNull;
@@ -27,49 +25,23 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiFunction;
 
-//TODO: - add comparator signal output
+//TODO: - add comparator signal output based on ALTAR_STAGE level
 //      - add NBT tags to BlockEntity
 //      - finish functionality (probs Diamond's territory)
 public class EndAltarBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING;
-    public static final BooleanProperty POWERED;
-    public static final BooleanProperty ALTAR_ACTIVE;
+    public static final IntegerProperty ALTAR_STAGE;
+    public static final int MAX_STAGES = 5;
     private final BiFunction<BlockPos, BlockState, BlockEntity> tileFactory;
 
     public EndAltarBlock(Properties pProperties, BiFunction<BlockPos, BlockState, BlockEntity> tileFactory) {
         super(pProperties);
         this.tileFactory = tileFactory;
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(POWERED, false).setValue(ALTAR_ACTIVE, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(ALTAR_STAGE, 0));
     }
 
-    @Override
-    public InteractionResult use(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
-        if (!player.level().isClientSide() && player.level().getBlockEntity(blockPos) instanceof EndAltarBlockEntity entity) {
-            if (hand == InteractionHand.MAIN_HAND && !player.getMainHandItem().isEmpty()) {
-                entity.addItem(player.getMainHandItem());
-            } else if (player.getMainHandItem().isEmpty() && !player.getOffhandItem().isEmpty()) {
-                entity.addItem(player.getOffhandItem());
-            } else if (hand == InteractionHand.MAIN_HAND) {
-                entity.dropItem();
-            }
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        Level level = pContext.getLevel();
-        ItemStack itemInHand = pContext.getItemInHand();
-        Player player = pContext.getPlayer();
-        boolean isActive = false;
-        if (!level.isClientSide && player != null && player.canUseGameMasterBlocks()) {
-            CompoundTag blockEntityData = BlockItem.getBlockEntityData(itemInHand);
-            if (blockEntityData != null && blockEntityData.contains("AltarActive")) { //TODO: Tag doesn't exist rn, so initialize this tag in the BlockEntity
-                isActive = true;
-            }
-        }
-
-        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite()).setValue(ALTAR_ACTIVE, isActive);
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -84,7 +56,26 @@ public class EndAltarBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, POWERED, ALTAR_ACTIVE);
+        pBuilder.add(FACING, ALTAR_STAGE);
+    }
+
+    @Override
+    public InteractionResult use(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+        if (!player.level().isClientSide() && player.level().getBlockEntity(blockPos) instanceof EndAltarBlockEntity blockEntity) {
+            if (hand == InteractionHand.MAIN_HAND && !player.getMainHandItem().isEmpty()) {
+                blockEntity.addItem(player.getMainHandItem());
+            } else if (player.getMainHandItem().isEmpty() && !player.getOffhandItem().isEmpty()) {
+                blockEntity.addItem(player.getOffhandItem());
+            } else if (hand == InteractionHand.MAIN_HAND) {
+                blockEntity.dropItem();
+            }
+            blockEntity.setUpdatedStageState(level, blockPos);
+            //Everend.LOGGER.info("Dust Count: {}, Required Dust Count: {}, Max Stage: {}", blockEntity.getDustCount(), blockEntity.getRequiredDustCount(), blockEntity.getMaxStages());
+            //Everend.LOGGER.info("Stage: {}", blockEntity.getStage(blockState));
+
+            //Everend.LOGGER.info("BlockState stage: {}", this.defaultBlockState().getValue(blockEntity.getStageProperty()));
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable
@@ -111,7 +102,6 @@ public class EndAltarBlock extends Block implements EntityBlock {
 
     static {
         FACING = HorizontalDirectionalBlock.FACING;
-        POWERED = BlockStateProperties.POWERED;
-        ALTAR_ACTIVE = BlockStateProperties.HAS_BOOK;
+        ALTAR_STAGE = IntegerProperty.create("stage", 0, 5);
     }
 }

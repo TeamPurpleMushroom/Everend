@@ -2,7 +2,7 @@
 	"credit": "Made by Cornman32 / Dizzlepop12 with Blockbench",
 	"textures": {
 		"1": "everend:block/end_altar_bottom",
-		"2": "everend:block/end_altar_side_0",
+		"2": "everend:block/end_altar_side_3",
 		"3": "everend:block/end_altar_top",
 		"4": "everend:block/end_altar_pillar",
 		"particle": "everend:block/end_altar_bottom"

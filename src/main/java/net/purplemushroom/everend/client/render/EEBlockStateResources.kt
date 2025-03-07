@@ -66,6 +66,107 @@ object EEBlockStateResources {
     }
 
     @JvmStatic
+    fun endAltarState(stage0Location: BlockModelLocation, stage1Location: BlockModelLocation, stage2Location: BlockModelLocation, stage3Location: BlockModelLocation, stage4Location: BlockModelLocation, stage5Location: BlockModelLocation): BlockStateResource {
+        return BlockStateResource.fromJson(json {
+            "variants" {
+                "facing=east,stage=0" {
+                    "model" set stage0Location
+                    y = 90
+                }
+                "facing=east,stage=1" {
+                    "model" set stage1Location
+                    y = 90
+                }
+                "facing=east,stage=2" {
+                    "model" set stage2Location
+                    y = 90
+                }
+                "facing=east,stage=3" {
+                    "model" set stage3Location
+                    y = 90
+                }
+                "facing=east,stage=4" {
+                    "model" set stage4Location
+                    y = 90
+                }
+                "facing=east,stage=5" {
+                    "model" set stage5Location
+                    y = 90
+                }
+
+                "facing=north,stage=0" {
+                    "model" set stage0Location
+                }
+                "facing=north,stage=1" {
+                    "model" set stage1Location
+                }
+                "facing=north,stage=2" {
+                    "model" set stage2Location
+                }
+                "facing=north,stage=3" {
+                    "model" set stage3Location
+                }
+                "facing=north,stage=4" {
+                    "model" set stage4Location
+                }
+                "facing=north,stage=5" {
+                    "model" set stage5Location
+                }
+
+                "facing=south,stage=0" {
+                    "model" set stage0Location
+                    y = 180
+                }
+                "facing=south,stage=1" {
+                    "model" set stage1Location
+                    y = 180
+                }
+                "facing=south,stage=2" {
+                    "model" set stage2Location
+                    y = 180
+                }
+                "facing=south,stage=3" {
+                    "model" set stage3Location
+                    y = 180
+                }
+                "facing=south,stage=4" {
+                    "model" set stage4Location
+                    y = 180
+                }
+                "facing=south,stage=5" {
+                    "model" set stage5Location
+                    y = 180
+                }
+
+                "facing=west,stage=0" {
+                    "model" set stage0Location
+                    z = 270
+                }
+                "facing=west,stage=1" {
+                    "model" set stage1Location
+                    z = 270
+                }
+                "facing=west,stage=2" {
+                    "model" set stage2Location
+                    z = 270
+                }
+                "facing=west,stage=3" {
+                    "model" set stage3Location
+                    z = 270
+                }
+                "facing=west,stage=4" {
+                    "model" set stage4Location
+                    z = 270
+                }
+                "facing=west,stage=5" {
+                    "model" set stage5Location
+                    z = 270
+                }
+            }
+        })
+    }
+
+    @JvmStatic
     fun anchorState(
         charge0: BlockModelLocation,
         charge1: BlockModelLocation,

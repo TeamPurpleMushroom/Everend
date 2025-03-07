@@ -94,10 +94,21 @@ public class EEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
                 .name("Enchantment Crystal Ore");
-        registerCustomModeledBlockNESW("end_altar", "End Altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
-                        .strength(2.0F, 6.0F)
-                        .lightLevel((level) -> 7)
-                        .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new));
+        BLOCKS.register("end_altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                .strength(2.0F, 6.0F)
+                .lightLevel((level) -> 7)
+                .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new))
+                .name("End Altar")
+                .defaultBlockItem(EECreativeTabs.BLOCKS)
+                .state(EEBlockStateResources.endAltarState(
+                        Everend.bml("block/end_altar_0"),
+                        Everend.bml("block/end_altar_1"),
+                        Everend.bml("block/end_altar_2"),
+                        Everend.bml("block/end_altar_3"),
+                        Everend.bml("block/end_altar_4"),
+                        Everend.bml("block/end_altar_5")))
+                .renderLayer(() -> RenderTypeWrappers.CUTOUT);
+
         registerCustomModeledBlockNESW("enchantment_shrine", "Enchantment Shrine", () -> new EnchantmentShrineBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .lightLevel((level) -> 7)
