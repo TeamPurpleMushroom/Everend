@@ -46,7 +46,7 @@ public class EEBlocks {
     private static void register() {
         BLOCKS.register("pale_end_stone", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(1.0F, 3.0F)
-                        .lightLevel(value -> 5)
+                        .lightLevel(blockState -> 5)
                         .requiresCorrectToolForDrops()).create()))
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
@@ -70,7 +70,7 @@ public class EEBlocks {
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
                 .name("Aldores Ore");
         BLOCKS.register("raw_aldores_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.ANCIENT_DEBRIS)
-                        .lightLevel(light -> 20)
+                        .lightLevel(blockState -> 20)
                         .emissiveRendering(EEBlocks::always)
                         .strength(30.0F, 50.0F)
                         .requiresCorrectToolForDrops()).create()))
@@ -96,7 +96,7 @@ public class EEBlocks {
                 .name("Enchantment Crystal Ore");
         BLOCKS.register("end_altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                 .strength(2.0F, 6.0F)
-                .lightLevel((level) -> 7)
+                .lightLevel((blockState) -> 7)
                 .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new))
                 .name("End Altar")
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
@@ -111,11 +111,11 @@ public class EEBlocks {
 
         registerCustomModeledBlockNESW("enchantment_shrine", "Enchantment Shrine", () -> new EnchantmentShrineBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
-                        .lightLevel((level) -> 7)
+                        .lightLevel((blockState) -> 7)
                         .requiresCorrectToolForDrops()).create()));
         BLOCKS.register("death_obelisk", () -> new DeathObeliskBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
-                        .lightLevel((level) -> 7)
+                        .lightLevel((blockState) -> 7)
                         .requiresCorrectToolForDrops()).create(), DeathObeliskBlockEntity::new))
 
                 .renderLayer(() -> RenderTypeWrappers.TRANSLUCENT)
@@ -132,6 +132,7 @@ public class EEBlocks {
                 .name("Death Obelisk");
         BLOCKS.register("end_anchor", () -> new EndAnchorBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
+                        .lightLevel((blockState) -> EndAnchorBlock.getScaledChargeLevel(blockState, 15))
                         .requiresCorrectToolForDrops()).create(), EndAnchorBlockEntity::new))
 
                 .renderLayer(() -> RenderTypeWrappers.TRANSLUCENT)
@@ -143,30 +144,30 @@ public class EEBlocks {
                         "block/end_anchor_4")))
 
                 .model(Everend.bml("block/end_anchor_0"), () -> BlockModels.cubeOrientableModel(
-                        Everend.tl("block/end_anchor_top"),
+                        Everend.tl("block/end_anchor_top_0"),
                         Everend.tl("block/end_anchor_front_0"),
-                        Everend.tl("block/end_anchor_side")))
+                        Everend.tl("block/end_anchor_side_0")))
                 .model(Everend.bml("block/end_anchor_1"), () -> BlockModels.cubeOrientableModel(
-                        Everend.tl("block/end_anchor_top"),
+                        Everend.tl("block/end_anchor_top_1"),
                         Everend.tl("block/end_anchor_front_1"),
-                        Everend.tl("block/end_anchor_side")))
+                        Everend.tl("block/end_anchor_side_1")))
                 .model(Everend.bml("block/end_anchor_2"), () -> BlockModels.cubeOrientableModel(
-                        Everend.tl("block/end_anchor_top"),
+                        Everend.tl("block/end_anchor_top_2"),
                         Everend.tl("block/end_anchor_front_2"),
-                        Everend.tl("block/end_anchor_side")))
+                        Everend.tl("block/end_anchor_side_2")))
                 .model(Everend.bml("block/end_anchor_3"), () -> BlockModels.cubeOrientableModel(
-                        Everend.tl("block/end_anchor_top"),
+                        Everend.tl("block/end_anchor_top_3"),
                         Everend.tl("block/end_anchor_front_3"),
-                        Everend.tl("block/end_anchor_side")))
+                        Everend.tl("block/end_anchor_side_3")))
                 .model(Everend.bml("block/end_anchor_4"), () -> BlockModels.cubeOrientableModel(
-                        Everend.tl("block/end_anchor_top"),
+                        Everend.tl("block/end_anchor_top_4"),
                         Everend.tl("block/end_anchor_front_4"),
-                        Everend.tl("block/end_anchor_side")))
+                        Everend.tl("block/end_anchor_side_4")))
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
                 .name("End Anchor");
         BLOCKS.register("gaze_crystal", () -> new GazeCrystalBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
-                        .lightLevel((light) -> 4)
+                        .lightLevel((blockState) -> 4)
                         .requiresCorrectToolForDrops()).create(), GazeCrystalBlockEntity::new))
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
