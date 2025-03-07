@@ -94,18 +94,12 @@ public class EEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
                 .name("Enchantment Crystal Ore");
-        BLOCKS.register("end_altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+        registerCustomModeledBlockNESW("end_altar", "End Altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
-                        .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new))
-                .oneVarStateAndCubeAllModel()
-                .defaultBlockItem(EECreativeTabs.BLOCKS)
-                .name("End Altar");
-        BLOCKS.register("enchantment_shrine", () -> new EnchantmentShrineBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new));
+        registerCustomModeledBlockNESW("enchantment_shrine", "Enchantment Shrine", () -> new EnchantmentShrineBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
-                        .requiresCorrectToolForDrops()).create()))
-                .oneVarStateAndCubeAllModel()
-                .defaultBlockItem(EECreativeTabs.BLOCKS)
-                .name("Enchantment Shrine");
+                        .requiresCorrectToolForDrops()).create()));
         BLOCKS.register("death_obelisk", () -> new DeathObeliskBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .lightLevel((level) -> 4)
@@ -178,9 +172,31 @@ public class EEBlocks {
         BLOCKS.register(name, blockSupplier)
                 .name(enName)
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
-                .state(EEBlockStateResources.rotatablePillarState(Everend.bml("block/" + name)))
+                .state(EEBlockStateResources.oneVarAxisXYZState(Everend.bml("block/" + name)))
                 .model(Everend.bml("block/" + name),
                         () -> BlockModels.cubeColumnModel(Everend.tl("block/" + topTexture), Everend.tl("block/" + sideTexture)));
+    }
+
+    /**
+     * Registers a block with a custom model
+     */
+    private static void registerCustomModeledBlock(String name, String enName, Supplier<Block> blockSupplier) {
+        BLOCKS.register(name, blockSupplier)
+                .name(enName)
+                .defaultBlockItem(EECreativeTabs.BLOCKS)
+                .oneVariantState(Everend.bml("block/" + name))
+                .renderLayer(() -> RenderTypeWrappers.CUTOUT);
+    }
+
+    /**
+     * Registers a rotatable block with a custom model
+     */
+    private static void registerCustomModeledBlockNESW(String name, String enName, Supplier<Block> blockSupplier) {
+        BLOCKS.register(name, blockSupplier)
+                .name(enName)
+                .defaultBlockItem(EECreativeTabs.BLOCKS)
+                .state(EEBlockStateResources.oneVarFacingNESWState(Everend.bml("block/" + name)))
+                .renderLayer(() -> RenderTypeWrappers.CUTOUT);
     }
 
     public static class RenderTypeWrappers {
