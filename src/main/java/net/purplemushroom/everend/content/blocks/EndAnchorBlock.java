@@ -91,7 +91,7 @@ public class EndAnchorBlock extends Block implements EntityBlock {
     }
 
     private static boolean isRespawnFuel(ItemStack pStack) {
-        return pStack.is(EEItems.SHIFTERINE_CRYSTAL);
+        return pStack.is(EEItems.ENCHANTMENT_CRYSTAL);
     }
 
     private static boolean canBeCharged(BlockState pState) {
@@ -152,7 +152,7 @@ public class EndAnchorBlock extends Block implements EntityBlock {
             double $$5 = (double) pPos.getY() + 1.0;
             double $$6 = (double) pPos.getZ() + 0.5 + (0.5 - pRandom.nextDouble());
             double $$7 = (double) pRandom.nextFloat() * 0.04;
-            pLevel.addParticle(ParticleTypes.END_ROD, $$4, $$5, $$6, 0.0, $$7, 0.0);
+            pLevel.addParticle(ParticleTypes.REVERSE_PORTAL, $$4, $$5, $$6, 0.0, $$7, 0.0);
         }
     }
 
