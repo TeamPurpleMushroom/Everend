@@ -15,7 +15,7 @@ const float fadeoffDistance = fadeoffEnd - fadeoffStart; // represents the range
 void main() {
     // generate the base noise
     vec3 sampleCoords = vec3(uv, GameTime * 5.0);
-    vec3 loopConfig = vec3(1.0, -1.0, -1.0);
+    vec3 loopConfig = vec3(1.0, -1.0, 5.0); // loop var for time is 5 since getShaderGameTime returns a float between 0 & 1, and we're multiplying it by 5
     float col = perlin3DLoop(sampleCoords, 5.0, 1.0, loopConfig);
     col += perlin3DLoop(sampleCoords, 10.0, 0.5, loopConfig);
     col += perlin3DLoop(sampleCoords, 20.0, 0.25, loopConfig);
