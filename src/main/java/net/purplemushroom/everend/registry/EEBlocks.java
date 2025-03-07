@@ -96,13 +96,15 @@ public class EEBlocks {
                 .name("Enchantment Crystal Ore");
         registerCustomModeledBlockNESW("end_altar", "End Altar", () -> new EndAltarBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
+                        .lightLevel((level) -> 7)
                         .requiresCorrectToolForDrops()).create(), EndAltarBlockEntity::new));
         registerCustomModeledBlockNESW("enchantment_shrine", "Enchantment Shrine", () -> new EnchantmentShrineBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
+                        .lightLevel((level) -> 7)
                         .requiresCorrectToolForDrops()).create()));
         BLOCKS.register("death_obelisk", () -> new DeathObeliskBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
-                        .lightLevel((level) -> 4)
+                        .lightLevel((level) -> 7)
                         .requiresCorrectToolForDrops()).create(), DeathObeliskBlockEntity::new))
 
                 .renderLayer(() -> RenderTypeWrappers.TRANSLUCENT)
