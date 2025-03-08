@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.client.render.entity.BaseRiftRenderer;
+import net.purplemushroom.everend.client.render.entity.EnderLordRenderer;
 import net.purplemushroom.everend.registry.EEEntities;
 
 @Mod.EventBusSubscriber(modid = Everend.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -24,6 +25,6 @@ public class EEEntityRenderRegistry {
                 .blockLightLevel(2)
                 .scale(5.5F));
 
-        event.registerEntityRenderer(EEEntities.ENDER_LORD_TYPE.get(), EndermanRenderer::new);
+        event.registerEntityRenderer(EEEntities.ENDER_LORD_TYPE.get(), EnderLordRenderer::new);
     }
 }
