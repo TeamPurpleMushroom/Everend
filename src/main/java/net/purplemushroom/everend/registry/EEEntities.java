@@ -27,7 +27,7 @@ public class EEEntities {
 
     public static final Promised<EntityType<EnderLord>> ENDER_LORD_TYPE = ENTITIES.register(
             "ender_lord", EntityType.Builder.of(EnderLord::new, MobCategory.MONSTER)
-                    .sized(0.6F, 2.9F)
+                    .sized(0.7F, 2.9F)
                     .clientTrackingRange(8)).asPromised();
 }
 

@@ -26,9 +26,8 @@ public class EnderLordRenderer extends MobRenderer<EnderLord, EnderLordModel<End
     }
 
     public void render(EnderLord pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
-        BlockState blockstate = pEntity.getCarriedBlock();
         EnderLordModel<EnderLord> enderlordmodel = this.getModel();
-        enderlordmodel.carrying = blockstate != null;
+        enderlordmodel.carrying = false;
         enderlordmodel.creepy = pEntity.isCreepy();
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
     }
