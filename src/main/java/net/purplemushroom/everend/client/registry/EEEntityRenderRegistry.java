@@ -1,5 +1,6 @@
 package net.purplemushroom.everend.client.registry;
 
+import net.minecraft.client.renderer.entity.EndermanRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,5 +23,7 @@ public class EEEntityRenderRegistry {
                 .fullbright(true)
                 .blockLightLevel(2)
                 .scale(5.5F));
+
+        event.registerEntityRenderer(EEEntities.ENDER_LORD_TYPE.get(), EndermanRenderer::new);
     }
 }
