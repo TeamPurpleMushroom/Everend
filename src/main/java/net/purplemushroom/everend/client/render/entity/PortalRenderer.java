@@ -12,9 +12,9 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.everend.content.entities.Portal;
+import org.joml.Matrix4f;
 
-import static net.purplemushroom.everend.client.registry.EERenderTypes.getEnderLordPortalType;
-import static net.purplemushroom.everend.client.registry.EERenderTypes.getRiftPortalRenderType;
+import static net.purplemushroom.everend.client.registry.EERenderTypes.*;
 
 public class PortalRenderer extends EntityRenderer<Portal> {
     private static final RenderType RENDER_TYPE = getEnderLordPortalType();
@@ -30,19 +30,27 @@ public class PortalRenderer extends EntityRenderer<Portal> {
 
     @Override
     public void render(Portal entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        // TODO: this code is kinda messy?Porta
         VertexConsumer vertexConsumer = buffer.getBuffer(RENDER_TYPE);
+        Matrix4f pose = poseStack.last().pose();
         Vec3i rightNormal = entity.getDirection().getNormal().cross(Direction.UP.getNormal());
         Vec3 up = Vec3.atLowerCornerOf(Direction.UP.getNormal()).normalize().scale(1.0);
         Vec3 right = Vec3.atLowerCornerOf(rightNormal).normalize().scale(0.5);
 
-        addVertex(vertexConsumer, right.add(up));
-        addVertex(vertexConsumer, right.scale(-1.0).add(up));
-        addVertex(vertexConsumer, right.scale(-1.0).subtract(up));
-        addVertex(vertexConsumer, right.subtract(up));
+        //face 1
+        addVertex(vertexConsumer, pose, right.add(up));
+        addVertex(vertexConsumer, pose, right.scale(-1.0).add(up));
+        addVertex(vertexConsumer, pose, right.scale(-1.0).subtract(up));
+        addVertex(vertexConsumer, pose, right.subtract(up));
+        //face 2
+        addVertex(vertexConsumer, pose, right.subtract(up));
+        addVertex(vertexConsumer, pose, right.scale(-1.0).subtract(up));
+        addVertex(vertexConsumer, pose, right.scale(-1.0).add(up));
+        addVertex(vertexConsumer, pose, right.add(up));
     }
 
-    private void addVertex(VertexConsumer consumer, Vec3 coords) {
-        consumer.vertex(coords.x, coords.y, coords.z).endVertex();
+    private void addVertex(VertexConsumer consumer, Matrix4f pose, Vec3 coords) {
+        consumer.vertex(pose, (float) coords.x, (float) coords.y, (float) coords.z).endVertex();
     }
 
     @Override

@@ -36,7 +36,7 @@ public class Portal extends Entity implements TraceableEntity {
     public void tick() {
         if (!level().isClientSide()) {
             Vec3i vec = getDirection().getNormal();
-            setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(0.05));
+            setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(0.5));
         }
         setPos(position().add(getDeltaMovement()));
     }
