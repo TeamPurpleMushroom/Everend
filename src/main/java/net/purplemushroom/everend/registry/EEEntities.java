@@ -3,9 +3,7 @@ package net.purplemushroom.everend.registry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.purplemushroom.everend.Everend;
-import net.purplemushroom.everend.content.entities.EnderLord;
-import net.purplemushroom.everend.content.entities.FishingRift;
-import net.purplemushroom.everend.content.entities.VoidRift;
+import net.purplemushroom.everend.content.entities.*;
 import ru.timeconqueror.timecore.api.registry.EntityRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 import ru.timeconqueror.timecore.api.registry.util.Promised;
@@ -27,8 +25,16 @@ public class EEEntities {
 
     public static final Promised<EntityType<EnderLord>> ENDER_LORD_TYPE = ENTITIES.register(
             "ender_lord", EntityType.Builder.of(EnderLord::new, MobCategory.MONSTER)
-                    .sized(0.7F, 2.9F)
+                    .sized(0.7f, 2.9f)
                     .clientTrackingRange(8)).asPromised();
+
+    public static final Promised<EntityType<EnderBomb>> ENDER_BOMB_TYPE = ENTITIES.register(
+            "ender_bomb", EntityType.Builder.of(EnderBomb::new, MobCategory.MONSTER)
+                    .sized(0.0f, 0.0f)).asPromised();
+
+    public static final Promised<EntityType<Portal>> PORTAL_TYPE = ENTITIES.register(
+            "portal", EntityType.Builder.of(Portal::new, MobCategory.MISC)
+                    .sized(1.0f, 2.0f)).asPromised();
 }
 
 
