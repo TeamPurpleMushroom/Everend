@@ -31,7 +31,7 @@ import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -40,6 +40,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.everend.util.EntityUtil;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
@@ -197,9 +198,10 @@ public class EnderLord extends Monster implements NeutralMob {
      */
     protected boolean teleportInResponseToAttack(boolean wasRanged) {
         if (!this.level().isClientSide() && this.isAlive()) {
-            if (this.getTarget() != null) {
+            LivingEntity target = getTarget();
+            if (target!= null) {
                 Vec3 currentPos = position();
-                Vec3 origin = this.getTarget().position();
+                Vec3 origin = target.position();
                 for (int i = 0; i < 16; i++) {
                     float angle = this.random.nextFloat() * Mth.TWO_PI;
                     double magnitude = wasRanged ? this.position().distanceTo(origin) : 5.0f;
@@ -211,8 +213,19 @@ public class EnderLord extends Monster implements NeutralMob {
                         if (!wasRanged) {
                             teleportCount--;
                             if (teleportCount <= 0) {
-                                PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
-                                level().addFreshEntity(bomb);
+                                //target.setPos(currentPos);
+                                for (int j = 0; j < 8; j++) {
+                                    float fireballAngle = this.random.nextFloat() * Mth.TWO_PI;
+                                    Vec3 offset = new Vec3(Math.cos(fireballAngle), 0.8, Math.sin(fireballAngle)).scale(0.5);
+                                    PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
+                                    bomb.setDeltaMovement(offset);
+                                    level().addFreshEntity(bomb);
+                                    /*LargeFireball fireball = new LargeFireball(level(), this, offset.x, offset.y, offset.z, 1);
+                                    fireball.setPos(currentPos.add(offset.scale(-15.0)).with(Direction.Axis.Y, target.getEyeY()));
+                                    level().addFreshEntity(fireball);*/
+                                }
+                                //PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
+                                //level().addFreshEntity(bomb);
                                 teleportCount = 3 + random.nextInt(4);
                             }
                         }
