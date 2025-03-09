@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.client.render.entity.BaseRiftRenderer;
 import net.purplemushroom.everend.client.render.entity.EnderLordRenderer;
+import net.purplemushroom.everend.client.render.entity.PortalRenderer;
+import net.purplemushroom.everend.client.render.entity.RadiantEnergyRenderer;
 import net.purplemushroom.everend.registry.EEEntities;
 
 @Mod.EventBusSubscriber(modid = Everend.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,5 +28,9 @@ public class EEEntityRenderRegistry {
                 .scale(5.5F));
 
         event.registerEntityRenderer(EEEntities.ENDER_LORD_TYPE.get(), EnderLordRenderer::new);
+
+        event.registerEntityRenderer(EEEntities.RADIANT_ENERGY_TYPE.get(), RadiantEnergyRenderer::new);
+
+        event.registerEntityRenderer(EEEntities.PORTAL_TYPE.get(), PortalRenderer::new);
     }
 }

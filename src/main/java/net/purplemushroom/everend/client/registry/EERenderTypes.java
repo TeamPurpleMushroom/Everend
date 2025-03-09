@@ -25,6 +25,21 @@ public class EERenderTypes {
                             .build())
                     .createCompositeState(false));
 
+    public static final RenderType ENDER_LORD_PORTAL_TYPE = RenderType.create(
+            "ender_lord_portal",
+            DefaultVertexFormat.POSITION,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEndPortalShader))
+                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                            .add(TheEndPortalRenderer.END_SKY_LOCATION, false, false)
+                            .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false)
+                            .build())
+                    .createCompositeState(false));
+
     public static final RenderType VOID_STARS_TRI_RENDER_TYPE = RenderType.create(
             "void_stars",
             DefaultVertexFormat.POSITION,
@@ -70,6 +85,10 @@ public class EERenderTypes {
                             //.add(Neverend.tl("gui/menu_island.png").fullLocation(), false, false)
                             .build())
                     .createCompositeState(false));
+
+    public static RenderType getEnderLordPortalType() {
+        return ENDER_LORD_PORTAL_TYPE;
+    }
 
     public static RenderType getRiftPortalRenderType() {
         return RIFT_PORTAL_RENDER_TYPE;

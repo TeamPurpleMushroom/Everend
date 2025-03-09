@@ -25,15 +25,15 @@ public class RadiantEnergy extends Entity implements TraceableEntity {
 
     public RadiantEnergy(EnderLord creator) {
         this(EEEntities.RADIANT_ENERGY_TYPE.get(), creator.level());
-        setPos(creator.position().add(0.0, creator.getBbHeight() / 2, 0.0));
         setOwner(creator);
     }
 
     @Override
     public void tick() {
+        this.setPos(position().add(this.getDeltaMovement()));
         if (!level().isClientSide()) {
             setTime(getTime() + 1);
-            if (getTime() >= 30) {
+            if (getTime() >= 80) {
                 this.kill();
                 level().explode(getOwner(), getX(), getY(), getZ(), 3.0f, false, Level.ExplosionInteraction.NONE);
             }

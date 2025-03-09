@@ -55,7 +55,6 @@ public class EnderLord extends Monster implements NeutralMob {
     private static final EntityDataAccessor<Boolean> DATA_CREEPY = SynchedEntityData.defineId(EnderLord.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_STARED_AT = SynchedEntityData.defineId(EnderLord.class, EntityDataSerializers.BOOLEAN);
     private int lastStareSound = Integer.MIN_VALUE;
-    private int targetChangeTime;
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
     @Nullable
@@ -86,11 +85,9 @@ public class EnderLord extends Monster implements NeutralMob {
      */
     public void setTarget(@Nullable LivingEntity pLivingEntity) {
         if (pLivingEntity == null) {
-            this.targetChangeTime = 0;
             this.entityData.set(DATA_CREEPY, false);
             this.entityData.set(DATA_STARED_AT, false);
         } else {
-            this.targetChangeTime = this.tickCount;
             this.entityData.set(DATA_CREEPY, true);
         }
 
@@ -191,6 +188,11 @@ public class EnderLord extends Monster implements NeutralMob {
     protected void customServerAiStep() {
         super.customServerAiStep();
         barInfo.setProgress(this.getHealth() / this.getMaxHealth());
+        if (tickCount % 40 == 0) {
+            Portal portal = new Portal(this, Direction.NORTH);
+            portal.setPos(position().add(0.0, 3.0, 0.0));
+            level().addFreshEntity(portal);
+        }
     }
 
     /**
@@ -216,8 +218,10 @@ public class EnderLord extends Monster implements NeutralMob {
                                 //target.setPos(currentPos);
                                 for (int j = 0; j < 8; j++) {
                                     float fireballAngle = this.random.nextFloat() * Mth.TWO_PI;
-                                    Vec3 offset = new Vec3(Math.cos(fireballAngle), 0.8, Math.sin(fireballAngle)).scale(0.5);
-                                    PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
+                                    Vec3 offset = new Vec3(Math.cos(fireballAngle), 0.0, Math.sin(fireballAngle)).scale(0.1);
+                                    //PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
+                                    RadiantEnergy bomb = new RadiantEnergy(this);
+                                    bomb.setPos(currentPos.add(0.0, getBbHeight() / 2, 0.0));
                                     bomb.setDeltaMovement(offset);
                                     level().addFreshEntity(bomb);
                                     /*LargeFireball fireball = new LargeFireball(level(), this, offset.x, offset.y, offset.z, 1);

@@ -26,10 +26,10 @@ public class Portal extends Entity implements TraceableEntity {
         super(pEntityType, pLevel);
     }
 
-    public Portal(EnderLord creator) {
+    public Portal(EnderLord creator, Direction dir) {
         this(EEEntities.PORTAL_TYPE.get(), creator.level());
-        setPos(creator.position().add(0.0, creator.getBbHeight() / 2, 0.0));
         setOwner(creator);
+        setDirection(dir);
     }
 
     @Override
@@ -38,11 +38,12 @@ public class Portal extends Entity implements TraceableEntity {
             Vec3i vec = getDirection().getNormal();
             setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(0.05));
         }
+        setPos(position().add(getDeltaMovement()));
     }
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(DATA_DIRECTION_ID, null);
+        this.entityData.define(DATA_DIRECTION_ID, Direction.WEST);
     }
 
     private void setDirection(Direction dir) {

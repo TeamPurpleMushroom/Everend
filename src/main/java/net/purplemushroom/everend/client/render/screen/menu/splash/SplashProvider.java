@@ -226,7 +226,9 @@ public class SplashProvider {
             "Very odd!",
             "The hottest thing north of Havana!",
             "Spaghetti clouds!",
-            "Mono hearts!"
+            "Mono hearts!",
+            "Master of its domain!",
+            "Call your friend Kevin!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
