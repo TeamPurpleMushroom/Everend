@@ -28,12 +28,12 @@ public class EEEntities {
                     .sized(0.7f, 2.9f)
                     .clientTrackingRange(8)).asPromised();
 
-    public static final Promised<EntityType<EnderBomb>> ENDER_BOMB_TYPE = ENTITIES.register(
-            "ender_bomb", EntityType.Builder.of(EnderBomb::new, MobCategory.MONSTER)
+    public static final Promised<EntityType<RadiantEnergy>> RADIANT_ENERGY_TYPE = ENTITIES.register(
+            "radiant_energy", EntityType.Builder.<RadiantEnergy>of(RadiantEnergy::new, MobCategory.MISC)
                     .sized(0.0f, 0.0f)).asPromised();
 
     public static final Promised<EntityType<Portal>> PORTAL_TYPE = ENTITIES.register(
-            "portal", EntityType.Builder.of(Portal::new, MobCategory.MISC)
+            "portal", EntityType.Builder.<Portal>of(Portal::new, MobCategory.MISC)
                     .sized(1.0f, 2.0f)).asPromised();
 }
 

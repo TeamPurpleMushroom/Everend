@@ -8,24 +8,23 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TraceableEntity;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.level.Level;
 import net.purplemushroom.everend.registry.EEEntities;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class EnderBomb extends Entity implements TraceableEntity {
+public class RadiantEnergy extends Entity implements TraceableEntity {
     private UUID creatorUUID;
     private EnderLord creator;
-    private static final EntityDataAccessor<Integer> DATA_TIME_ID = SynchedEntityData.defineId(EnderBomb.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_TIME_ID = SynchedEntityData.defineId(RadiantEnergy.class, EntityDataSerializers.INT);
 
-    public EnderBomb(EntityType<?> pEntityType, Level pLevel) {
+    public RadiantEnergy(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public EnderBomb(EnderLord creator) {
-        this(EEEntities.ENDER_BOMB_TYPE.get(), creator.level());
+    public RadiantEnergy(EnderLord creator) {
+        this(EEEntities.RADIANT_ENERGY_TYPE.get(), creator.level());
         setPos(creator.position().add(0.0, creator.getBbHeight() / 2, 0.0));
         setOwner(creator);
     }
