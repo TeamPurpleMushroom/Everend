@@ -14,7 +14,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class EntityUtil {
 
@@ -124,5 +123,11 @@ public class EntityUtil {
         } else {
             return level.clip(new ClipContext(subjectVector, targetVector, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, subject)).getType() == HitResult.Type.MISS;
         }
+    }
+
+    public static double calculateMinimalAttackReach(LivingEntity attacker, LivingEntity victim) {
+        double endermanBoundingBoxRadius = Math.sqrt(2 * (attacker.getBbWidth() / 2) * (attacker.getBbWidth() / 2));
+        double targetBoundingBoxRadius = Math.sqrt(2 * (victim.getBbWidth() / 2) * (victim.getBbWidth() / 2));
+        return (endermanBoundingBoxRadius + targetBoundingBoxRadius) * (endermanBoundingBoxRadius + targetBoundingBoxRadius);
     }
 }

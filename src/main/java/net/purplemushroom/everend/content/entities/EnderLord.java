@@ -41,6 +41,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.purplemushroom.everend.util.EntityUtil;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
 
 import javax.annotation.Nullable;
@@ -70,7 +71,7 @@ public class EnderLord extends Monster implements NeutralMob {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new EverendMeleeAttack(this, 1.0D, 6));
+        this.goalSelector.addGoal(2, new EverendMeleeAttack(this, 1.0D, 0));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D, 0.0F));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -350,5 +351,10 @@ public class EnderLord extends Monster implements NeutralMob {
     public void stopSeenByPlayer(ServerPlayer serverPlayer) {
         super.stopSeenByPlayer(serverPlayer);
         barInfo.removePlayer(serverPlayer);
+    }
+
+    @Override
+    public double getMeleeAttackRangeSqr(LivingEntity pEntity) {
+        return EntityUtil.calculateMinimalAttackReach(this, pEntity);
     }
 }

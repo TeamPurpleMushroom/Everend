@@ -54,4 +54,9 @@ public class EverendMeleeAttack extends MeleeAttackGoal {
             attackTimer = 0;
         }
     }
+
+    @Override
+    protected double getAttackReachSqr(LivingEntity pAttackTarget) {
+        return this.mob.getMeleeAttackRangeSqr(pAttackTarget);
+    }
 }
