@@ -32,6 +32,9 @@ public class PortalRenderer extends EntityRenderer<Portal> {
     public void render(Portal entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         // TODO: this code is kinda messy?Porta
         VertexConsumer vertexConsumer = buffer.getBuffer(RENDER_TYPE);
+        poseStack.pushPose();
+        poseStack.translate(0.0, 0.5, 0.0);
+
         Matrix4f pose = poseStack.last().pose();
         Vec3i rightNormal = entity.getDirection().getNormal().cross(Direction.UP.getNormal());
         Vec3 up = Vec3.atLowerCornerOf(Direction.UP.getNormal()).normalize().scale(1.0);
@@ -47,6 +50,8 @@ public class PortalRenderer extends EntityRenderer<Portal> {
         addVertex(vertexConsumer, pose, right.scale(-1.0).subtract(up));
         addVertex(vertexConsumer, pose, right.scale(-1.0).add(up));
         addVertex(vertexConsumer, pose, right.add(up));
+
+        poseStack.popPose();
     }
 
     private void addVertex(VertexConsumer consumer, Matrix4f pose, Vec3 coords) {
