@@ -57,6 +57,12 @@ public class EEBlocks {
                 .oneVarStateAndCubeAllModel()
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
                 .name("Shifterine Ore");
+        BLOCKS.register("enderium_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
+                        .strength(2.0F, 6.0F)
+                        .requiresCorrectToolForDrops()).create()))
+                .oneVarStateAndCubeAllModel()
+                .defaultBlockItem(EECreativeTabs.BLOCKS)
+                .name("Enderium Ore");
         BLOCKS.register("ludunite_ore", () -> new Block(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.END_STONE)
                         .strength(2.0F, 6.0F)
                         .requiresCorrectToolForDrops()).create()))

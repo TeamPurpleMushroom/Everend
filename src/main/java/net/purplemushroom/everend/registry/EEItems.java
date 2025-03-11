@@ -60,6 +60,7 @@ public class EEItems {
 
         register("dull_aldores", "Dull Aldores");
         register("aldores_thing", "Aldores Thing");
+        register("ethereal_eye", "Ethereal Eye");
 
         //TODO: stats
         register("aldores_sword", "Aldores Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
