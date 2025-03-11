@@ -189,10 +189,78 @@ public class EnderLord extends Monster implements NeutralMob {
         super.customServerAiStep();
         barInfo.setProgress(this.getHealth() / this.getMaxHealth());
         if (tickCount % 40 == 0) {
-            Portal portal = new Portal(this, Direction.NORTH);
-            portal.setPos(position().add(0.0, 3.0, 0.0));
-            level().addFreshEntity(portal);
+            Direction dir = Direction.from3DDataValue(2 + random.nextInt(4));
+            BlockPos pos = blockPosition().relative(dir.getOpposite(), 15);
+            boolean offset = random.nextBoolean();
+            if (!offset) {
+                Portal portal = new Portal(this, dir);
+                portal.setPos(pos.getCenter());
+                level().addFreshEntity(portal);
+            }
+            for (int i = 1; i < 15; i++) {
+                if (i % 2 == (offset ? 1 : 0)) {
+                    Portal portal;
+
+                    portal = new Portal(this, dir);
+                    portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
+                    level().addFreshEntity(portal);
+
+                    portal = new Portal(this, dir);
+                    portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
+                    level().addFreshEntity(portal);
+                }
+            }
         }
+
+        /*if (tickCount % 9 == 0) {
+            Direction dir = Direction.NORTH;
+            BlockPos pos = blockPosition().relative(dir.getOpposite(), 15);
+            boolean offset = random.nextBoolean();
+            if (!offset) {
+                Portal portal = new Portal(this, dir);
+                portal.setPos(pos.getCenter());
+                level().addFreshEntity(portal);
+            }
+            for (int i = 1; i < 15; i++) {
+                if (i % 2 == (offset ? 1 : 0)) {
+                    Portal portal;
+
+                    portal = new Portal(this, dir);
+                    portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
+                    level().addFreshEntity(portal);
+
+                    portal = new Portal(this, dir);
+                    portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
+                    level().addFreshEntity(portal);
+                }
+            }
+        }*/
+
+        /*if (tickCount % 40 == 0) {
+            Direction dir = Direction.from3DDataValue(2 + random.nextInt(4));
+            BlockPos pos = blockPosition().relative(dir.getOpposite(), 15);
+            BlockPos oppositePos = blockPosition().relative(dir, 15);
+            boolean offset = random.nextBoolean();
+            boolean mirrored = random.nextBoolean();
+            if (!offset) {
+                Portal portal = new Portal(this, dir);
+                portal.setPos(pos.getCenter());
+                level().addFreshEntity(portal);
+            }
+            for (int i = 0; i < 15; i++) {
+                Portal portal;
+
+                portal = new Portal(this, dir);
+                portal.setPos(pos.relative(mirrored ? dir.getClockWise() : dir.getCounterClockWise(), i).getCenter());
+                level().addFreshEntity(portal);
+
+                if (i > 0) {
+                    portal = new Portal(this, dir.getOpposite());
+                    portal.setPos(oppositePos.relative(mirrored ? dir.getCounterClockWise() : dir.getClockWise(), i).getCenter());
+                    level().addFreshEntity(portal);
+                }
+            }
+        }*/
     }
 
     /**
