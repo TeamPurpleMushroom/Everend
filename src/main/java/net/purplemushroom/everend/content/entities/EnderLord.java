@@ -373,6 +373,7 @@ public class EnderLord extends Monster implements NeutralMob {
 
         private Direction dir;
         BlockPos originForWalls;
+        boolean alt;
 
         private static final int WARMUP_TIME = 30;
         private static final int COOLDOWN_TIME = 50;
@@ -385,7 +386,7 @@ public class EnderLord extends Monster implements NeutralMob {
 
         @Override
         public boolean canUse() {
-            if (/*cooldown <= 0 &&*/ owner.getTarget() != null) {
+            if (cooldown <= 0 && owner.getTarget() != null) {
                 cooldown = owner.random.nextInt(100) + 100;
                 return true;
             }
@@ -401,9 +402,8 @@ public class EnderLord extends Monster implements NeutralMob {
         @Override
         public void start() {
             timer = 0;
-            type = BulletHellType.WALLS;
-            originForWalls = getTarget().blockPosition();
-            /*switch (random.nextInt(3)) {
+
+            switch (random.nextInt(3)) {
                 case 0:
                     type = BulletHellType.DOORS_FROM_RANDOM_DIRECTIONS;
                     break;
@@ -414,7 +414,9 @@ public class EnderLord extends Monster implements NeutralMob {
                 case 2:
                     type = BulletHellType.WALLS;
                     originForWalls = getTarget().blockPosition();
-            }*/
+                    dir = getRandomDirection();
+                    alt = owner.random.nextBoolean();
+            }
         }
 
         @Override
@@ -426,29 +428,22 @@ public class EnderLord extends Monster implements NeutralMob {
         public void tick() {
             if (timer >= WARMUP_TIME && timer <= TOTAL_RUNTIME - COOLDOWN_TIME && (timer - WARMUP_TIME) % type.interval == 0) {
                 Entity target = getTarget();
-                if (type != BulletHellType.DOORS_FROM_ONE_DIRECTION) dir = getRandomDirection();
+                if (type == BulletHellType.DOORS_FROM_RANDOM_DIRECTIONS) dir = getRandomDirection();
                 if (type == BulletHellType.WALLS) {
-                    Vec3 pos = getTarget().position().relative(dir.getOpposite(), 25);
-                    Vec3 oppositePos = getTarget().position().relative(dir, 25);
-                    //boolean offset = random.nextBoolean();
-                    boolean mirrored = random.nextBoolean();
-                    /*if (!offset) {
-                        Portal portal = new Portal(owner, dir);
-                        portal.setPos(pos);
-                        level().addFreshEntity(portal);
-                    }*/
+                    BlockPos pos = originForWalls.relative(dir.getOpposite(), 25);
+                    BlockPos oppositePos = originForWalls.relative(dir, 25);
                     for (int i = 0; i < 25; i++) {
                         Portal portal;
 
-                        portal = new Portal(owner, dir, 0.3);
-                        portal.setPos(pos.relative(mirrored ? dir.getClockWise() : dir.getCounterClockWise(), i + 0.5));
+                        portal = new Portal(owner, dir, 0.45);
+                        portal.setPos(pos.relative(alt ? dir.getClockWise() : dir.getCounterClockWise(), i).getCenter());
                         level().addFreshEntity(portal);
 
-                        //if (i > 0) {
-                            portal = new Portal(owner, dir.getOpposite(), 0.3);
-                            portal.setPos(oppositePos.relative(mirrored ? dir.getCounterClockWise() : dir.getClockWise(), i + 0.5));
+                        if (i > 0) {
+                            portal = new Portal(owner, dir.getOpposite(), 0.45);
+                            portal.setPos(oppositePos.relative(alt ? dir.getCounterClockWise() : dir.getClockWise(), i).getCenter());
                             level().addFreshEntity(portal);
-                        //}
+                        }
                     }
                 } else {
                     BlockPos pos = target.blockPosition().relative(dir.getOpposite(), 15);
@@ -483,7 +478,7 @@ public class EnderLord extends Monster implements NeutralMob {
         private enum BulletHellType {
             DOORS_FROM_RANDOM_DIRECTIONS(40),
             DOORS_FROM_ONE_DIRECTION(11),
-            WALLS(40);
+            WALLS(30);
 
             private final int interval;
 
