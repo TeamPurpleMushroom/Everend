@@ -41,7 +41,7 @@ public class Portal extends Entity implements TraceableEntity {
         if (!level().isClientSide() && tickCount > 10) {
             Vec3i vec = getDirection().getNormal();
             setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(speed));
-            if (tickCount >= 200 || getOwner() == null || !creator.isDoingBullethell()) kill();
+            if (tickCount >= 100) kill();
 
             for (Entity entity : level().getEntities(this, this.getBoundingBox())) {
                 if (entity instanceof ServerPlayer player) {
