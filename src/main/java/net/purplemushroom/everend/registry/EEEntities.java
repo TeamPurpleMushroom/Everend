@@ -34,7 +34,7 @@ public class EEEntities {
 
     public static final Promised<EntityType<Portal>> PORTAL_TYPE = ENTITIES.register(
             "portal", EntityType.Builder.<Portal>of(Portal::new, MobCategory.MISC)
-                    .sized(1.0f, 2.0f)).asPromised();
+                    .sized(0.8f, 2.0f)).asPromised();
 }
 
 

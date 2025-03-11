@@ -3,10 +3,12 @@ package net.purplemushroom.everend.content.entities;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TraceableEntity;
@@ -39,9 +41,20 @@ public class Portal extends Entity implements TraceableEntity {
         if (!level().isClientSide() && tickCount > 10) {
             Vec3i vec = getDirection().getNormal();
             setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(speed));
-            if (tickCount >= 200) kill();
+            if (tickCount >= 200 || getOwner() == null || !creator.isDoingBullethell()) kill();
+
+            for (Entity entity : level().getEntities(this, this.getBoundingBox())) {
+                if (entity instanceof ServerPlayer player) {
+                    player.sendSystemMessage(Component.literal("HIT!"));
+                }
+            }
         }
         setPos(position().add(getDeltaMovement()));
+    }
+
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
     }
 
     @Override
@@ -60,12 +73,14 @@ public class Portal extends Entity implements TraceableEntity {
     @Override
     protected void readAdditionalSaveData(CompoundTag pCompound) {
         creatorUUID = pCompound.getUUID("Creator");
+        speed = pCompound.getDouble("Speed");
         setDirection(Direction.from3DDataValue(pCompound.getInt("Direction")));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag pCompound) {
         pCompound.putUUID("Creator", creatorUUID);
+        pCompound.putDouble("Speed", speed);
         pCompound.putInt("Direction", getDirection().get3DDataValue());
     }
 

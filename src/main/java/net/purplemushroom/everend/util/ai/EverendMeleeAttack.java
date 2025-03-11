@@ -39,9 +39,6 @@ public class EverendMeleeAttack extends MeleeAttackGoal {
         double d0 = this.getAttackReachSqr(pEnemy);
         if (pDistToEnemySqr <= d0) {
             if (this.getTicksUntilNextAttack() <= 0) {
-                if (pEnemy instanceof ServerPlayer player) {
-                    player.sendSystemMessage(Component.literal(String.valueOf(attackTimer)));
-                }
                 if (attackTimer >= attackWarmupTime) {
                     this.resetAttackCooldown();
                     this.mob.swing(InteractionHand.MAIN_HAND);

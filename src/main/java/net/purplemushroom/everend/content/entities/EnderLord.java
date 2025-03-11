@@ -60,6 +60,7 @@ public class EnderLord extends Monster implements NeutralMob {
     @Nullable
     private UUID persistentAngerTarget;
     private int teleportCount = 10;
+    private boolean isDoingBullethell = false;
 
     private final ServerBossEvent barInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
 
@@ -195,6 +196,7 @@ public class EnderLord extends Monster implements NeutralMob {
      * Teleport the enderman to a random nearby position
      */
     protected boolean teleportInResponseToAttack(boolean wasRanged) {
+        if (isDoingBullethell()) return false;
         if (!this.level().isClientSide() && this.isAlive()) {
             LivingEntity target = getTarget();
             if (target!= null) {
@@ -304,26 +306,11 @@ public class EnderLord extends Monster implements NeutralMob {
 
                 return wasHurtByWater;
             }
-            /*boolean flag = pSource.getDirectEntity() instanceof ThrownPotion;
-            if (!pSource.is(DamageTypeTags.IS_PROJECTILE) && !flag) {
-                boolean flag2 = super.hurt(pSource, pAmount);
-                if (!this.level().isClientSide() && !(pSource.getEntity() instanceof LivingEntity) && this.random.nextInt(10) != 0) {
-                    this.teleport();
-                }
-
-                return flag2;
-            } else {
-                boolean flag1 = flag && this.hurtWithCleanWater(pSource, (ThrownPotion)pSource.getDirectEntity(), pAmount);
-
-                for(int i = 0; i < 64; ++i) {
-                    if (this.teleport()) {
-                        return true;
-                    }
-                }
-
-                return flag1;
-            }*/
         }
+    }
+
+    public boolean isDoingBullethell() {
+        return isDoingBullethell;
     }
 
     private boolean hurtWithCleanWater(DamageSource pSource, ThrownPotion pPotion, float pAmount) {
@@ -377,7 +364,7 @@ public class EnderLord extends Monster implements NeutralMob {
 
         private static final int WARMUP_TIME = 30;
         private static final int COOLDOWN_TIME = 50;
-        private static final int TOTAL_RUNTIME = WARMUP_TIME + 300 + COOLDOWN_TIME;
+        //private static final int TOTAL_RUNTIME = WARMUP_TIME + 300 + COOLDOWN_TIME;
 
         private EnderLordBulletHellGoal(EnderLord lord) {
             owner = lord;
@@ -396,11 +383,12 @@ public class EnderLord extends Monster implements NeutralMob {
 
         @Override
         public boolean canContinueToUse() {
-            return owner.getTarget() != null && timer <= TOTAL_RUNTIME;
+            return owner.getTarget() != null && timer <= getTotalRuntime();
         }
 
         @Override
         public void start() {
+            isDoingBullethell = true;
             timer = 0;
 
             switch (random.nextInt(3)) {
@@ -420,18 +408,23 @@ public class EnderLord extends Monster implements NeutralMob {
         }
 
         @Override
+        public void stop() {
+            isDoingBullethell = false;
+        }
+
+        @Override
         public boolean requiresUpdateEveryTick() {
             return true;
         }
 
         @Override
         public void tick() {
-            if (timer >= WARMUP_TIME && timer <= TOTAL_RUNTIME - COOLDOWN_TIME && (timer - WARMUP_TIME) % type.interval == 0) {
+            if (timer >= WARMUP_TIME && timer <= getTotalRuntime() - COOLDOWN_TIME && (timer - WARMUP_TIME) % type.interval == 0) {
                 Entity target = getTarget();
                 if (type == BulletHellType.DOORS_FROM_RANDOM_DIRECTIONS) dir = getRandomDirection();
                 if (type == BulletHellType.WALLS) {
-                    BlockPos pos = originForWalls.relative(dir.getOpposite(), 25);
-                    BlockPos oppositePos = originForWalls.relative(dir, 25);
+                    BlockPos pos = originForWalls.relative(dir.getOpposite(), 15);
+                    BlockPos oppositePos = originForWalls.relative(dir, 15);
                     for (int i = 0; i < 25; i++) {
                         Portal portal;
 
@@ -475,15 +468,21 @@ public class EnderLord extends Monster implements NeutralMob {
             return Direction.from3DDataValue(2 + random.nextInt(4));
         }
 
+        private int getTotalRuntime() {
+            return WARMUP_TIME + type.duration + COOLDOWN_TIME;
+        }
+
         private enum BulletHellType {
-            DOORS_FROM_RANDOM_DIRECTIONS(40),
-            DOORS_FROM_ONE_DIRECTION(11),
-            WALLS(30);
+            DOORS_FROM_RANDOM_DIRECTIONS(40, 300),
+            DOORS_FROM_ONE_DIRECTION(11, 180),
+            WALLS(30, 100);
 
             private final int interval;
+            private final int duration;
 
-            BulletHellType(int time) {
+            BulletHellType(int time, int duration) {
                 interval = time;
+                this.duration = duration;
             }
         }
     }
