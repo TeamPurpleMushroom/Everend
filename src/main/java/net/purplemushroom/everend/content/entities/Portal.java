@@ -20,23 +20,26 @@ import java.util.UUID;
 public class Portal extends Entity implements TraceableEntity {
     private UUID creatorUUID;
     private EnderLord creator;
+    private double speed;
     private static final EntityDataAccessor<Direction> DATA_DIRECTION_ID = SynchedEntityData.defineId(Portal.class, EntityDataSerializers.DIRECTION);
 
     public Portal(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public Portal(EnderLord creator, Direction dir) {
+    public Portal(EnderLord creator, Direction dir, double speed) {
         this(EEEntities.PORTAL_TYPE.get(), creator.level());
         setOwner(creator);
         setDirection(dir);
+        this.speed = speed;
     }
 
     @Override
     public void tick() {
-        if (!level().isClientSide()) {
+        if (!level().isClientSide() && tickCount > 10) {
             Vec3i vec = getDirection().getNormal();
-            setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(0.5));
+            setDeltaMovement(new Vec3(vec.getX(), vec.getY(), vec.getZ()).scale(speed));
+            if (tickCount >= 200) kill();
         }
         setPos(position().add(getDeltaMovement()));
     }

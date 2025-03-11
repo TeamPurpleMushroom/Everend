@@ -71,6 +71,7 @@ public class EnderLord extends Monster implements NeutralMob {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new EnderLordBulletHellGoal(this));
         this.goalSelector.addGoal(2, new EverendMeleeAttack(this, 1.0D, 0));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D, 0.0F));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -188,79 +189,6 @@ public class EnderLord extends Monster implements NeutralMob {
     protected void customServerAiStep() {
         super.customServerAiStep();
         barInfo.setProgress(this.getHealth() / this.getMaxHealth());
-        if (tickCount % 40 == 0) {
-            Direction dir = Direction.from3DDataValue(2 + random.nextInt(4));
-            BlockPos pos = blockPosition().relative(dir.getOpposite(), 15);
-            boolean offset = random.nextBoolean();
-            if (!offset) {
-                Portal portal = new Portal(this, dir);
-                portal.setPos(pos.getCenter());
-                level().addFreshEntity(portal);
-            }
-            for (int i = 1; i < 15; i++) {
-                if (i % 2 == (offset ? 1 : 0)) {
-                    Portal portal;
-
-                    portal = new Portal(this, dir);
-                    portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
-                    level().addFreshEntity(portal);
-
-                    portal = new Portal(this, dir);
-                    portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
-                    level().addFreshEntity(portal);
-                }
-            }
-        }
-
-        /*if (tickCount % 9 == 0) {
-            Direction dir = Direction.NORTH;
-            BlockPos pos = blockPosition().relative(dir.getOpposite(), 15);
-            boolean offset = random.nextBoolean();
-            if (!offset) {
-                Portal portal = new Portal(this, dir);
-                portal.setPos(pos.getCenter());
-                level().addFreshEntity(portal);
-            }
-            for (int i = 1; i < 15; i++) {
-                if (i % 2 == (offset ? 1 : 0)) {
-                    Portal portal;
-
-                    portal = new Portal(this, dir);
-                    portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
-                    level().addFreshEntity(portal);
-
-                    portal = new Portal(this, dir);
-                    portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
-                    level().addFreshEntity(portal);
-                }
-            }
-        }*/
-
-        /*if (tickCount % 40 == 0) {
-            Direction dir = Direction.from3DDataValue(2 + random.nextInt(4));
-            BlockPos pos = blockPosition().relative(dir.getOpposite(), 15);
-            BlockPos oppositePos = blockPosition().relative(dir, 15);
-            boolean offset = random.nextBoolean();
-            boolean mirrored = random.nextBoolean();
-            if (!offset) {
-                Portal portal = new Portal(this, dir);
-                portal.setPos(pos.getCenter());
-                level().addFreshEntity(portal);
-            }
-            for (int i = 0; i < 15; i++) {
-                Portal portal;
-
-                portal = new Portal(this, dir);
-                portal.setPos(pos.relative(mirrored ? dir.getClockWise() : dir.getCounterClockWise(), i).getCenter());
-                level().addFreshEntity(portal);
-
-                if (i > 0) {
-                    portal = new Portal(this, dir.getOpposite());
-                    portal.setPos(oppositePos.relative(mirrored ? dir.getCounterClockWise() : dir.getClockWise(), i).getCenter());
-                    level().addFreshEntity(portal);
-                }
-            }
-        }*/
     }
 
     /**
@@ -274,7 +202,7 @@ public class EnderLord extends Monster implements NeutralMob {
                 Vec3 origin = target.position();
                 for (int i = 0; i < 16; i++) {
                     float angle = this.random.nextFloat() * Mth.TWO_PI;
-                    double magnitude = wasRanged ? this.position().distanceTo(origin) : 5.0f;
+                    double magnitude = wasRanged ? this.position().distanceTo(origin) : 7.0f;
                     if (teleportCount <= 1) magnitude *= 3;
                     double x = origin.x + Mth.cos(angle) * magnitude;
                     double y = origin.y + 3;
@@ -283,21 +211,15 @@ public class EnderLord extends Monster implements NeutralMob {
                         if (!wasRanged) {
                             teleportCount--;
                             if (teleportCount <= 0) {
-                                //target.setPos(currentPos);
-                                for (int j = 0; j < 8; j++) {
+                                int count = 8 + this.random.nextInt(5);
+                                for (int j = 0; j < count; j++) {
                                     float fireballAngle = this.random.nextFloat() * Mth.TWO_PI;
                                     Vec3 offset = new Vec3(Math.cos(fireballAngle), 0.0, Math.sin(fireballAngle)).scale(0.1);
-                                    //PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
                                     RadiantEnergy bomb = new RadiantEnergy(this);
                                     bomb.setPos(currentPos.add(0.0, getBbHeight() / 2, 0.0));
-                                    bomb.setDeltaMovement(offset);
+                                    bomb.setDeltaMovement(offset.scale(this.random.nextFloat() + 1.0f));
                                     level().addFreshEntity(bomb);
-                                    /*LargeFireball fireball = new LargeFireball(level(), this, offset.x, offset.y, offset.z, 1);
-                                    fireball.setPos(currentPos.add(offset.scale(-15.0)).with(Direction.Axis.Y, target.getEyeY()));
-                                    level().addFreshEntity(fireball);*/
                                 }
-                                //PrimedTnt bomb = new PrimedTnt(level(), currentPos.x, currentPos.y, currentPos.z, this);
-                                //level().addFreshEntity(bomb);
                                 teleportCount = 3 + random.nextInt(4);
                             }
                         }
@@ -441,5 +363,133 @@ public class EnderLord extends Monster implements NeutralMob {
     @Override
     public double getMeleeAttackRangeSqr(LivingEntity pEntity) {
         return EntityUtil.calculateMinimalAttackReach(this, pEntity);
+    }
+
+    private class EnderLordBulletHellGoal extends Goal {
+        EnderLord owner;
+        private int timer;
+        private int cooldown = 400;
+        private BulletHellType type;
+
+        private Direction dir;
+        BlockPos originForWalls;
+
+        private static final int WARMUP_TIME = 30;
+        private static final int COOLDOWN_TIME = 50;
+        private static final int TOTAL_RUNTIME = WARMUP_TIME + 300 + COOLDOWN_TIME;
+
+        private EnderLordBulletHellGoal(EnderLord lord) {
+            owner = lord;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (/*cooldown <= 0 &&*/ owner.getTarget() != null) {
+                cooldown = owner.random.nextInt(100) + 100;
+                return true;
+            }
+            cooldown--;
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return owner.getTarget() != null && timer <= TOTAL_RUNTIME;
+        }
+
+        @Override
+        public void start() {
+            timer = 0;
+            type = BulletHellType.WALLS;
+            originForWalls = getTarget().blockPosition();
+            /*switch (random.nextInt(3)) {
+                case 0:
+                    type = BulletHellType.DOORS_FROM_RANDOM_DIRECTIONS;
+                    break;
+                case 1:
+                    type = BulletHellType.DOORS_FROM_ONE_DIRECTION;
+                    dir = getRandomDirection();
+                    break;
+                case 2:
+                    type = BulletHellType.WALLS;
+                    originForWalls = getTarget().blockPosition();
+            }*/
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+
+        @Override
+        public void tick() {
+            if (timer >= WARMUP_TIME && timer <= TOTAL_RUNTIME - COOLDOWN_TIME && (timer - WARMUP_TIME) % type.interval == 0) {
+                Entity target = getTarget();
+                if (type != BulletHellType.DOORS_FROM_ONE_DIRECTION) dir = getRandomDirection();
+                if (type == BulletHellType.WALLS) {
+                    Vec3 pos = getTarget().position().relative(dir.getOpposite(), 25);
+                    Vec3 oppositePos = getTarget().position().relative(dir, 25);
+                    //boolean offset = random.nextBoolean();
+                    boolean mirrored = random.nextBoolean();
+                    /*if (!offset) {
+                        Portal portal = new Portal(owner, dir);
+                        portal.setPos(pos);
+                        level().addFreshEntity(portal);
+                    }*/
+                    for (int i = 0; i < 25; i++) {
+                        Portal portal;
+
+                        portal = new Portal(owner, dir, 0.3);
+                        portal.setPos(pos.relative(mirrored ? dir.getClockWise() : dir.getCounterClockWise(), i + 0.5));
+                        level().addFreshEntity(portal);
+
+                        //if (i > 0) {
+                            portal = new Portal(owner, dir.getOpposite(), 0.3);
+                            portal.setPos(oppositePos.relative(mirrored ? dir.getCounterClockWise() : dir.getClockWise(), i + 0.5));
+                            level().addFreshEntity(portal);
+                        //}
+                    }
+                } else {
+                    BlockPos pos = target.blockPosition().relative(dir.getOpposite(), 15);
+                    boolean offset = random.nextBoolean();
+                    if (!offset) {
+                        Portal portal = new Portal(owner, dir, 0.5);
+                        portal.setPos(pos.getCenter());
+                        level().addFreshEntity(portal);
+                    }
+                    for (int i = 1; i < 15; i++) {
+                        if (i % 2 == (offset ? 1 : 0)) {
+                            Portal portal;
+
+                            portal = new Portal(owner, dir, 0.5);
+                            portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
+                            level().addFreshEntity(portal);
+
+                            portal = new Portal(owner, dir, 0.5);
+                            portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
+                            level().addFreshEntity(portal);
+                        }
+                    }
+                }
+            }
+            timer++;
+        }
+
+        private Direction getRandomDirection() {
+            return Direction.from3DDataValue(2 + random.nextInt(4));
+        }
+
+        private enum BulletHellType {
+            DOORS_FROM_RANDOM_DIRECTIONS(40),
+            DOORS_FROM_ONE_DIRECTION(11),
+            WALLS(40);
+
+            private final int interval;
+
+            BulletHellType(int time) {
+                interval = time;
+            }
+        }
     }
 }

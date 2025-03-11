@@ -12,8 +12,8 @@ public class EEMobStats {
     @SubscribeEvent
     public static void registerStats(EntityAttributeCreationEvent event) {
         event.put(EEEntities.ENDER_LORD_TYPE.get(), Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 150.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.42D)
+                .add(Attributes.MAX_HEALTH, 450.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.45D)
                 .add(Attributes.ATTACK_DAMAGE, 20.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).build());
