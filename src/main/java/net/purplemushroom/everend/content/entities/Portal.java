@@ -9,9 +9,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TraceableEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.everend.registry.EEEntities;
@@ -24,6 +22,7 @@ public class Portal extends Entity implements TraceableEntity {
     private EnderLord creator;
     private double speed;
     private static final EntityDataAccessor<Direction> DATA_DIRECTION_ID = SynchedEntityData.defineId(Portal.class, EntityDataSerializers.DIRECTION);
+    private static final EntityDataAccessor<Float> DATA_HEIGHT_ID = SynchedEntityData.defineId(Portal.class, EntityDataSerializers.FLOAT);
 
     public Portal(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -58,8 +57,22 @@ public class Portal extends Entity implements TraceableEntity {
     }
 
     @Override
+    public EntityDimensions getDimensions(Pose pPose) {
+        return EntityDimensions.scalable(0.8f, getHeight());
+    }
+
+    @Override
     protected void defineSynchedData() {
         this.entityData.define(DATA_DIRECTION_ID, Direction.WEST);
+        this.entityData.define(DATA_HEIGHT_ID, getBbHeight());
+    }
+
+    protected void setHeight(float height) {
+        this.entityData.set(DATA_HEIGHT_ID, height);
+    }
+
+    private float getHeight() {
+        return this.entityData.get(DATA_HEIGHT_ID);
     }
 
     private void setDirection(Direction dir) {
@@ -68,6 +81,12 @@ public class Portal extends Entity implements TraceableEntity {
 
     public Direction getDirection() {
         return this.entityData.get(DATA_DIRECTION_ID);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (DATA_HEIGHT_ID.equals(pKey)) refreshDimensions();
+        super.onSyncedDataUpdated(pKey);
     }
 
     @Override

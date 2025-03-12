@@ -33,11 +33,11 @@ public class PortalRenderer extends EntityRenderer<Portal> {
         // TODO: this code is kinda messy?Porta
         VertexConsumer vertexConsumer = buffer.getBuffer(RENDER_TYPE);
         poseStack.pushPose();
-        poseStack.translate(0.0, 1.0f, 0.0);
+        poseStack.translate(0.0, entity.getBbHeight() * 0.5f, 0.0);
 
         Matrix4f pose = poseStack.last().pose();
         Vec3i rightNormal = entity.getDirection().getNormal().cross(Direction.UP.getNormal());
-        Vec3 up = Vec3.atLowerCornerOf(Direction.UP.getNormal()).normalize().scale(1.0f);
+        Vec3 up = Vec3.atLowerCornerOf(Direction.UP.getNormal()).normalize().scale(entity.getBbHeight() * 0.5f);
         Vec3 right = Vec3.atLowerCornerOf(rightNormal).normalize().scale(0.5f);
 
         //face 1

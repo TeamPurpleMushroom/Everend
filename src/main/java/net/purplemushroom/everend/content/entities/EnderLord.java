@@ -2,6 +2,7 @@ package net.purplemushroom.everend.content.entities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,13 +27,14 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
@@ -40,7 +42,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.everend.util.EntityUtil;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
@@ -49,7 +50,6 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public class EnderLord extends Monster implements NeutralMob {
     private static final EntityDataAccessor<Boolean> DATA_CREEPY = SynchedEntityData.defineId(EnderLord.class, EntityDataSerializers.BOOLEAN);
@@ -284,6 +284,29 @@ public class EnderLord extends Monster implements NeutralMob {
         return SoundEvents.ENDERMAN_DEATH;
     }
 
+    @Override
+    public boolean canDisableShield() {
+        return true;
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity pEntity) {
+        if (super.doHurtTarget(pEntity)) return true;
+        if (pEntity instanceof Player player) {
+            if (player.isUsingItem() && player.getUseItem().is(Items.SHIELD)) {
+                player.getCooldowns().addCooldown(Items.SHIELD, 50);
+                player.stopUsingItem();
+                this.level().broadcastEntityEvent(player, (byte) 30);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean canRide(Entity pVehicle) {
+        return false;
+    }
+
     /**
      * Called when the entity is attacked.
      */
@@ -359,7 +382,7 @@ public class EnderLord extends Monster implements NeutralMob {
         private BulletHellType type;
 
         private Direction dir;
-        BlockPos originForWalls;
+        BlockPos bulletHellOrigin;
         boolean alt;
 
         private static final int WARMUP_TIME = 30;
@@ -390,6 +413,7 @@ public class EnderLord extends Monster implements NeutralMob {
         public void start() {
             isDoingBullethell = true;
             timer = 0;
+            bulletHellOrigin = getTarget().blockPosition();
 
             switch (random.nextInt(3)) {
                 case 0:
@@ -401,7 +425,6 @@ public class EnderLord extends Monster implements NeutralMob {
                     break;
                 case 2:
                     type = BulletHellType.WALLS;
-                    originForWalls = getTarget().blockPosition();
                     dir = getRandomDirection();
                     alt = owner.random.nextBoolean();
             }
@@ -422,45 +445,90 @@ public class EnderLord extends Monster implements NeutralMob {
             if (timer >= WARMUP_TIME && timer <= getTotalRuntime() - COOLDOWN_TIME && (timer - WARMUP_TIME) % type.interval == 0) {
                 Entity target = getTarget();
                 if (type == BulletHellType.DOORS_FROM_RANDOM_DIRECTIONS) dir = getRandomDirection();
-                if (type == BulletHellType.WALLS) {
-                    BlockPos pos = originForWalls.relative(dir.getOpposite(), 15);
-                    BlockPos oppositePos = originForWalls.relative(dir, 15);
-                    for (int i = 0; i < 25; i++) {
-                        Portal portal;
-
-                        portal = new Portal(owner, dir, 0.45);
-                        portal.setPos(pos.relative(alt ? dir.getClockWise() : dir.getCounterClockWise(), i).getCenter());
-                        level().addFreshEntity(portal);
-
-                        if (i > 0) {
-                            portal = new Portal(owner, dir.getOpposite(), 0.45);
-                            portal.setPos(oppositePos.relative(alt ? dir.getCounterClockWise() : dir.getClockWise(), i).getCenter());
-                            level().addFreshEntity(portal);
-                        }
+                if (target.onGround()) {
+                    if (type != BulletHellType.WALLS) {
+                        bulletHellOrigin = target.blockPosition();
+                    } else {
+                        bulletHellOrigin = bulletHellOrigin.atY(target.blockPosition().getY());
                     }
-                } else {
-                    BlockPos pos = target.blockPosition().relative(dir.getOpposite(), 15);
-                    boolean offset = random.nextBoolean();
-                    if (!offset) {
-                        Portal portal = new Portal(owner, dir, 0.5);
-                        portal.setPos(pos.getCenter());
-                        level().addFreshEntity(portal);
-                    }
-                    for (int i = 1; i < 15; i++) {
-                        if (i % 2 == (offset ? 1 : 0)) {
+
+                }
+                switch (type) {
+                    case WALLS -> {
+                        BlockPos pos = bulletHellOrigin.relative(dir.getOpposite(), 15);
+                        BlockPos oppositePos = bulletHellOrigin.relative(dir, 15);
+                        for (int i = 0; i < 25; i++) {
                             Portal portal;
 
-                            portal = new Portal(owner, dir, 0.5);
-                            portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
+                            portal = new Portal(owner, dir, 0.45);
+                            portal.setPos(pos.relative(alt ? dir.getClockWise() : dir.getCounterClockWise(), i).getCenter());
                             level().addFreshEntity(portal);
 
-                            portal = new Portal(owner, dir, 0.5);
-                            portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
+                            if (i > 0) {
+                                portal = new Portal(owner, dir.getOpposite(), 0.45);
+                                portal.setPos(oppositePos.relative(alt ? dir.getCounterClockWise() : dir.getClockWise(), i).getCenter());
+                                level().addFreshEntity(portal);
+                            }
+                        }
+                    }
+                    case DOORS_FROM_RANDOM_DIRECTIONS -> {
+                        BlockPos pos = bulletHellOrigin.relative(dir.getOpposite(), 15);
+                        boolean offset = random.nextBoolean();
+                        if (!offset) {
+                            Portal portal = new Portal(owner, dir, 0.5);
+                            portal.setPos(pos.getCenter());
                             level().addFreshEntity(portal);
+                        }
+                        for (int i = 1; i < 15; i++) {
+                            if (i % 2 == (offset ? 1 : 0)) {
+                                Portal portal;
+
+                                portal = new Portal(owner, dir, 0.5);
+                                portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
+                                level().addFreshEntity(portal);
+
+                                portal = new Portal(owner, dir, 0.5);
+                                portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
+                                level().addFreshEntity(portal);
+                            }
+                        }
+                    }
+                    case DOORS_FROM_ONE_DIRECTION -> {
+                        BlockPos pos = bulletHellOrigin.relative(dir.getOpposite(), 15);
+                        boolean offset = random.nextBoolean();
+                        boolean vertical = random.nextBoolean();
+                        if (vertical) {
+                            for (int i = -14; i <= 14; i++) {
+                                Portal portal = new Portal(owner, dir, 0.5);
+                                portal.setHeight(0.4f);
+                                double height = offset ? 1.1 : 0.0;
+                                portal.setPos(pos.relative(dir.getClockWise(), i).getCenter().add(0.0, height, 0.0));
+                                level().addFreshEntity(portal);
+                            }
+                        } else {
+                            if (!offset) {
+                                Portal portal = new Portal(owner, dir, 0.5);
+                                portal.setPos(pos.getCenter());
+                                level().addFreshEntity(portal);
+                            }
+                            for (int i = 1; i < 15; i++) {
+                                if (i % 2 == (offset ? 1 : 0)) {
+                                    Portal portal;
+
+                                    portal = new Portal(owner, dir, 0.5);
+                                    portal.setPos(pos.relative(dir.getClockWise(), i).getCenter());
+                                    level().addFreshEntity(portal);
+
+                                    portal = new Portal(owner, dir, 0.5);
+                                    portal.setPos(pos.relative(dir.getCounterClockWise(), i).getCenter());
+                                    level().addFreshEntity(portal);
+                                }
+                            }
                         }
                     }
                 }
             }
+
             timer++;
         }
 
