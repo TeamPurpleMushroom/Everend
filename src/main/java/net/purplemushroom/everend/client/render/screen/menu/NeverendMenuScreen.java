@@ -11,18 +11,24 @@ import net.minecraft.client.gui.screens.multiplayer.SafetyScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.Music;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.purplemushroom.everend.client.registry.EERenderTypes;
 import net.purplemushroom.everend.client.registry.EEShaderRegistry;
+import net.purplemushroom.everend.client.registry.EESoundRegistry;
 import net.purplemushroom.everend.client.render.screen.EEButton;
 import net.purplemushroom.everend.client.render.screen.menu.splash.NeverendSplash;
 import net.purplemushroom.everend.client.render.screen.menu.splash.SplashProvider;
 import net.purplemushroom.everend.mixin.client.accessor.TitleScreenAccessor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
+    public static final Music MUSIC = new Music(EESoundRegistry.MENU_MUSIC_EVENT, 20, 600, true);
+
     private long time = 0;
     public NeverendMenuScreen() {
         super(false, new NeverendLogoRender());
@@ -62,6 +68,12 @@ public class NeverendMenuScreen extends TitleScreen {
 
         Uniform seedUniform = shaderinstance.getUniform("Seed");
         if (seedUniform != null) seedUniform.set(new Random().nextFloat(1024.0f));
+    }
+
+    @Nullable
+    @Override
+    public Music getBackgroundMusic() {
+        return MUSIC;
     }
 
     @Override

@@ -1,0 +1,18 @@
+{
+  "menu_music": {
+    "sounds": [
+      {
+        "name": "everend:music/menu",
+        "stream": true
+      }
+    ]
+  },
+  "ender_lord_music": {
+    "sounds": [
+      {
+        "name": "everend:music/ender_lord",
+        "stream": true
+      }
+    ]
+  }
+}
