@@ -46,7 +46,7 @@ public class Portal extends Entity implements TraceableEntity {
             if (tickCount >= 100) kill();
 
             for (Entity entity : level().getEntities(this, this.getBoundingBox())) {
-                if (entity != getOwner() && entity instanceof LivingEntity living && living.hurt(living.damageSources().fellOutOfWorld(), 1.0f)) { // TODO: custom damage type!
+                if (entity != getOwner() && entity instanceof LivingEntity living && living.hurt(living.damageSources().fellOutOfWorld(), 3.0f)) { // TODO: custom damage type!
                     MobEffectInstance prevEffect = living.getEffect(EEEffects.RIFT_TORN.get());
                     int amplifier = prevEffect != null ? prevEffect.getAmplifier() + 1 : 0;
                     living.addEffect(new MobEffectInstance(EEEffects.RIFT_TORN.get(), 5 * 60 * 20, amplifier));
