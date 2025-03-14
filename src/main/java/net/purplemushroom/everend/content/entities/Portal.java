@@ -9,9 +9,12 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.purplemushroom.everend.registry.EEEffects;
 import net.purplemushroom.everend.registry.EEEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,9 +46,14 @@ public class Portal extends Entity implements TraceableEntity {
             if (tickCount >= 100) kill();
 
             for (Entity entity : level().getEntities(this, this.getBoundingBox())) {
-                if (entity instanceof ServerPlayer player) {
-                    player.sendSystemMessage(Component.literal("HIT!"));
+                if (entity != getOwner() && entity instanceof LivingEntity living && living.hurt(living.damageSources().fellOutOfWorld(), 1.0f)) { // TODO: custom damage type!
+                    MobEffectInstance prevEffect = living.getEffect(EEEffects.RIFT_TORN.get());
+                    int amplifier = prevEffect != null ? prevEffect.getAmplifier() + 1 : 0;
+                    living.addEffect(new MobEffectInstance(EEEffects.RIFT_TORN.get(), 5 * 60 * 20, amplifier));
                 }
+                /*if (entity instanceof ServerPlayer player) {
+                    player.sendSystemMessage(Component.literal("HIT!"));
+                }*/
             }
         }
         setPos(position().add(getDeltaMovement()));

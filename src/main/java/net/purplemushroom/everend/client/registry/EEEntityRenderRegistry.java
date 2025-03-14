@@ -14,7 +14,6 @@ import net.purplemushroom.everend.registry.EEEntities;
 
 @Mod.EventBusSubscriber(modid = Everend.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EEEntityRenderRegistry {
-
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EEEntities.FISHING_RIFT_TYPE.get(), manager -> new BaseRiftRenderer(manager, BaseRiftRenderer.RiftType.FISHING)
