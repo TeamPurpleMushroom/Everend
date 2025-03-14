@@ -1,5 +1,5 @@
 {
-  "menu_music": {
+  "music_menu": {
     "sounds": [
       {
         "name": "everend:music/menu",
@@ -7,7 +7,7 @@
       }
     ]
   },
-  "ender_lord_music": {
+  "music_ender_lord": {
     "sounds": [
       {
         "name": "everend:music/ender_lord",

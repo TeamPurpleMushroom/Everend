@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.multiplayer.SafetyScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
-    public static final Music MUSIC = new Music(EESoundRegistry.MENU_MUSIC_EVENT, 20, 600, true);
+    public static final Music MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EESoundRegistry.MUSIC_MENU), 20, 600, true);
 
     private long time = 0;
     public NeverendMenuScreen() {

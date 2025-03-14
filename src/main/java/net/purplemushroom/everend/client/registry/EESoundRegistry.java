@@ -1,5 +1,7 @@
 package net.purplemushroom.everend.client.registry;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -13,18 +15,19 @@ import ru.timeconqueror.timecore.api.registry.util.Promised;
 
 @AutoRegistrable.Entries("sound_event")
 public class EESoundRegistry {
-    public static SoundEvent MENU_MUSIC_EVENT;
-    public static SoundEvent ENDER_LORD_MUSIC_EVENT;
+    //public static Holder<SoundEvent> MENU_MUSIC;
+
+    public static SoundEvent MUSIC_MENU;
+    public static SoundEvent MUSIC_ENDER_LORD;
 
     @AutoRegistrable
     private static final SoundRegister SOUNDS = new SoundRegister(Everend.MODID);
 
-    /*public static final Promised<SoundEvent> MENU_MUSIC = SOUNDS.register("music/menu.ogg");
-    public static final Promised<SoundEvent> ENDER_LORD_MUSIC = SOUNDS.register("music/ender_lord.ogg");*/
-
     @AutoRegistrable.Init
     public static void init() {
-        SOUNDS.register("music/menu.ogg");
-        SOUNDS.register("music/ender_lord.ogg");
+        SOUNDS.register("music_menu");
+        SOUNDS.register("music_ender_lord");
+
+        //MENU_MUSIC = BuiltInRegistries.SOUND_EVENT.wrapAsHolder(MENU_MUSIC_EVENT);
     }
 }

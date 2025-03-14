@@ -1,6 +1,7 @@
 #version 150
 
 #moj_import <matrix.glsl>
+#moj_import <everend:perlin.glsl>
 
 uniform sampler2D Sampler0;
 uniform sampler2D Sampler1;
@@ -48,7 +49,25 @@ mat4 end_portal_layer(float layer) {
 out vec4 fragColor;
 
 void main() {
-    vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
+    vec3 samplePoint = vec3(texProj0.xy, GameTime * 50.0);
+
+    float thickness = perlin3D(samplePoint, 2.0, 1.0);
+    thickness += perlin3D(samplePoint, 4.0, 0.5);
+    thickness += perlin3D(samplePoint, 8.0, 0.25);
+    thickness += perlin3D(samplePoint, 16.0, 0.125);
+    thickness += perlin3D(samplePoint, 32.0, 0.0625);
+    thickness += perlin3D(samplePoint, 64.0, 0.03125);
+    thickness += perlin3D(samplePoint, 128.0, 0.015625);
+    thickness += perlin3D(samplePoint, 256.0, 0.0078125);
+    thickness /= 1.9921875;
+    thickness = clamp(thickness + 0.4, 0.0, 1.0);
+    //thickness = (thickness + 1.0) / 2.0;
+
+    float hue = perlin3D(samplePoint, 1.0, 0.5) + 0.5;
+
+    vec3 color = vec3(thickness) * mix(vec3(0.82, 0.18, 0.66), vec3(0.247, 0.0588, 0.8588), hue);
+
+    //vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
     for (int i = 0; i < 10; i++) {
         color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
     }
