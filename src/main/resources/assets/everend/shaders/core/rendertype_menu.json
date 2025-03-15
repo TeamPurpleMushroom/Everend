@@ -10,9 +10,6 @@
   "samplers": [
     {
       "name": "Sampler0"
-    },
-    {
-      "name": "Sampler1"
     }
   ],
   "uniforms": [

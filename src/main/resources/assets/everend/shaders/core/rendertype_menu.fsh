@@ -4,7 +4,6 @@
 #moj_import <everend:perlin.glsl>
 
 uniform sampler2D Sampler0;
-uniform sampler2D Sampler1;
 
 uniform float GameTime;
 uniform float Seed;
@@ -67,9 +66,8 @@ void main() {
 
     vec3 color = vec3(thickness) * mix(vec3(0.82, 0.18, 0.66), vec3(0.247, 0.0588, 0.8588), hue);
 
-    //vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
     for (int i = 0; i < 10; i++) {
-        color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
+        color += textureProj(Sampler0, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
     }
     fragColor = vec4(color, 1.0);
 }

@@ -80,7 +80,7 @@ public class EERenderTypes {
             RenderType.CompositeState.builder()
                     .setShaderState(new RenderStateShard.ShaderStateShard(EEShaderRegistry::getShaderMenu))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
-                            .add(Everend.tl("gui/nebula.png").fullLocation(), false, false)
+                            //.add(Everend.tl("gui/nebula.png").fullLocation(), false, false)
                             .add(Everend.tl("entity/void_stars.png").fullLocation(), false, false)
                             //.add(Neverend.tl("gui/menu_island.png").fullLocation(), false, false)
                             .build())

@@ -1,5 +1,6 @@
 package net.purplemushroom.everend.content.effect;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;

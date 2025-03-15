@@ -51,9 +51,6 @@ public class Portal extends Entity implements TraceableEntity {
                     int amplifier = prevEffect != null ? prevEffect.getAmplifier() + 1 : 0;
                     living.addEffect(new MobEffectInstance(EEEffects.RIFT_TORN.get(), 5 * 60 * 20, amplifier));
                 }
-                /*if (entity instanceof ServerPlayer player) {
-                    player.sendSystemMessage(Component.literal("HIT!"));
-                }*/
             }
         }
         setPos(position().add(getDeltaMovement()));
