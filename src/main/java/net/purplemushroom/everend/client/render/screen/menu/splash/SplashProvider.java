@@ -229,7 +229,9 @@ public class SplashProvider {
             "Mono hearts!",
             "Master of its domain!",
             "Call your friend Kevin!",
-            "Lowkey!"
+            "Lowkey!",
+            "Black, slender men!",
+            "Bullet hell-ish!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
