@@ -233,7 +233,10 @@ public class SplashProvider {
             "Black, slender men!",
             "Bullet hell-ish!",
             "Your personal healthcare companion!",
-            "(Mostly) Stress-free!"
+            "(Mostly) Stress-free!",
+            "What's so funny about money?",
+            "Astrological!",
+            "Floating islands!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
