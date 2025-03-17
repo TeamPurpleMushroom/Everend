@@ -236,7 +236,12 @@ public class SplashProvider {
             "(Mostly) Stress-free!",
             "What's so funny about money?",
             "Astrological!",
-            "Floating islands!"
+            "Floating islands!",
+            "Dun dun duuuun!",
+            "Now you know your ABCs!",
+            "\"Ouch\", cried I!",
+            "Loser says what!",
+            "This text was written by a stranger on the internet!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
