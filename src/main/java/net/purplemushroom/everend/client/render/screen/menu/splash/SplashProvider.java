@@ -241,7 +241,10 @@ public class SplashProvider {
             "Now you know your ABCs!",
             "\"Ouch\", cried I!",
             "Loser says what!",
-            "This text was written by a stranger on the internet!"
+            "This text was written by a stranger on the internet!",
+            "I'm the box demon!",
+            "Hello, procrastinators!",
+            "My precious!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
