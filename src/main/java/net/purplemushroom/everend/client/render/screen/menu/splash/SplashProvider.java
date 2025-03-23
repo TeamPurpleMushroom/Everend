@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class SplashProvider {
-    private static final int SPECIAL_SPLASHES = 7;
+    private static final int SPECIAL_SPLASHES = 8;
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
@@ -184,8 +184,6 @@ public class SplashProvider {
             "Why so uptight, Mr. Cox?",
             "Look behind you.",
             "'The Owl House' is a fun show!",
-            "This message will self-destruct in five seconds!", // TODO: maybe make this a special splash?
-            "This message has errors in it is grammar!", // TODO: maybe change to something that makes more sense?
             "Deja vu!",
             "One man's \"cringe\" is another man's \"cool\"!",
             "Ores spawn!",
@@ -244,7 +242,11 @@ public class SplashProvider {
             "This text was written by a stranger on the internet!",
             "I'm the box demon!",
             "Hello, procrastinators!",
-            "My precious!"
+            "My precious!",
+            "x = x + 1 is a valid statement!",
+            "PEMDAS!",
+            "24 = 4!",
+            "Si, la mi, sol. Si, la mi, re."
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -266,14 +268,20 @@ public class SplashProvider {
             "Joyous Kwanzaa!",
             "Yuletide!",
             "Festive!",
-            "Christmas is the time to say \'I love you\'!",
+            "Christmas is the time to say 'I love you'!",
             "It's the most wonderful time of the year!",
             "Grandma got run over!",
             "Santa Claus is coming to town!",
             "A home invader is coming down the chimney!"
     };
 
+    private static final String DEBUG_SPLASH = null;
+
     public static NeverendSplash getRandomSplash() {
+        if (DEBUG_SPLASH != null) {
+            return new NeverendSplash(DEBUG_SPLASH);
+        }
+
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
             return new FestiveSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
@@ -318,29 +326,21 @@ public class SplashProvider {
             case 5:
                 return new CountdownSplash("Liftoff!");
             case 6: // this text is color
-                switch (new Random().nextInt(10)) {
-                    case 0:
-                        return new NeverendSplash("§0This splash is black!");
-                    case 1:
-                        return new NeverendSplash("§1This splash is blue!");
-                    case 2:
-                        return new NeverendSplash("§2This splash is green!");
-                    case 3:
-                        return new NeverendSplash("§4This splash is red!");
-                    case 4:
-                        return new NeverendSplash("§5This splash is purple!");
-                    case 5:
-                        return new NeverendSplash("§6This splash is golden!");
-                    case 6:
-                        return new NeverendSplash("§7This splash is grey!");
-                    case 7:
-                        return new NeverendSplash("§dThis splash is pink!");
-                    case 8:
-                        return new NeverendSplash("§eThis splash is yellow!");
-                    case 9:
-                        return new NeverendSplash("§fThis splash is white!");
-                }
-                throw new IllegalArgumentException("Could not pick a valid color for color splash!");
+                return switch (new Random().nextInt(10)) {
+                    case 0 -> new NeverendSplash("§0This splash is black!");
+                    case 1 -> new NeverendSplash("§1This splash is blue!");
+                    case 2 -> new NeverendSplash("§2This splash is green!");
+                    case 3 -> new NeverendSplash("§4This splash is red!");
+                    case 4 -> new NeverendSplash("§5This splash is purple!");
+                    case 5 -> new NeverendSplash("§6This splash is golden!");
+                    case 6 -> new NeverendSplash("§7This splash is grey!");
+                    case 7 -> new NeverendSplash("§dThis splash is pink!");
+                    case 8 -> new NeverendSplash("§eThis splash is yellow!");
+                    case 9 -> new NeverendSplash("§fThis splash is white!");
+                    default -> throw new IllegalArgumentException("Could not pick a valid color for color splash!");
+                };
+            case 7: // this message will self-destruct
+                return new VanishingSplash("This message will self-destruct in five seconds!");
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
