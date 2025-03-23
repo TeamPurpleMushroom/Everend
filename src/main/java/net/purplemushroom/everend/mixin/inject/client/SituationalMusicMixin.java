@@ -3,6 +3,7 @@ package net.purplemushroom.everend.mixin.inject.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.sounds.Music;
+import net.purplemushroom.everend.client.registry.EEMusic;
 import net.purplemushroom.everend.client.render.screen.menu.EverendMenuScreen;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +19,7 @@ public class SituationalMusicMixin {
     @Inject(method = "getSituationalMusic", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/BossHealthOverlay;shouldPlayMusic()Z"), cancellable = true)
     private void defineCustomEndMusic(CallbackInfoReturnable<Music> cir) {
         if(true) {
-            cir.setReturnValue(EverendMenuScreen.BOSS_MUSIC);
+            cir.setReturnValue(EEMusic.ENDER_LORD);
         }
     }
 }

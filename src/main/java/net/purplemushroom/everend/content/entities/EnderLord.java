@@ -444,6 +444,7 @@ public class EnderLord extends Monster implements NeutralMob {
         public void tick() {
             if (timer >= WARMUP_TIME && timer <= getTotalRuntime() - COOLDOWN_TIME && (timer - WARMUP_TIME) % type.interval == 0) {
                 Entity target = getTarget();
+                if (target == null) return; // for some reason this can happen???
                 if (type == BulletHellType.DOORS_FROM_RANDOM_DIRECTIONS) dir = getRandomDirection();
                 if (target.onGround()) {
                     if (type != BulletHellType.WALLS) {
@@ -453,7 +454,7 @@ public class EnderLord extends Monster implements NeutralMob {
                     }
 
                 }
-                switch (type) {
+                switch (type) { // FIXME: you can jump over these sometimes. Make the origin move up & down like the others
                     case WALLS -> {
                         BlockPos pos = bulletHellOrigin.relative(dir.getOpposite(), 15);
                         BlockPos oppositePos = bulletHellOrigin.relative(dir, 15);

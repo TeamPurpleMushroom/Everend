@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
+import net.purplemushroom.everend.client.registry.EEMusic;
 import net.purplemushroom.everend.client.registry.EERenderTypes;
 import net.purplemushroom.everend.client.registry.EEShaderRegistry;
 import net.purplemushroom.everend.client.registry.EESoundRegistry;
@@ -27,9 +28,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class EverendMenuScreen extends TitleScreen {
-    public static final Music MENU_MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EESoundRegistry.MUSIC_MENU), 20, 600, true);
-    public static final Music BOSS_MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EESoundRegistry.MUSIC_ENDER_LORD), 20, 600, true);
-
     private long time = 0;
     public EverendMenuScreen() {
         super(false, new EverendLogoRender());
@@ -74,7 +72,7 @@ public class EverendMenuScreen extends TitleScreen {
     @Nullable
     @Override
     public Music getBackgroundMusic() {
-        return MENU_MUSIC;
+        return EEMusic.MENU;
     }
 
     @Override
