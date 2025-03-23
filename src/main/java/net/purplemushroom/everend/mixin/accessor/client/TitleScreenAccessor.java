@@ -1,4 +1,4 @@
-package net.purplemushroom.everend.mixin.client.accessor;
+package net.purplemushroom.everend.mixin.accessor.client;
 
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;

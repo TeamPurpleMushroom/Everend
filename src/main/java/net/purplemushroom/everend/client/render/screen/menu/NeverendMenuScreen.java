@@ -13,22 +13,23 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
+import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.client.registry.EERenderTypes;
 import net.purplemushroom.everend.client.registry.EEShaderRegistry;
 import net.purplemushroom.everend.client.registry.EESoundRegistry;
 import net.purplemushroom.everend.client.render.screen.EEButton;
 import net.purplemushroom.everend.client.render.screen.menu.splash.NeverendSplash;
 import net.purplemushroom.everend.client.render.screen.menu.splash.SplashProvider;
-import net.purplemushroom.everend.mixin.client.accessor.TitleScreenAccessor;
+import net.purplemushroom.everend.mixin.accessor.client.TitleScreenAccessor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
 public class NeverendMenuScreen extends TitleScreen {
-    public static final Music MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EESoundRegistry.MUSIC_MENU), 20, 600, true);
+    public static final Music MENU_MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EESoundRegistry.MUSIC_MENU), 20, 600, true);
+    public static final Music BOSS_MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(EESoundRegistry.MUSIC_ENDER_LORD), 20, 600, true);
 
     private long time = 0;
     public NeverendMenuScreen() {
@@ -74,7 +75,7 @@ public class NeverendMenuScreen extends TitleScreen {
     @Nullable
     @Override
     public Music getBackgroundMusic() {
-        return MUSIC;
+        return MENU_MUSIC;
     }
 
     @Override

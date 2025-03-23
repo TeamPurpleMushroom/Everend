@@ -2,6 +2,7 @@ package net.purplemushroom.everend.client.registry;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -15,8 +16,6 @@ import ru.timeconqueror.timecore.api.registry.util.Promised;
 
 @AutoRegistrable.Entries("sound_event")
 public class EESoundRegistry {
-    //public static Holder<SoundEvent> MENU_MUSIC;
-
     public static SoundEvent MUSIC_MENU;
     public static SoundEvent MUSIC_ENDER_LORD;
 
