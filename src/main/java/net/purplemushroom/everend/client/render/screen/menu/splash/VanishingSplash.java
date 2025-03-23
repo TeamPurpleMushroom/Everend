@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 
-public class VanishingSplash extends NeverendSplash {
+public class VanishingSplash extends EverendSplash {
     private final long start;
 
     protected VanishingSplash(String pSplash) {

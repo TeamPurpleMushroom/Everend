@@ -6,7 +6,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 
-public class EndIsNeverSplash extends NeverendSplash {
+public class EndIsNeverSplash extends EverendSplash {
     protected EndIsNeverSplash(String pSplash) {
         super(pSplash);
     }

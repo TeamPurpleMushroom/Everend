@@ -7,16 +7,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.client.render.screen.menu.splash.CountdownSplash;
 
-class NeverendLogoRender extends LogoRenderer {
+class EverendLogoRender extends LogoRenderer {
     public static final ResourceLocation NEVEREND_LOGO = Everend.rl("textures/gui/logo.png");
 
-    public NeverendLogoRender() {
+    public EverendLogoRender() {
         super(false);
     }
 
     @Override
     public void renderLogo(GuiGraphics pGuiGraphics, int pScreenWidth, float pTransparency, int pHeight) {
-        if (((NeverendMenuScreen) Minecraft.getInstance().screen).getSplash() instanceof CountdownSplash countdownSplash) {
+        if (((EverendMenuScreen) Minecraft.getInstance().screen).getSplash() instanceof CountdownSplash countdownSplash) {
             long elapsedTime = countdownSplash.getElapsedTime();
             boolean flag = 10 - (int) (elapsedTime / 1E9) <= 0;
             if (flag) {

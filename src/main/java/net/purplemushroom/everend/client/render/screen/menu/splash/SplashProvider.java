@@ -277,9 +277,9 @@ public class SplashProvider {
 
     private static final String DEBUG_SPLASH = null;
 
-    public static NeverendSplash getRandomSplash() {
+    public static EverendSplash getRandomSplash() {
         if (DEBUG_SPLASH != null) {
-            return new NeverendSplash(DEBUG_SPLASH);
+            return new EverendSplash(DEBUG_SPLASH);
         }
 
         Calendar calendar = Calendar.getInstance();
@@ -297,13 +297,13 @@ public class SplashProvider {
             return getSpecialSplash(pick);
 
         }
-        return new NeverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
+        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
     }
 
-    private static NeverendSplash getSpecialSplash(int id) {
+    private static EverendSplash getSpecialSplash(int id) {
         switch (id) {
             case 0: // nostalgic
-                return new NeverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!");
+                return new EverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!");
             case 1: // greeting
                 String greeting;
                 Calendar time = Calendar.getInstance();
@@ -316,27 +316,27 @@ public class SplashProvider {
                 } else {
                     greeting = "evening";
                 }
-                return new NeverendSplash("Good " + greeting + "!");
+                return new EverendSplash("Good " + greeting + "!");
             case 2: // double trouble
                 return new DoubleSplash("Double trouble!");
             case 3: // you're a wizard
-                return new NeverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
+                return new EverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
             case 4: // THE END IS NEVER THE END
                 return new EndIsNeverSplash("THE END IS NEVER ".repeat(20));
             case 5:
                 return new CountdownSplash("Liftoff!");
             case 6: // this text is color
                 return switch (new Random().nextInt(10)) {
-                    case 0 -> new NeverendSplash("§0This splash is black!");
-                    case 1 -> new NeverendSplash("§1This splash is blue!");
-                    case 2 -> new NeverendSplash("§2This splash is green!");
-                    case 3 -> new NeverendSplash("§4This splash is red!");
-                    case 4 -> new NeverendSplash("§5This splash is purple!");
-                    case 5 -> new NeverendSplash("§6This splash is golden!");
-                    case 6 -> new NeverendSplash("§7This splash is grey!");
-                    case 7 -> new NeverendSplash("§dThis splash is pink!");
-                    case 8 -> new NeverendSplash("§eThis splash is yellow!");
-                    case 9 -> new NeverendSplash("§fThis splash is white!");
+                    case 0 -> new EverendSplash("§0This splash is black!");
+                    case 1 -> new EverendSplash("§1This splash is blue!");
+                    case 2 -> new EverendSplash("§2This splash is green!");
+                    case 3 -> new EverendSplash("§4This splash is red!");
+                    case 4 -> new EverendSplash("§5This splash is purple!");
+                    case 5 -> new EverendSplash("§6This splash is golden!");
+                    case 6 -> new EverendSplash("§7This splash is grey!");
+                    case 7 -> new EverendSplash("§dThis splash is pink!");
+                    case 8 -> new EverendSplash("§eThis splash is yellow!");
+                    case 9 -> new EverendSplash("§fThis splash is white!");
                     default -> throw new IllegalArgumentException("Could not pick a valid color for color splash!");
                 };
             case 7: // this message will self-destruct

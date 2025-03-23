@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class CountdownSplash extends NeverendSplash {
+public class CountdownSplash extends EverendSplash {
     private final long launchStart;
 
     protected CountdownSplash(String pSplash) {

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class DoubleSplash extends NeverendSplash {
+public class DoubleSplash extends EverendSplash {
     protected DoubleSplash(String pSplash) {
         super(pSplash);
     }

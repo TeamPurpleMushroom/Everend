@@ -2,8 +2,8 @@ package net.purplemushroom.everend.client.render.screen.menu;
 
 import net.minecraft.client.renderer.PanoramaRenderer;
 
-class NeverendMenuBackground extends PanoramaRenderer {
-    public NeverendMenuBackground() {
+class EverendMenuBackground extends PanoramaRenderer {
+    public EverendMenuBackground() {
         super(null);
     }
 

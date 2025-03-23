@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class SpookySplash extends NeverendSplash {
+public class SpookySplash extends EverendSplash {
     protected SpookySplash(String pSplash) {
         super(pSplash);
     }

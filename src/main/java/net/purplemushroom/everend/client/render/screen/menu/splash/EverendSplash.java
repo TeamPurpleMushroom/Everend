@@ -8,8 +8,8 @@ import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.util.Mth;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class NeverendSplash extends SplashRenderer {
-    protected NeverendSplash(String pSplash) {
+public class EverendSplash extends SplashRenderer {
+    protected EverendSplash(String pSplash) {
         super(pSplash);
     }
 

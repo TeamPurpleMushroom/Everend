@@ -5,7 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class FestiveSplash extends NeverendSplash {
+public class FestiveSplash extends EverendSplash {
 
     protected FestiveSplash(String pSplash) {
         super(pSplash);

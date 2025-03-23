@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class FoolsSplash extends NeverendSplash {
+public class FoolsSplash extends EverendSplash {
     private final long startTime;
 
     private static final String[] LINES = {
