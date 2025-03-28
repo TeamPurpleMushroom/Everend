@@ -161,7 +161,7 @@ public class SplashProvider {
             "No refunds!",
             "TODO: get milk, destroy humanity",
             "No animals were harmed in the making of this mod!",
-            "Your skin is freezing; let me help you take it off!",
+            "Monday Night Sobbin'!",
             "Undead cat inside a box!",
             "Creeper no creeping!",
             "Non-biodegradable!",
@@ -192,7 +192,7 @@ public class SplashProvider {
             "Hic textus latine scriptus est, ut debet esse valde profundus!",
             "This message is almost certainly qualified!",
             "Custom shaders!",
-            "Thanks Mr. Perlin!",
+            "Thanks, Mr. Perlin!",
             "Pokemon go to the polls!",
             "World's only antivirus with data recovery software!",
             "I see love!",
@@ -246,7 +246,14 @@ public class SplashProvider {
             "x = x + 1 is a valid statement!",
             "PEMDAS!",
             "24 = 4!",
-            "Si, la mi, sol. Si, la mi, re."
+            "Si, la mi, sol. Si, la mi, re.",
+            "Fat controller!",
+            "Wasted!",
+            "Peak!",
+            "I was crazy once!",
+            "Subscribe to Drapie!",
+            "Piggy demon!",
+            "It's dust in the wind!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
