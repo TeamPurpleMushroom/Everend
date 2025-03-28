@@ -161,7 +161,7 @@ public class SplashProvider {
             "No refunds!",
             "TODO: get milk, destroy humanity",
             "No animals were harmed in the making of this mod!",
-            "Monday Night Sobbin'!",
+            "Monday Mornin' Sobbin'!",
             "Undead cat inside a box!",
             "Creeper no creeping!",
             "Non-biodegradable!",
