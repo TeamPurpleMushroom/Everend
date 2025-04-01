@@ -12,7 +12,7 @@ import net.purplemushroom.everend.util.BitUtil;
 
 @OnlyIn(Dist.CLIENT)
 public class RiftFishingOverlay {
-    public static void render(ForgeGui forgeGui, GuiGraphics guiGraphics, float v, int u, int i1) {
+    public static void render(ForgeGui forgeGui, GuiGraphics guiGraphics, float partialTick, int u, int i1) {
         Player player = Minecraft.getInstance().player;
         if (player != null) {
             EEPlayer playerCap = EEPlayer.from(player);
@@ -26,9 +26,9 @@ public class RiftFishingOverlay {
                     guiGraphics.pose().pushPose();
                     guiGraphics.pose().translate(0, 0, -90);
                     RenderSystem.defaultBlendFunc();
-                    guiGraphics.fill(k, j, k + 182, j + 5, BitUtil.rgbToInt(0, 255, 0));
+                    guiGraphics.fill(k, j, k + 182, j + 5, BitUtil.rgbaToInt(0, 20, 50, 255));
                     RenderSystem.enableBlend();
-                    guiGraphics.fill(k, j, k + (int) (182 * progress), j + 5, BitUtil.rgbToInt(0, 0, 255));
+                    guiGraphics.fill(k, j, k + (int) (182 * progress), j + 5, BitUtil.rgbaToInt(0, 155, 155, 255));
                     RenderSystem.disableBlend();
                     guiGraphics.pose().popPose();
                 }

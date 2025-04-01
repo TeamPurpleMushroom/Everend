@@ -55,7 +55,7 @@ public class RiftFishingData extends PropertyContainer {
     }
 
     public boolean progressFishing(float amount) {
-        float progress = fishingProgress.get() + amount;
+        float progress = (fishingProgress.get() != null ? fishingProgress.get() : 0.0f) + amount;
         if (progress >= 1.0f) {
             stopFishingFromRift();
             return true;

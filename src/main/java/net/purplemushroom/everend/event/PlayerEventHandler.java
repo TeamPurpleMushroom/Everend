@@ -54,13 +54,13 @@ public class PlayerEventHandler {
                         FishingRift fishingRift = riftFishingData.getFishingRift(level);
                         if (player.distanceTo(fishingRift) > 16 || !EntityUtil.isHolding(player, EEItems.SHIFTERINE_ROD)) {
                             riftFishingData.stopFishingFromRift();
-                            playerCap.detectAndSendChanges();
                         } else {
                             float looking = (float) EntityUtil.lookingAt(player, EntityUtil.getCenterPos(fishingRift));
                             if (looking <= 0.0f) riftFishingData.stopFishingFromRift();
                             riftFishingData.progressFishing(looking / 100);
                             System.out.println(riftFishingData.getProgress());
                         }
+                        playerCap.detectAndSendChanges();
                     }
                 }
             } else {

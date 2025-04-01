@@ -21,4 +21,15 @@ public class BitUtil {
         color = (color << 8) | blue;
         return color;
     }
+
+    public static int rgbaToInt(int red, int green, int blue, int alpha) {
+        if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255 || alpha < 0 || alpha > 255) {
+            throw new IllegalArgumentException("RGBA values " + red + ", " + green + ", " + blue + ", " + alpha + " are out of range!");
+        }
+        int color = alpha;
+        color = (color << 8) | red;
+        color = (color << 8) | green;
+        color = (color << 8) | blue;
+        return color;
+    }
 }
