@@ -47,7 +47,7 @@ public class EEPlayer extends CoffeeCapabilityInstance<Entity> implements EEPlay
 
     @Override
     public void sendChangesToClient(@NotNull SimpleChannel channel, @NotNull Object data) {
-        riftFishingData.sendChangesToClient(channel, serverPlayer);
+        riftFishingData.sendChangesToClient(serverPlayer);
         channel.send(PacketDistributor.PLAYER.with(() -> serverPlayer), data);
     }
 

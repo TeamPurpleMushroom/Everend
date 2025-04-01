@@ -71,7 +71,7 @@ public class RiftFishingData extends PropertyContainer {
         return fishingProgress.get();
     }
 
-    public void sendChangesToClient(@NotNull SimpleChannel channel, ServerPlayer player) {
+    public void sendChangesToClient(ServerPlayer player) {
         if (needsUpdate) {
             FishingRift rift = getFishingRift(player.level());
             EEPackets.sendToPlayer(player, new SRiftFishingPacket(rift, fishingProgress.get()));
