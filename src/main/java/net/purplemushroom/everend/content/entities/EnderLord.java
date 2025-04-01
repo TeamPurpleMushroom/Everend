@@ -43,6 +43,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.purplemushroom.everend.packet.SBossInfoPacket;
+import net.purplemushroom.everend.registry.EEPackets;
 import net.purplemushroom.everend.util.EntityUtil;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
 
@@ -362,12 +364,14 @@ public class EnderLord extends Monster implements NeutralMob {
     public void startSeenByPlayer(ServerPlayer serverPlayer) {
         super.startSeenByPlayer(serverPlayer);
         barInfo.addPlayer(serverPlayer);
+        EEPackets.sendToPlayer(serverPlayer, new SBossInfoPacket(SBossInfoPacket.Operation.ADD, barInfo.getId(), this));
     }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer serverPlayer) {
         super.stopSeenByPlayer(serverPlayer);
         barInfo.removePlayer(serverPlayer);
+        EEPackets.sendToPlayer(serverPlayer, new SBossInfoPacket(SBossInfoPacket.Operation.REMOVE, barInfo.getId(), this));
     }
 
     @Override

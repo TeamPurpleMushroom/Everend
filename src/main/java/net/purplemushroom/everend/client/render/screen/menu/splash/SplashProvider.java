@@ -255,7 +255,8 @@ public class SplashProvider {
             "Piggy demon!",
             "It's dust in the wind!",
             "As seen on YouTube!",
-            "100 days in the End!"
+            "100 days in the End!",
+            "An offer you can't refuse!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
