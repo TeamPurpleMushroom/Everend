@@ -6,6 +6,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.packet.SBossInfoPacket;
+import net.purplemushroom.everend.packet.SRiftFishingPacket;
 import ru.timeconqueror.timecore.api.registry.PacketRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
 
@@ -16,6 +17,7 @@ public class EEPackets {
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = REGISTER.createChannel("main", () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals)
             .regPacket(SBossInfoPacket.class)
+            .regPacket(SRiftFishingPacket.class)
             .asChannel();
 
     public static void sendToPlayer(ServerPlayer player, Object packet) {

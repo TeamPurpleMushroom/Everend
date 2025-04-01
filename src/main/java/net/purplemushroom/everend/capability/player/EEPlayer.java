@@ -1,5 +1,6 @@
 package net.purplemushroom.everend.capability.player;
 
+import net.minecraft.client.multiplayer.chat.report.ReportEnvironment;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.purplemushroom.everend.capability.player.data.PlayerTracker;
 import net.purplemushroom.everend.capability.player.data.RiftFishingData;
 import net.purplemushroom.everend.registry.EECapabilities;
+import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.common.capability.CoffeeCapabilityInstance;
 import ru.timeconqueror.timecore.common.capability.owner.CapabilityOwner;
@@ -21,10 +23,14 @@ public class EEPlayer extends CoffeeCapabilityInstance<Entity> implements EEPlay
     public final PlayerTracker playerTracker = container("player_tracker", new PlayerTracker());
     public final RiftFishingData riftFishingData = container("rift_fishing_data", new RiftFishingData());
 
-    private final Player player;
+    private final ServerPlayer serverPlayer;
 
     public EEPlayer(Player player) {
-        this.player = player;
+        if (player instanceof ServerPlayer sPlayer) {
+            this.serverPlayer = sPlayer;
+        } else {
+            serverPlayer = null;
+        }
     }
 
     @NotNull
@@ -41,15 +47,16 @@ public class EEPlayer extends CoffeeCapabilityInstance<Entity> implements EEPlay
 
     @Override
     public void sendChangesToClient(@NotNull SimpleChannel channel, @NotNull Object data) {
-        channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), data);
+        riftFishingData.sendChangesToClient(channel, serverPlayer);
+        channel.send(PacketDistributor.PLAYER.with(() -> serverPlayer), data);
     }
 
     public void detectAndSendChanges() {
-        detectAndSendChanges(player.level(), player);
+        detectAndSendChanges(serverPlayer.level(), serverPlayer);
     }
 
     public void sendAllData() {
-        sendAllData(player.level(), player);
+        sendAllData(serverPlayer.level(), serverPlayer);
     }
 
     @Nullable
