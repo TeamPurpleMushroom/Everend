@@ -50,7 +50,7 @@ public class PlayerEventHandler {
                      * Rift Fishing Handler
                      */
                     RiftFishingData riftFishingData = playerCap.riftFishingData;
-                    if (riftFishingData.isActive()) { // FIXME: will break if you exit world while doing the rift thingie
+                    if (riftFishingData.isActive()) {
                         FishingRift fishingRift = riftFishingData.getFishingRift(level);
                         if (player.distanceTo(fishingRift) > 16 || !EntityUtil.isHolding(player, EEItems.SHIFTERINE_ROD)) {
                             riftFishingData.stopFishingFromRift();
@@ -65,7 +65,7 @@ public class PlayerEventHandler {
             } else {
                 if (playerCap != null) {
                     RiftFishingData riftFishingData = playerCap.riftFishingData;
-                    if (riftFishingData.isActive()) { // FIXME: will break if you exit world while doing the rift thingie
+                    if (riftFishingData.isActive()) {
                         FishingRift fishingRift = riftFishingData.getFishingRift(level);
                         Vec3 playerPos = event.player.getEyePosition();
                         Vec3 riftPos = EntityUtil.getCenterPos(fishingRift);
