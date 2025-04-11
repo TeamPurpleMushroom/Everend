@@ -1,6 +1,7 @@
 package net.purplemushroom.everend.client.render.screen.menu.splash;
 
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.ModList;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +25,8 @@ public class SplashProvider {
             "Also try Eternalcraft!",
             "Also try Advent of Ascension!",
             "Also try Hexxit!",
+            "Also try Born in Chaos!",
+            "Also try Oh The Biomes We've Gone!",
             "Family friendly!",
             "Remember the cows!",
             "Will it ever end?!",
@@ -256,7 +259,20 @@ public class SplashProvider {
             "It's dust in the wind!",
             "As seen on YouTube!",
             "100 days in the End!",
-            "An offer you can't refuse!"
+            "An offer you can't refuse!",
+            "A very aladeen experience!",
+            "That's a fender bender!",
+            "You owe your life to dental hygiene!",
+            "Here be dragons!",
+            "BEWARE of CAT!",
+            "Dr. iChun!",
+            "This world uses experimental settings that could stop working at any time!",
+            "Freeware!",
+            "Hovering parrots!",
+            "Alex's Cockroaches!",
+            "Speak of the devil!",
+            "Inspired by HEE!",
+            "Better Than Shulkers!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
