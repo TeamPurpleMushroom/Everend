@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class SplashProvider {
-    private static final int SPECIAL_SPLASHES = 8;
+    private static final int SPECIAL_SPLASHES = 10;
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
@@ -367,6 +367,17 @@ public class SplashProvider {
                 };
             case 7: // this message will self-destruct
                 return new VanishingSplash("This message will self-destruct in five seconds!");
+            case 8: // mod list
+                int extraModCount = ModList.get().size() - 6;
+                if (extraModCount == 0) { // everend + timecore
+                    return new EverendSplash("Consider downloading some quality of life mods!");
+                } else if (extraModCount < 30) {
+                    return new EverendSplash("A humble mod count!");
+                } else {
+                    return new EverendSplash("Look mom, I'm in a modpack!");
+                }
+            case 9:
+                return new EverendSplash("That " + Minecraft.getInstance().getUser().getName() + " is such a- oh, didn't see you there!");
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
