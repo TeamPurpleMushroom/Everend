@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.purplemushroom.everend.client.registry.EEMusic;
@@ -20,6 +21,7 @@ import net.purplemushroom.everend.client.registry.EERenderTypes;
 import net.purplemushroom.everend.client.registry.EEShaderRegistry;
 import net.purplemushroom.everend.client.registry.EESoundRegistry;
 import net.purplemushroom.everend.client.render.screen.EEButton;
+import net.purplemushroom.everend.client.render.screen.menu.splash.ClickMeSplash;
 import net.purplemushroom.everend.client.render.screen.menu.splash.EverendSplash;
 import net.purplemushroom.everend.client.render.screen.menu.splash.SplashProvider;
 import net.purplemushroom.everend.mixin.accessor.client.TitleScreenAccessor;
@@ -29,6 +31,7 @@ import java.util.Random;
 
 public class EverendMenuScreen extends TitleScreen {
     private long time = 0;
+    private boolean renderSurprise = false;
     public EverendMenuScreen() {
         super(false, new EverendLogoRender());
     }
@@ -99,6 +102,24 @@ public class EverendMenuScreen extends TitleScreen {
         pGuiGraphics.fill(EERenderTypes.getMenuRenderType(), 0, 0, width, height, 0);
 
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    }
+
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        if (getSplash() instanceof ClickMeSplash) {
+            float textX = (float) width / 2.0F + 123.0F;
+            float textY = 69.0F;
+            double newMouseX = pMouseX - textX;
+            double newMouseY = pMouseY - textY;
+            double relativeX = newMouseX * Math.cos(Math.toRadians(20)) - newMouseY * Math.sin(Math.toRadians(20));
+            double relativeY = newMouseY * Math.cos(Math.toRadians(20)) + newMouseX * Math.sin(Math.toRadians(20));
+            if (Math.abs(relativeX) <= (double) this.font.width(getSplash().getText()) * 1.8f / 2 && relativeY <= 0 && relativeY >= -this.font.lineHeight * 1.8f) {
+                System.out.println("HI");
+                renderSurprise = true;
+                return true;
+            }
+        }
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
     private void createNormalMenuOptions(int pY, int pRowHeight) {

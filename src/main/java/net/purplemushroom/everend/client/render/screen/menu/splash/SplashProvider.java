@@ -2,6 +2,7 @@ package net.purplemushroom.everend.client.render.screen.menu.splash;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.ModList;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -209,7 +210,6 @@ public class SplashProvider {
             "Some assembly required!",
             "Diary of a blocky man!",
             "Illuminati confirmed!",
-            "...and then one with the crowbar!",
             "§mJumpscare Mansion§r House of Jumpscares!",
             "Elytras give you wiiings!",
             "May I take your order?",
@@ -256,9 +256,7 @@ public class SplashProvider {
             "I was crazy once!",
             "Subscribe to Drapie!",
             "Piggy demon!",
-            "It's dust in the wind!",
             "As seen on YouTube!",
-            "100 days in the End!",
             "An offer you can't refuse!",
             "A very aladeen experience!",
             "That's a fender bender!",
@@ -268,11 +266,11 @@ public class SplashProvider {
             "Dr. iChun!",
             "This world uses experimental settings that could stop working at any time!",
             "Freeware!",
-            "Hovering parrots!",
             "Alex's Cockroaches!",
             "Speak of the devil!",
             "Inspired by HEE!",
-            "Better Than Shulkers!"
+            "Better than shulkers!",
+            "Don't throw popcorn in movie theaters!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -301,12 +299,19 @@ public class SplashProvider {
             "A home invader is coming down the chimney!"
     };
 
+    private static final Calendar RELEASE_DATE = Calendar.getInstance();
+    static {
+        RELEASE_DATE.set(2024, Calendar.OCTOBER, 29); // TODO: update release date!
+        RELEASE_DATE.add(Calendar.YEAR, 3);
+    }
     private static final String DEBUG_SPLASH = null;
 
     public static EverendSplash getRandomSplash() {
         if (DEBUG_SPLASH != null) {
             return new EverendSplash(DEBUG_SPLASH);
         }
+
+        Random rand = new Random();
 
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
@@ -316,9 +321,14 @@ public class SplashProvider {
             return new SpookySplash(SPOOKY_SPLASHES[new Random().nextInt(SPOOKY_SPLASHES.length)]);
         }
         if (calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DATE) == 1) {
+            if (rand.nextInt(30) == 0) return new ClickMeSplash("Click me!");
             return new FoolsSplash();
         }
-        int pick = new Random().nextInt(SPLASHES.length + SPECIAL_SPLASHES);
+        if (calendar.get(Calendar.MONTH) == RELEASE_DATE.get(Calendar.MONTH) && calendar.get(Calendar.DATE) == RELEASE_DATE.get(Calendar.DATE)) {
+            return new EverendSplash("Happy Birthday, Everend!");
+        }
+        if (rand.nextInt(1000) == 0) return new ClickMeSplash("Click me!");
+        int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES);
         if (pick < SPECIAL_SPLASHES) {
             return getSpecialSplash(pick);
 
@@ -383,12 +393,8 @@ public class SplashProvider {
     }
 
     private static boolean isNostalgic() {
-        Calendar releaseDate = Calendar.getInstance();
-        releaseDate.set(2024, Calendar.OCTOBER, 29); // TODO: update release date!
-        releaseDate.add(Calendar.YEAR, 3);
-
         Calendar time = Calendar.getInstance();
         time.setTime(new Date());
-        return time.after(releaseDate);
+        return time.after(RELEASE_DATE);
     }
 }

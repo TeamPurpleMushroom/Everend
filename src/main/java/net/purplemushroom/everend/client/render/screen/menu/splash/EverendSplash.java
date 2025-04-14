@@ -28,6 +28,10 @@ public class EverendSplash extends SplashRenderer {
         pGuiGraphics.pose().popPose();
     }
 
+    public String getText() {
+        return this.splash;
+    }
+
     protected void renderText(GuiGraphics graphics, Font font, int color) {
         graphics.drawCenteredString(font, this.splash, 0, -8, BitUtil.rgbToInt(13, 82, 60) | color);
     }
