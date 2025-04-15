@@ -3,6 +3,7 @@ package net.purplemushroom.everend.client.render.screen.menu;
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -10,9 +11,11 @@ import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.multiplayer.SafetyScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.Music;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
@@ -75,7 +78,7 @@ public class EverendMenuScreen extends TitleScreen {
     @Nullable
     @Override
     public Music getBackgroundMusic() {
-        return EEMusic.MENU;
+        return renderSurprise ? null : EEMusic.MENU;
     }
 
     @Override
@@ -116,6 +119,8 @@ public class EverendMenuScreen extends TitleScreen {
             if (Math.abs(relativeX) <= (double) this.font.width(getSplash().getText()) * 1.8f / 2 && relativeY <= 0 && relativeY >= -this.font.lineHeight * 1.8f) {
                 System.out.println("HI");
                 renderSurprise = true;
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(EESoundRegistry.BLOB, 1.0F, 20.0f));
+                splash = SplashProvider.getRandomSplash();
                 return true;
             }
         }

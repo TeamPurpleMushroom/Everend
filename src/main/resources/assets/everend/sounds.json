@@ -1,4 +1,10 @@
 {
+  "blob": {
+    "category": "master",
+    "sounds": [
+      "everend:blob"
+    ]
+  },
   "music_menu": {
     "sounds": [
       {

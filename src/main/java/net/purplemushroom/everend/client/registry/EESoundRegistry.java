@@ -16,6 +16,7 @@ import ru.timeconqueror.timecore.api.registry.util.Promised;
 
 @AutoRegistrable.Entries("sound_event")
 public class EESoundRegistry {
+    public static SoundEvent BLOB;
     public static SoundEvent MUSIC_MENU;
     public static SoundEvent MUSIC_ENDER_LORD;
 
@@ -24,6 +25,7 @@ public class EESoundRegistry {
 
     @AutoRegistrable.Init
     public static void init() {
+        SOUNDS.register("blob");
         SOUNDS.register("music_menu");
         SOUNDS.register("music_ender_lord");
 

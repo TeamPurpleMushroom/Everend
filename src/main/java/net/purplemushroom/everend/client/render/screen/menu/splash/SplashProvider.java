@@ -270,7 +270,8 @@ public class SplashProvider {
             "Speak of the devil!",
             "Inspired by HEE!",
             "Better than shulkers!",
-            "Don't throw popcorn in movie theaters!"
+            "Don't throw popcorn in movie theaters!",
+            "I can see my house from here!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -311,7 +312,8 @@ public class SplashProvider {
             return new EverendSplash(DEBUG_SPLASH);
         }
 
-        Random rand = new Random();
+        return new ClickMeSplash("Click me!");
+        /*Random rand = new Random();
 
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
@@ -333,7 +335,7 @@ public class SplashProvider {
             return getSpecialSplash(pick);
 
         }
-        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
+        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);*/
     }
 
     private static EverendSplash getSpecialSplash(int id) {
