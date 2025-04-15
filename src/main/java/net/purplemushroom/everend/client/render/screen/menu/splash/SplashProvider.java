@@ -312,8 +312,7 @@ public class SplashProvider {
             return new EverendSplash(DEBUG_SPLASH);
         }
 
-        return new ClickMeSplash("Click me!");
-        /*Random rand = new Random();
+        Random rand = new Random();
 
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
@@ -335,7 +334,7 @@ public class SplashProvider {
             return getSpecialSplash(pick);
 
         }
-        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);*/
+        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
     }
 
     private static EverendSplash getSpecialSplash(int id) {

@@ -14,11 +14,13 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
+import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.client.registry.EEMusic;
 import net.purplemushroom.everend.client.registry.EERenderTypes;
 import net.purplemushroom.everend.client.registry.EEShaderRegistry;
@@ -34,7 +36,10 @@ import java.util.Random;
 
 public class EverendMenuScreen extends TitleScreen {
     private long time = 0;
-    private boolean renderSurprise = false;
+    private long surpriseTime = -1;
+
+    public static final ResourceLocation BEAUTIFUL_IMAGE = Everend.rl("textures/gui/blob.png");
+
     public EverendMenuScreen() {
         super(false, new EverendLogoRender());
     }
@@ -75,10 +80,14 @@ public class EverendMenuScreen extends TitleScreen {
         if (seedUniform != null) seedUniform.set(new Random().nextFloat(1024.0f));
     }
 
+    private boolean renderSurprise() {
+        return surpriseTime >= 0 && System.nanoTime() < surpriseTime + 2e9;
+    }
+
     @Nullable
     @Override
     public Music getBackgroundMusic() {
-        return renderSurprise ? null : EEMusic.MENU;
+        return renderSurprise() ? null : EEMusic.MENU;
     }
 
     @Override
@@ -93,6 +102,12 @@ public class EverendMenuScreen extends TitleScreen {
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        if (renderSurprise()) {
+            pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            pGuiGraphics.blit(BEAUTIFUL_IMAGE, 0, 0, 0, 0, 0, width, height, width, height);
+            return;
+        }
+
         RenderSystem.setShader(EEShaderRegistry::getShaderMenu);
         RenderSystem.setShaderGameTime(time, pPartialTick);
         ShaderInstance shaderinstance = RenderSystem.getShader();
@@ -117,13 +132,13 @@ public class EverendMenuScreen extends TitleScreen {
             double relativeX = newMouseX * Math.cos(Math.toRadians(20)) - newMouseY * Math.sin(Math.toRadians(20));
             double relativeY = newMouseY * Math.cos(Math.toRadians(20)) + newMouseX * Math.sin(Math.toRadians(20));
             if (Math.abs(relativeX) <= (double) this.font.width(getSplash().getText()) * 1.8f / 2 && relativeY <= 0 && relativeY >= -this.font.lineHeight * 1.8f) {
-                System.out.println("HI");
-                renderSurprise = true;
+                surpriseTime = System.nanoTime();
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(EESoundRegistry.BLOB, 1.0F, 20.0f));
                 splash = SplashProvider.getRandomSplash();
                 return true;
             }
         }
+        if (renderSurprise()) return false;
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
