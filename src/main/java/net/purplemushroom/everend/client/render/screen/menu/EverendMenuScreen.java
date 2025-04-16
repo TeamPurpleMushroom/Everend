@@ -30,6 +30,7 @@ import net.purplemushroom.everend.client.render.screen.menu.splash.ClickMeSplash
 import net.purplemushroom.everend.client.render.screen.menu.splash.EverendSplash;
 import net.purplemushroom.everend.client.render.screen.menu.splash.SplashProvider;
 import net.purplemushroom.everend.mixin.accessor.client.TitleScreenAccessor;
+import net.purplemushroom.everend.util.BitUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
@@ -104,7 +105,9 @@ public class EverendMenuScreen extends TitleScreen {
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (renderSurprise()) {
             pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            pGuiGraphics.blit(BEAUTIFUL_IMAGE, 0, 0, 0, 0, 0, width, height, width, height);
+            Random rand = new Random(System.nanoTime() / 50000000);
+            pGuiGraphics.fill(0, 0, width, height, BitUtil.rgbaToInt(0, 0, 0, 255));
+            pGuiGraphics.blit(BEAUTIFUL_IMAGE, -50 + rand.nextInt(101), -50 + rand.nextInt(101), 0, 0, 0, width, height, width, height);
             return;
         }
 
