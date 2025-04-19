@@ -271,7 +271,12 @@ public class SplashProvider {
             "Inspired by HEE!",
             "Better than shulkers!",
             "Don't throw popcorn in movie theaters!",
-            "I can see my house from here!"
+            "I can see my house from here!",
+            "Evil Incorporated!",
+            "Analysis paralysis!",
+            "A terrible, awful, no good, very bad day!",
+            "Rock me, Amadeus!",
+            "State of the art!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
