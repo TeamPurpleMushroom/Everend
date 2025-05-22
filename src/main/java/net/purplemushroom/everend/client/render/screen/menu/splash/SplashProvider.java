@@ -276,7 +276,11 @@ public class SplashProvider {
             "Analysis paralysis!",
             "A terrible, awful, no good, very bad day!",
             "Rock me, Amadeus!",
-            "State of the art!"
+            "State of the art!",
+            "Not Shane!",
+            "Southern hospitality!",
+            "Love thy neighbor!",
+            "Geronimo!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
