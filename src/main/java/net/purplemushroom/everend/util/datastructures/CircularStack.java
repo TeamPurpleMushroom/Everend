@@ -30,8 +30,8 @@ public class CircularStack<T> {
 
     public void clear() {
         /*
-        although this doesn't actually remove the elements internally, they will be gradually overwitten and garbage collected
-        the only alternative would to iterate through the elements setting everything null, or create a new array altogether
+        although this doesn't actually remove the elements internally, they will be gradually overwritten and garbage collected
+        the only alternative would be to iterate through the elements setting everything null, or create a new array altogether
         both of these could cause slowdown for very large queues
          */
         count = 0;
