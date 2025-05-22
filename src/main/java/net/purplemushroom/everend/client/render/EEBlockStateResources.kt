@@ -66,6 +66,35 @@ object EEBlockStateResources {
     }
 
     @JvmStatic
+    fun cakeState(fullModel: BlockModelLocation, bites1Location: BlockModelLocation, bites2Location: BlockModelLocation, bites3Location: BlockModelLocation, bites4Location: BlockModelLocation, bites5Location: BlockModelLocation, bites6Location: BlockModelLocation): BlockStateResource {
+        return BlockStateResource.fromJson(json {
+            "variants" {
+                "bites=0" {
+                    "model" set fullModel
+                }
+                "bites=1" {
+                    "model" set bites1Location
+                }
+                "bites=2" {
+                    "model" set bites2Location
+                }
+                "bites=3" {
+                    "model" set bites3Location
+                }
+                "bites=4" {
+                    "model" set bites4Location
+                }
+                "bites=5" {
+                    "model" set bites5Location
+                }
+                "bites=6" {
+                    "model" set bites6Location
+                }
+            }
+        })
+    }
+
+    @JvmStatic
     fun endAltarState(stage0Location: BlockModelLocation, stage1Location: BlockModelLocation, stage2Location: BlockModelLocation, stage3Location: BlockModelLocation, stage4Location: BlockModelLocation, stage5Location: BlockModelLocation): BlockStateResource {
         return BlockStateResource.fromJson(json {
             "variants" {

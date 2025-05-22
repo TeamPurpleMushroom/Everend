@@ -1,0 +1,22 @@
+{
+    "textures": {
+        "particle": "everend:block/quantum_cake_side",
+        "bottom": "everend:block/quantum_cake_bottom",
+        "top": "everend:block/quantum_cake_top",
+        "side": "everend:block/quantum_cake_side",
+        "inside": "everend:block/quantum_cake_inner"
+    },
+    "elements": [
+        {   "from": [ 3, 0, 1 ],
+            "to": [ 15, 8, 15 ],
+            "faces": {
+                "down":  { "texture": "#bottom", "cullface": "down" },
+                "up":    { "texture": "#top" },
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" },
+                "west":  { "texture": "#inside" },
+                "east":  { "texture": "#side" }
+            }
+        }
+    ]
+}

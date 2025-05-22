@@ -182,6 +182,14 @@ public class EEBlocks {
         BLOCKS.register("quantum_cake", () -> new QuantumCakeBlock(new BlockPropsFactory(() -> BlockBehaviour.Properties.copy(Blocks.CAKE)
         ).create()))
                 .defaultBlockItem(EECreativeTabs.BLOCKS)
+                .state(EEBlockStateResources.cakeState(Everend.bml(
+                        "block/quantum_cake"), Everend.bml(
+                        "block/quantum_cake_slice1"), Everend.bml(
+                        "block/quantum_cake_slice2"), Everend.bml(
+                        "block/quantum_cake_slice3"), Everend.bml(
+                        "block/quantum_cake_slice4"), Everend.bml(
+                        "block/quantum_cake_slice5"), Everend.bml(
+                        "block/quantum_cake_slice6")))
                 .name("Quantum Cake");
     }
 
