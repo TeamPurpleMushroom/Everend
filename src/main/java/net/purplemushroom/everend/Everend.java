@@ -1,13 +1,16 @@
 package net.purplemushroom.everend;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.purplemushroom.everend.client.event.EEOverlayHandler;
 import net.purplemushroom.everend.client.registry.EESoundRegistry;
 import net.purplemushroom.everend.content.blocks.tile.EndAltarBlockEntity;
 import net.purplemushroom.everend.registry.EEEffects;

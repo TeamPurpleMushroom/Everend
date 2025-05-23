@@ -43,9 +43,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.purplemushroom.everend.client.registry.EEMusic;
 import net.purplemushroom.everend.packet.SBossInfoPacket;
 import net.purplemushroom.everend.registry.EEPackets;
 import net.purplemushroom.everend.util.EntityUtil;
+import net.purplemushroom.everend.util.EverendBossInfo;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
 
 import javax.annotation.Nullable;
@@ -53,7 +55,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 
-public class EnderLord extends Monster implements NeutralMob {
+public class EnderLord extends Monster implements NeutralMob, IEverendBoss<EnderLord> {
     private static final EntityDataAccessor<Boolean> DATA_CREEPY = SynchedEntityData.defineId(EnderLord.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_STARED_AT = SynchedEntityData.defineId(EnderLord.class, EntityDataSerializers.BOOLEAN);
     private int lastStareSound = Integer.MIN_VALUE;
@@ -377,6 +379,11 @@ public class EnderLord extends Monster implements NeutralMob {
     @Override
     public double getMeleeAttackRangeSqr(LivingEntity pEntity) {
         return EntityUtil.calculateMinimalAttackReach(this, pEntity);
+    }
+
+    @Override
+    public EverendBossInfo<EnderLord> getBossInfo() {
+        return new EverendBossInfo<>(this, EEMusic.ENDER_LORD);
     }
 
     private class EnderLordBulletHellGoal extends Goal {

@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent;
+import net.purplemushroom.everend.client.BossInfoHandler;
+import net.purplemushroom.everend.content.entities.IEverendBoss;
 import org.jetbrains.annotations.NotNull;
 import ru.timeconqueror.timecore.api.common.packet.IPacket;
 import ru.timeconqueror.timecore.api.common.packet.ITimePacketHandler;
@@ -15,8 +17,6 @@ public class SBossInfoPacket implements IPacket {
     private Operation addOrRemove;
     private UUID barUUID;
     private int bossNum;
-
-    public static boolean MUSIC_PLAYING = false;
 
     private SBossInfoPacket(Operation operation, UUID barUUID, int bossNum) {
         this.addOrRemove = operation;
@@ -44,7 +44,18 @@ public class SBossInfoPacket implements IPacket {
 
     @Override
     public void handleOnClient(NetworkEvent.Context ctx) {
-        MUSIC_PLAYING = addOrRemove == Operation.ADD;
+        switch (addOrRemove) {
+            case ADD:
+                Entity entity = Minecraft.getInstance().level.getEntity(bossNum);
+                if (entity instanceof IEverendBoss<?> boss) {
+                    if (BossInfoHandler.info.put(barUUID, boss.getBossInfo()) != null) throw new IllegalStateException("Boss info already existed???");
+                } else {
+                    throw new IllegalStateException("Could not find boss to add info");
+                }
+                break;
+            case REMOVE:
+                BossInfoHandler.info.remove(barUUID);
+        }
     }
 
     public enum Operation {
