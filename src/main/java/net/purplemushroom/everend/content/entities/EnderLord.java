@@ -554,7 +554,7 @@ public class EnderLord extends Monster implements NeutralMob, IEverendBoss<Ender
 
         private enum BulletHellType {
             DOORS_FROM_RANDOM_DIRECTIONS(40, 300),
-            DOORS_FROM_ONE_DIRECTION(11, 180),
+            DOORS_FROM_ONE_DIRECTION(10, 180),
             WALLS(30, 100);
 
             private final int interval;
