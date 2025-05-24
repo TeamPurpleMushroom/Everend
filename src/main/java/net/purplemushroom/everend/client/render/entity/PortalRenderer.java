@@ -57,7 +57,7 @@ public class PortalRenderer extends EntityRenderer<Portal> {
         addVertex(vertexConsumer, pose, right.scale(-1.0F).add(up));
         addVertex(vertexConsumer, pose, right.add(up));
 
-        //FRAME
+        /*//FRAME
         int packedLightLevel = 15728880;
         vertexConsumer = buffer.getBuffer(frameRenderType);
         Matrix3f normal = pose.normal(poseStack.last().normal());
@@ -70,7 +70,7 @@ public class PortalRenderer extends EntityRenderer<Portal> {
         addFrameVertex(vertexConsumer, pose, normal, packedLightLevel, right.subtract(up), 0, 1);
         addFrameVertex(vertexConsumer, pose, normal, packedLightLevel, right.scale(-1.01F).subtract(up), 1, 1);
         addFrameVertex(vertexConsumer, pose, normal, packedLightLevel, right.scale(-1.01F).add(up), 1, 0);
-        addFrameVertex(vertexConsumer, pose, normal, packedLightLevel, right.add(up), 0, 0);
+        addFrameVertex(vertexConsumer, pose, normal, packedLightLevel, right.add(up), 0, 0);*/
 
         poseStack.popPose();
     }

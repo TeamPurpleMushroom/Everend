@@ -20,6 +20,8 @@ public class EEShaderRegistry {
 
     public static ShaderInstance shaderEndSky;
 
+    public static ShaderInstance shaderBossBar;
+
     public static ShaderInstance getShaderVoidStars() {
         return shaderVoidStars;
     }
@@ -29,6 +31,8 @@ public class EEShaderRegistry {
     }
 
     public static ShaderInstance getShaderEndSky() {return shaderEndSky;}
+
+    public static ShaderInstance getShaderBossBar() {return shaderBossBar;}
 
     @SubscribeEvent
     public static void registerShaders(RegisterShadersEvent event) throws IOException {
@@ -41,5 +45,8 @@ public class EEShaderRegistry {
 
         event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Everend.MODID, "end_sky"), DefaultVertexFormat.POSITION_TEX),
                 shaderInstance -> shaderEndSky = shaderInstance);
+
+        event.registerShader(new ShaderInstance(resourceProvider, new ResourceLocation(Everend.MODID, "rendertype_boss_bar"), DefaultVertexFormat.POSITION),
+                shaderInstance -> shaderBossBar = shaderInstance);
     }
 }

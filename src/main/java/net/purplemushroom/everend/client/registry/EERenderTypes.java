@@ -1,5 +1,7 @@
 package net.purplemushroom.everend.client.registry;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.GameRenderer;
@@ -9,7 +11,6 @@ import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.purplemushroom.everend.Everend;
 
 public class EERenderTypes {
-
     public static final RenderType RIFT_PORTAL_RENDER_TYPE = RenderType.create(
             "end_space",
             DefaultVertexFormat.POSITION,
@@ -86,6 +87,25 @@ public class EERenderTypes {
                             .build())
                     .createCompositeState(false));
 
+    public static final RenderType BOSS_BAR_RENDER_TYPE = RenderType.create(
+            "boss_bar",
+            DefaultVertexFormat.POSITION_TEX,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(new RenderStateShard.ShaderStateShard(EEShaderRegistry::getShaderBossBar))
+                    .setTransparencyState(new RenderStateShard.TransparencyStateShard("test", () -> {
+                        RenderSystem.enableBlend();
+                        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+                    }, () -> {
+                        RenderSystem.disableBlend();
+                        RenderSystem.defaultBlendFunc();
+                    }))
+                    .createCompositeState(false)
+                    );
+
     public static RenderType getEnderLordPortalType() {
         return ENDER_LORD_PORTAL_TYPE;
     }
@@ -104,6 +124,10 @@ public class EERenderTypes {
 
     public static RenderType getMenuRenderType() {
         return MENU_RENDER_TYPE;
+    }
+
+    public static RenderType getBossBarRenderType() {
+        return BOSS_BAR_RENDER_TYPE;
     }
 
     public static class Shaders {
