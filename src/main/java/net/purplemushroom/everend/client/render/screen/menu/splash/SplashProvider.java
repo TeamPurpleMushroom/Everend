@@ -28,6 +28,7 @@ public class SplashProvider {
             "Also try Hexxit!",
             "Also try Born in Chaos!",
             "Also try Oh The Biomes We've Gone!",
+            "Also try Botania!",
             "Family friendly!",
             "Remember the cows!",
             "Will it ever end?!",
@@ -124,6 +125,7 @@ public class SplashProvider {
             "Hey!",
             "Heya!",
             "Hello!",
+            "Yo!",
             "Made by nerds, for nerds!",
             "The (unofficial) End Update!",
             "Over 200 custom splashes!",
@@ -280,7 +282,8 @@ public class SplashProvider {
             "Not Shane!",
             "Southern hospitality!",
             "Love thy neighbor!",
-            "Geronimo!"
+            "Geronimo!",
+            "There is nowhere to run, chat!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
