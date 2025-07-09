@@ -51,6 +51,7 @@ import net.purplemushroom.everend.util.EverendBossInfo;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
@@ -383,7 +384,11 @@ public class EnderLord extends Monster implements NeutralMob, IEverendBoss<Ender
 
     @Override
     public EverendBossInfo<EnderLord> getBossInfo() {
-        return new EverendBossInfo<>(this, EEMusic.ENDER_LORD);
+        return new EverendBossInfo<>(
+                this,
+                new Color(255, 255, 255, 255),
+                new Color(255, 255, 255, 0),
+                EEMusic.ENDER_LORD);
     }
 
     private class EnderLordBulletHellGoal extends Goal {

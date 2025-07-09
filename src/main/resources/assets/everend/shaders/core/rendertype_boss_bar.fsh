@@ -7,6 +7,9 @@ in vec2 uv;
 
 uniform float GameTime;
 
+uniform vec4 PrimaryColor;
+uniform vec4 SecondaryColor;
+
 out vec4 fragColor;
 
 void main() {
@@ -39,5 +42,6 @@ void main() {
         vMultiplier = 1.0 - (vMultiplier - (0.0241935 - 0.02)) / 0.02;
     }
 
-    fragColor = vec4(vec3(1.0), thickness * thickness * uMultiplier * vMultiplier);
+    fragColor = (PrimaryColor - SecondaryColor) * thickness * thickness + SecondaryColor;
+    fragColor.a *= uMultiplier * vMultiplier;
 }

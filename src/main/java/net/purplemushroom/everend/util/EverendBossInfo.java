@@ -1,5 +1,6 @@
 package net.purplemushroom.everend.util;
 
+import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -16,14 +17,28 @@ import net.purplemushroom.everend.client.registry.EERenderTypes;
 import net.purplemushroom.everend.client.registry.EEShaderRegistry;
 import org.joml.Matrix4f;
 
+import java.awt.*;
+
 public class EverendBossInfo<T extends LivingEntity> {
     private static final ResourceLocation GUI_BARS_LOCATION = new ResourceLocation("textures/gui/bars.png");
 
     T boss;
+    float primaryRed, primaryGreen, primaryBlue, primaryAlpha;
+    float secondaryRed, secondaryGreen, secondaryBlue, secondaryAlpha;
     Music music;
 
-    public EverendBossInfo(T boss, Music music) {
+    public EverendBossInfo(T boss, Color primaryFogColor, Color secondaryFogColor, Music music) {
         this.boss = boss;
+        primaryRed = (float)primaryFogColor.getRed() / 255;
+        primaryGreen = (float)primaryFogColor.getGreen() / 255;
+        primaryBlue = (float)primaryFogColor.getBlue() / 255;
+        primaryAlpha = (float)primaryFogColor.getAlpha() / 255;
+
+        secondaryRed = (float)secondaryFogColor.getRed() / 255;
+        secondaryGreen = (float)secondaryFogColor.getGreen() / 255;
+        secondaryBlue = (float)secondaryFogColor.getBlue() / 255;
+        secondaryAlpha = (float)secondaryFogColor.getAlpha() / 255;
+
         this.music = music;
     }
 
@@ -31,6 +46,20 @@ public class EverendBossInfo<T extends LivingEntity> {
         Font font = Minecraft.getInstance().font;
 
         Matrix4f matrix = graphics.pose().last().pose();
+
+        // set up shader colors
+        RenderSystem.setShader(EEShaderRegistry::getShaderBossBar);
+        ShaderInstance shaderInstance = RenderSystem.getShader();
+        if (shaderInstance != null) {
+            Uniform primaryColor = shaderInstance.getUniform("PrimaryColor");
+            Uniform secondaryColor = shaderInstance.getUniform("SecondaryColor");
+            if (primaryColor != null && secondaryColor != null) {
+                primaryColor.set(primaryRed, primaryGreen, primaryBlue, primaryAlpha);
+                secondaryColor.set(secondaryRed, secondaryGreen, secondaryBlue, secondaryAlpha);
+                shaderInstance.apply();
+            }
+        }
+
         VertexConsumer vertexconsumer = graphics.bufferSource().getBuffer(EERenderTypes.getBossBarRenderType());
         vertexconsumer.vertex(matrix, (float)(x - 3), (float)(y - 3), -90.0f).uv(0.0f, 0.0f).endVertex();
         vertexconsumer.vertex(matrix, (float)(x - 3), (float)(y + 5 + 3), -90.0f).uv(0.0f, 0.048387f).endVertex();
