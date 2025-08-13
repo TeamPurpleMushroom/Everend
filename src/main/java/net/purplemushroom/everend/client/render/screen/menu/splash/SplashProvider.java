@@ -284,7 +284,8 @@ public class SplashProvider {
             "Love thy neighbor!",
             "Geronimo!",
             "There is nowhere to run, chat!",
-            "YOUR TAKING TOO LONG"
+            "YOUR TAKING TOO LONG",
+            "The hierarchy of power is about to change."
     };
 
     public static final String[] SPOOKY_SPLASHES = {
