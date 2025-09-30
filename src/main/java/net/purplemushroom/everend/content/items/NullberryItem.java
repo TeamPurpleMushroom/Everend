@@ -42,7 +42,7 @@ public class NullberryItem extends Item {
 
     private void handleTeleport(ServerLevel serverLevel, Player serverPlayer) {
         BlockPos playerPos = serverLevel.getSharedSpawnPos();
-        EEPlayer playerCap = EEPlayer.from((ServerPlayer) serverPlayer);
+        EEPlayer playerCap = EEPlayer.from(serverPlayer);
         if (playerCap != null) {
             PlayerTracker playerTracker = playerCap.playerTracker;
             if (playerTracker.getDimension() == serverLevel.dimension().location()) {
