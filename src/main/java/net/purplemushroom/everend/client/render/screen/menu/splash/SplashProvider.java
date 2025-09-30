@@ -29,6 +29,7 @@ public class SplashProvider {
             "Also try Born in Chaos!",
             "Also try Oh The Biomes We've Gone!",
             "Also try Botania!",
+            "Also try Gamer's Glee!",
             "Family friendly!",
             "Remember the cows!",
             "Will it ever end?!",
@@ -139,7 +140,6 @@ public class SplashProvider {
             "America, heck yeah!",
             "Didn't see you come in!",
             "UwU",
-            "How are you feeling today?",
             "How does that make you feel?",
             "Self-conscious Endermen!",
             "Scopophobia!",
@@ -232,7 +232,6 @@ public class SplashProvider {
             "Mono hearts!",
             "Master of its domain!",
             "Call your friend Kevin!",
-            "Lowkey!",
             "Black, slender men!",
             "Bullet hell-ish!",
             "Your personal healthcare companion!",
@@ -285,7 +284,13 @@ public class SplashProvider {
             "Geronimo!",
             "There is nowhere to run, chat!",
             "YOUR TAKING TOO LONG",
-            "The hierarchy of power is about to change."
+            "The hierarchy of power is about to change.",
+            "1A! 1A! 1A!",
+            "Java, not JavaScript!",
+            "Nearest neighbor!",
+            "That bump is shaped like a deer!",
+            "Shaww!",
+
     };
 
     public static final String[] SPOOKY_SPLASHES = {
