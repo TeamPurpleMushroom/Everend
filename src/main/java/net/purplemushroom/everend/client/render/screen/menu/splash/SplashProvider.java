@@ -2,7 +2,6 @@ package net.purplemushroom.everend.client.render.screen.menu.splash;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.ModList;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -290,7 +289,7 @@ public class SplashProvider {
             "Nearest neighbor!",
             "That bump is shaped like a deer!",
             "Shaww!",
-
+            "To be, or not to be!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -325,36 +324,6 @@ public class SplashProvider {
         RELEASE_DATE.add(Calendar.YEAR, 3);
     }
     private static final String DEBUG_SPLASH = null;
-
-    public static EverendSplash getRandomSplash() {
-        if (DEBUG_SPLASH != null) {
-            return new EverendSplash(DEBUG_SPLASH);
-        }
-
-        Random rand = new Random();
-
-        Calendar calendar = Calendar.getInstance();
-        if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
-            return new FestiveSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
-        }
-        if (calendar.get(Calendar.MONTH) == Calendar.OCTOBER && calendar.get(Calendar.DATE) >= 15) {
-            return new SpookySplash(SPOOKY_SPLASHES[new Random().nextInt(SPOOKY_SPLASHES.length)]);
-        }
-        if (calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DATE) == 1) {
-            if (rand.nextInt(30) == 0) return new ClickMeSplash("Click me!");
-            return new FoolsSplash();
-        }
-        if (calendar.get(Calendar.MONTH) == RELEASE_DATE.get(Calendar.MONTH) && calendar.get(Calendar.DATE) == RELEASE_DATE.get(Calendar.DATE)) {
-            return new EverendSplash("Happy Birthday, Everend!");
-        }
-        if (rand.nextInt(1000) == 0) return new ClickMeSplash("Click me!");
-        int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES);
-        if (pick < SPECIAL_SPLASHES) {
-            return getSpecialSplash(pick);
-
-        }
-        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
-    }
 
     private static EverendSplash getSpecialSplash(int id) {
         switch (id) {
@@ -416,5 +385,35 @@ public class SplashProvider {
         Calendar time = Calendar.getInstance();
         time.setTime(new Date());
         return time.after(RELEASE_DATE);
+    }
+
+    public static EverendSplash getRandomSplash() {
+        if (DEBUG_SPLASH != null) {
+            return new EverendSplash(DEBUG_SPLASH);
+        }
+
+        Random rand = new Random();
+
+        Calendar calendar = Calendar.getInstance();
+        if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
+            return new FestiveSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);
+        }
+        if (calendar.get(Calendar.MONTH) == Calendar.OCTOBER && calendar.get(Calendar.DATE) >= 15) {
+            return new SpookySplash(SPOOKY_SPLASHES[new Random().nextInt(SPOOKY_SPLASHES.length)]);
+        }
+        if (calendar.get(Calendar.MONTH) == Calendar.APRIL && calendar.get(Calendar.DATE) == 1) {
+            if (rand.nextInt(30) == 0) return new ClickMeSplash("Click me!");
+            return new FoolsSplash();
+        }
+        if (calendar.get(Calendar.MONTH) == RELEASE_DATE.get(Calendar.MONTH) && calendar.get(Calendar.DATE) == RELEASE_DATE.get(Calendar.DATE)) {
+            return new EverendSplash("Happy Birthday, Everend!");
+        }
+        if (rand.nextInt(1000) == 0) return new ClickMeSplash("Click me!");
+        int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES);
+        if (pick < SPECIAL_SPLASHES) {
+            return getSpecialSplash(pick);
+
+        }
+        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
     }
 }

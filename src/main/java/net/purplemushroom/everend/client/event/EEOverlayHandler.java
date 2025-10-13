@@ -11,6 +11,7 @@ import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purplemushroom.everend.Everend;
@@ -27,7 +28,7 @@ public class EEOverlayHandler {
             gui.setupOverlayRenderState(true, false);
             RiftFishingOverlay.render(gui, guiGraphics, partialTick, screenWidth, screenHeight);
         });
-        event.registerAbove(new ResourceLocation("portal"), "gaze_crystal_teleport", (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
+        event.registerAbove(VanillaGuiOverlay.PORTAL.id(), "gaze_crystal_teleport", (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
             gui.setupOverlayRenderState(true, false);
             gazeCrystal(gui, guiGraphics, partialTick, screenWidth, screenHeight);
         });
