@@ -9,7 +9,8 @@
     "inject.PlayerRespawnMixin"
   ],
   "client": [
-    "inject.client.SituationalMusicMixin",
-    "accessor.client.TitleScreenAccessor"
+    "accessor.client.TitleScreenAccessor",
+    "inject.client.GameRendererMixin",
+    "inject.client.SituationalMusicMixin"
   ]
 }
