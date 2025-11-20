@@ -7,19 +7,18 @@ import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
 public class GradientTextRendering extends CustomTextRendering {
-    public GradientTextRendering(Font mainFont) {
+    private final int gradientColor;
+
+    public GradientTextRendering(Font mainFont, int gradientColor) {
         super(mainFont);
+        this.gradientColor = Font.adjustColor(gradientColor);
     }
 
     @Override
-    protected void render(BakedGlyph glyph, float pX, float pY, float red, float green, float blue, float alpha, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
-        float bottomRed = Mth.lerp(0.25f, red, 1.0f);
-        float bottomGreen = Mth.lerp(0.25f, green, 1.0f);
-        float bottomBlue = Mth.lerp(0.25f, blue, 1.0f);
-
-        red = Mth.lerp(0.25f, red, 0.0f);
-        green = Mth.lerp(0.25f, green, 0.0f);
-        blue = Mth.lerp(0.25f, blue, 0.0f);
+    protected void render(BakedGlyph glyph, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+        float gr = (float)(gradientColor >> 16 & 255) / 255.0F * shadowFactor;
+        float gg = (float)(gradientColor >> 8 & 255) / 255.0F * shadowFactor;
+        float gb = (float)(gradientColor & 255) / 255.0F * shadowFactor;
 
         int i = 3;
         float f = pX + glyph.left;
@@ -32,8 +31,8 @@ public class GradientTextRendering extends CustomTextRendering {
         float f7 = italic ? 1.0F - 0.25F * f3 : 0.0F;
 
         buffer.vertex(matrix, f + f6, f4, 0.0F).color(red, green, blue, alpha).uv(glyph.u0, glyph.v0).uv2(light).endVertex();
-        buffer.vertex(matrix, f + f7, f5, 0.0F).color(bottomRed, bottomGreen, bottomBlue, alpha).uv(glyph.u0, glyph.v1).uv2(light).endVertex();
-        buffer.vertex(matrix, f1 + f7, f5, 0.0F).color(bottomRed, bottomGreen, bottomBlue, alpha).uv(glyph.u1, glyph.v1).uv2(light).endVertex();
+        buffer.vertex(matrix, f + f7, f5, 0.0F).color(gr, gg, gb, alpha).uv(glyph.u0, glyph.v1).uv2(light).endVertex();
+        buffer.vertex(matrix, f1 + f7, f5, 0.0F).color(gr, gg, gb, alpha).uv(glyph.u1, glyph.v1).uv2(light).endVertex();
         buffer.vertex(matrix, f1 + f6, f4, 0.0F).color(red, green, blue, alpha).uv(glyph.u1, glyph.v0).uv2(light).endVertex();
     }
 }

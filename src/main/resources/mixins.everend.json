@@ -10,6 +10,7 @@
   ],
   "client": [
     "accessor.client.TitleScreenAccessor",
+    "inject.client.FontMixin",
     "inject.client.GameRendererMixin",
     "inject.client.SituationalMusicMixin"
   ]

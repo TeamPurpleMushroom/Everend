@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
@@ -13,26 +14,21 @@ public abstract class CustomTextRendering extends Font {
         super(mainFont.fonts, mainFont.filterFishyGlyphs);
     }
 
-    @Override
-    protected final void renderChar(BakedGlyph pGlyph, boolean pBold, boolean pItalic, float pBoldOffset, float pX, float pY, Matrix4f pMatrix, VertexConsumer pBuffer, float pRed, float pGreen, float pBlue, float pAlpha, int pPackedLight) {
-        RenderType type = getRenderType();
-
-        VertexConsumer buffer = type == null ? pBuffer : Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(type);
-
-        render(pGlyph, pX, pY, pRed, pGreen, pBlue, pAlpha, pItalic, pMatrix, buffer, pPackedLight);
+    public final void renderChar(BakedGlyph pGlyph, boolean pBold, boolean pItalic, float pBoldOffset, float pX, float pY, Matrix4f pMatrix, VertexConsumer buffer, DisplayMode mode, float pRed, float pGreen, float pBlue, float pAlpha, boolean shadow, float shadowFactor, int pPackedLight) {
+        render(pGlyph, pX, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
         //pGlyph.render(pItalic, pX, pY, pMatrix, buffer, pRed, pGreen, pBlue, pAlpha, pPackedLight);
 
         if (pBold) {
-            render(pGlyph, pX + pBoldOffset, pY, pRed, pGreen, pBlue, pAlpha, pItalic, pMatrix, buffer, pPackedLight);
+            render(pGlyph, pX + pBoldOffset, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
             //pGlyph.render(pItalic, pX + pBoldOffset, pY, pMatrix, buffer, pRed, pGreen, pBlue, pAlpha, pPackedLight);
         }
     }
 
-    protected RenderType getRenderType() {
-        return null;
+    public VertexConsumer makeVertexConsumer(VertexConsumer original, BakedGlyph glyph, DisplayMode mode) {
+        return original;
     }
 
-    protected void render(BakedGlyph glyph, float pX, float pY, float red, float green, float blue, float alpha, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+    protected void render(BakedGlyph glyph, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
         int i = 3;
         float f = pX + glyph.left;
         float f1 = pX + glyph.right;

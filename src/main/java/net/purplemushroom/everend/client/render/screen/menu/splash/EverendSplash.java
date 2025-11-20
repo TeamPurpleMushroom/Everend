@@ -17,7 +17,7 @@ public class EverendSplash extends SplashRenderer {
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
-        pFont = new GradientTextRendering(pFont); // TODO: move this elsewhere
+        pFont = new GradientTextRendering(pFont, BitUtil.rgbToInt(168, 0, 240)); // TODO: move this elsewhere. Also need to set the gradients for the special splash renderers
 
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
