@@ -289,7 +289,9 @@ public class SplashProvider {
             "Nearest neighbor!",
             "That bump is shaped like a deer!",
             "Shaww!",
-            "To be, or not to be!"
+            "To be, or not to be!",
+            "If at first you don't succeed, redefine success!",
+            "Post-processing!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {

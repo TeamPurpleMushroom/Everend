@@ -7,6 +7,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.util.Mth;
 import net.purplemushroom.everend.util.BitUtil;
+import net.purplemushroom.everend.util.text.CustomTextRendering;
+import net.purplemushroom.everend.util.text.GradientTextRendering;
 
 public class EverendSplash extends SplashRenderer {
     protected EverendSplash(String pSplash) {
@@ -15,10 +17,11 @@ public class EverendSplash extends SplashRenderer {
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
+        pFont = new GradientTextRendering(pFont); // TODO: move this elsewhere
+
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
         pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
-
         float f = 1.8F - Mth.sin((float) (Util.getMillis() % 4000L) / 4000.0F * ((float) Math.PI * 2F)) * 0.1F;
         int textWidth = pFont.width(this.splash);
         f = f * 100.0F / (float) (textWidth + 32);
