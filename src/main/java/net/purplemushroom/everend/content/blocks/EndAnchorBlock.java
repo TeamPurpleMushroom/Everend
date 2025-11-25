@@ -19,6 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -91,7 +92,7 @@ public class EndAnchorBlock extends Block implements EntityBlock {
     }
 
     private static boolean isRespawnFuel(ItemStack pStack) {
-        return pStack.is(EEItems.ENCHANTMENT_CRYSTAL);
+        return pStack.is(Items.ENDER_PEARL);
     }
 
     private static boolean canBeCharged(BlockState pState) {
