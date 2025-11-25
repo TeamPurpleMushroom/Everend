@@ -2,6 +2,7 @@ package net.purplemushroom.everend.client.render.screen.menu.splash;
 
 import com.mojang.math.Axis;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.SplashRenderer;
@@ -11,14 +12,18 @@ import net.purplemushroom.everend.util.text.CustomTextRendering;
 import net.purplemushroom.everend.util.text.GradientTextRendering;
 
 public class EverendSplash extends SplashRenderer {
+    private final Font customFont;
     protected EverendSplash(String pSplash) {
         super(pSplash);
+        this.customFont = getCustomFont();
     }
 
     @Override
-    public void render(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
-        pFont = new GradientTextRendering(pFont, BitUtil.rgbToInt(13, 0, 60)); // TODO: move this elsewhere. Also need to set the gradients for the special splash renderers
+    public final void render(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
+        renderWithCustomFont(pGuiGraphics, pScreenWidth, customFont, pColor);
+    }
 
+    protected void renderWithCustomFont(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
         pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
@@ -29,6 +34,10 @@ public class EverendSplash extends SplashRenderer {
         pGuiGraphics.pose().scale(f, f, f);
         renderText(pGuiGraphics, pFont, pColor);
         pGuiGraphics.pose().popPose();
+    }
+
+    protected Font getCustomFont() {
+        return new GradientTextRendering(Minecraft.getInstance().font, BitUtil.rgbToInt(13, 0, 60), GradientTextRendering.GradientDirection.DOWN);
     }
 
     public String getText() {

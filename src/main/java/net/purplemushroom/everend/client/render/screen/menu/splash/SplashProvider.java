@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class SplashProvider {
-    private static final int SPECIAL_SPLASHES = 10;
+    private static final int SPECIAL_SPLASHES = 11;
 
     public static final String[] SPLASHES = {
             "Purple is the new black!",
@@ -291,7 +291,8 @@ public class SplashProvider {
             "Shaww!",
             "To be, or not to be!",
             "If at first you don't succeed, redefine success!",
-            "Post-processing!"
+            "Post-processing!",
+            "Not necessarily just a problem, but an opportunity as well!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -354,16 +355,16 @@ public class SplashProvider {
                 return new CountdownSplash("Liftoff!");
             case 6: // this text is color
                 return switch (new Random().nextInt(10)) {
-                    case 0 -> new EverendSplash("§0This splash is black!");
-                    case 1 -> new EverendSplash("§1This splash is blue!");
-                    case 2 -> new EverendSplash("§2This splash is green!");
-                    case 3 -> new EverendSplash("§4This splash is red!");
-                    case 4 -> new EverendSplash("§5This splash is purple!");
-                    case 5 -> new EverendSplash("§6This splash is golden!");
-                    case 6 -> new EverendSplash("§7This splash is grey!");
-                    case 7 -> new EverendSplash("§dThis splash is pink!");
-                    case 8 -> new EverendSplash("§eThis splash is yellow!");
-                    case 9 -> new EverendSplash("§fThis splash is white!");
+                    case 0 -> new SolidColorSplash("§0This splash is black!");
+                    case 1 -> new SolidColorSplash("§1This splash is blue!");
+                    case 2 -> new SolidColorSplash("§2This splash is green!");
+                    case 3 -> new SolidColorSplash("§4This splash is red!");
+                    case 4 -> new SolidColorSplash("§5This splash is purple!");
+                    case 5 -> new SolidColorSplash("§6This splash is golden!");
+                    case 6 -> new SolidColorSplash("§7This splash is grey!");
+                    case 7 -> new SolidColorSplash("§dThis splash is pink!");
+                    case 8 -> new SolidColorSplash("§eThis splash is yellow!");
+                    case 9 -> new SolidColorSplash("§fThis splash is white!");
                     default -> throw new IllegalArgumentException("Could not pick a valid color for color splash!");
                 };
             case 7: // this message will self-destruct
@@ -379,6 +380,8 @@ public class SplashProvider {
                 }
             case 9:
                 return new EverendSplash("That " + Minecraft.getInstance().getUser().getName() + " is such a- oh, didn't see you there!");
+            case 10:
+                return new RainbowSplash("COLORS!!!!!!!!!");
         }
         throw new IllegalArgumentException(id + " is not a valid special splash ID!");
     }
@@ -395,7 +398,6 @@ public class SplashProvider {
         }
 
         Random rand = new Random();
-
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DATE) >= 15) {
             return new FestiveSplash(HOLIDAY_SPLASHES[new Random().nextInt(HOLIDAY_SPLASHES.length)]);

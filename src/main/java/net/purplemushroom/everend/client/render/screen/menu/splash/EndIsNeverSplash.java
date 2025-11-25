@@ -12,7 +12,7 @@ public class EndIsNeverSplash extends EverendSplash {
     }
 
     @Override
-    public void render(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
+    public void renderWithCustomFont(GuiGraphics pGuiGraphics, int pScreenWidth, Font pFont, int pColor) {
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate((float) pScreenWidth / 2.0F + 123.0F, 69.0F, 0.0F);
         pGuiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-20.0F));
