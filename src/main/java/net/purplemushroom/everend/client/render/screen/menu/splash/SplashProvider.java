@@ -6,10 +6,9 @@ import net.minecraftforge.fml.ModList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class SplashProvider {
-    private static final int SPECIAL_SPLASHES = 11;
-
     public static final String[] SPLASHES = {
             "Purple is the new black!",
             "\"Neverend\" was taken!",
@@ -321,18 +320,12 @@ public class SplashProvider {
             "A home invader is coming down the chimney!"
     };
 
-    private static final Calendar RELEASE_DATE = Calendar.getInstance();
-    static {
-        RELEASE_DATE.set(2024, Calendar.OCTOBER, 29); // TODO: update release date!
-        RELEASE_DATE.add(Calendar.YEAR, 3);
-    }
-    private static final String DEBUG_SPLASH = null;
+    public static final Supplier<?>[] SPECIAL_SPLASHES = { // I don't think I'm allowed to specify the generic here. Sad :(
+            // nostalgic
+            () -> new EverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!"),
 
-    private static EverendSplash getSpecialSplash(int id) {
-        switch (id) {
-            case 0: // nostalgic
-                return new EverendSplash(isNostalgic() ? "Nostalgic!" : "Not nostalgic yet!");
-            case 1: // greeting
+            // greeting
+            () -> {
                 String greeting;
                 Calendar time = Calendar.getInstance();
                 time.setTime(new Date());
@@ -345,31 +338,40 @@ public class SplashProvider {
                     greeting = "evening";
                 }
                 return new EverendSplash("Good " + greeting + "!");
-            case 2: // double trouble
-                return new DoubleSplash("Double trouble!");
-            case 3: // you're a wizard
-                return new EverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!");
-            case 4: // THE END IS NEVER THE END
-                return new EndIsNeverSplash("THE END IS NEVER ".repeat(20));
-            case 5:
-                return new CountdownSplash("Liftoff!");
-            case 6: // this text is color
-                return switch (new Random().nextInt(10)) {
-                    case 0 -> new SolidColorSplash("§0This splash is black!");
-                    case 1 -> new SolidColorSplash("§1This splash is blue!");
-                    case 2 -> new SolidColorSplash("§2This splash is green!");
-                    case 3 -> new SolidColorSplash("§4This splash is red!");
-                    case 4 -> new SolidColorSplash("§5This splash is purple!");
-                    case 5 -> new SolidColorSplash("§6This splash is golden!");
-                    case 6 -> new SolidColorSplash("§7This splash is grey!");
-                    case 7 -> new SolidColorSplash("§dThis splash is pink!");
-                    case 8 -> new SolidColorSplash("§eThis splash is yellow!");
-                    case 9 -> new SolidColorSplash("§fThis splash is white!");
-                    default -> throw new IllegalArgumentException("Could not pick a valid color for color splash!");
-                };
-            case 7: // this message will self-destruct
-                return new VanishingSplash("This message will self-destruct in five seconds!");
-            case 8: // mod list
+            },
+
+            // double trouble
+            () -> new DoubleSplash("Double trouble!"),
+
+            // you're a wizard
+            () -> new EverendSplash("You're a wizard, " + Minecraft.getInstance().getUser().getName() + "!"),
+
+            // THE END IS NEVER THE END IS NEVER
+            () -> new EndIsNeverSplash("THE END IS NEVER ".repeat(20)),
+
+            // countdown
+            () -> new CountdownSplash("Liftoff!"),
+
+            // this text is color
+            () -> switch (new Random().nextInt(10)) {
+                case 0 -> new SolidColorSplash("§0This splash is black!");
+                case 1 -> new SolidColorSplash("§1This splash is blue!");
+                case 2 -> new SolidColorSplash("§2This splash is green!");
+                case 3 -> new SolidColorSplash("§4This splash is red!");
+                case 4 -> new SolidColorSplash("§5This splash is purple!");
+                case 5 -> new SolidColorSplash("§6This splash is golden!");
+                case 6 -> new SolidColorSplash("§7This splash is grey!");
+                case 7 -> new SolidColorSplash("§dThis splash is pink!");
+                case 8 -> new SolidColorSplash("§eThis splash is yellow!");
+                case 9 -> new SolidColorSplash("§fThis splash is white!");
+                default -> throw new IllegalArgumentException("Could not pick a valid color for color splash!");
+            },
+
+            // this message will self-destruct
+            () -> new VanishingSplash("This message will self-destruct in five seconds!"),
+
+            // mod list
+            () -> {
                 int extraModCount = ModList.get().size() - 6;
                 if (extraModCount == 0) { // everend + timecore
                     return new EverendSplash("Consider downloading some quality of life mods!");
@@ -378,13 +380,21 @@ public class SplashProvider {
                 } else {
                     return new EverendSplash("Look mom, I'm in a modpack!");
                 }
-            case 9:
-                return new EverendSplash("That " + Minecraft.getInstance().getUser().getName() + " is such a- oh, didn't see you there!");
-            case 10:
-                return new RainbowSplash("COLORS!!!!!!!!!");
-        }
-        throw new IllegalArgumentException(id + " is not a valid special splash ID!");
+            },
+
+            // gossip
+            () -> new EverendSplash("That " + Minecraft.getInstance().getUser().getName() + " is such a- oh, didn't see you there!"),
+
+            // rainbow
+            () -> new RainbowSplash("COLORS!!!!!!!!!")
+    };
+
+    private static final Calendar RELEASE_DATE = Calendar.getInstance();
+    static {
+        RELEASE_DATE.set(2024, Calendar.OCTOBER, 29); // TODO: update release date!
+        RELEASE_DATE.add(Calendar.YEAR, 3);
     }
+    private static final String DEBUG_SPLASH = null;
 
     private static boolean isNostalgic() {
         Calendar time = Calendar.getInstance();
@@ -413,11 +423,12 @@ public class SplashProvider {
             return new EverendSplash("Happy Birthday, Everend!");
         }
         if (rand.nextInt(1000) == 0) return new ClickMeSplash("Click me!");
-        int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES);
-        if (pick < SPECIAL_SPLASHES) {
-            return getSpecialSplash(pick);
 
+        int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES.length);
+        if (pick < SPECIAL_SPLASHES.length) {
+            return (EverendSplash) SPECIAL_SPLASHES[pick].get();
         }
-        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES]);
+
+        return new EverendSplash(SPLASHES[pick - SPECIAL_SPLASHES.length]);
     }
 }
