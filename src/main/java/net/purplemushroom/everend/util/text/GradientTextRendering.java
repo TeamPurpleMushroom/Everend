@@ -23,7 +23,7 @@ public class GradientTextRendering extends CustomTextRendering {
     }
 
     @Override
-    protected void render(BakedGlyph glyph, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+    protected void render(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
         float gradientRed = (float)(gradientColor >> 16 & 255) / 255.0F * shadowFactor;
         float gradientGreen = (float)(gradientColor >> 8 & 255) / 255.0F * shadowFactor;
         float gradientBlue = (float)(gradientColor & 255) / 255.0F * shadowFactor;

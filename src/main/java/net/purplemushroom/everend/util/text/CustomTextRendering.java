@@ -19,13 +19,11 @@ public abstract class CustomTextRendering extends Font {
 
     }
 
-    public final void renderChar(BakedGlyph pGlyph, boolean pBold, boolean pItalic, float pBoldOffset, float pX, float pY, Matrix4f pMatrix, VertexConsumer buffer, DisplayMode mode, float pRed, float pGreen, float pBlue, float pAlpha, boolean shadow, float shadowFactor, int pPackedLight) {
-        render(pGlyph, pX, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
-        //pGlyph.render(pItalic, pX, pY, pMatrix, buffer, pRed, pGreen, pBlue, pAlpha, pPackedLight);
+    public final void renderChar(BakedGlyph pGlyph, int index, boolean pBold, boolean pItalic, float pBoldOffset, float pX, float pY, Matrix4f pMatrix, VertexConsumer buffer, DisplayMode mode, float pRed, float pGreen, float pBlue, float pAlpha, boolean shadow, float shadowFactor, int pPackedLight) {
+        render(pGlyph, index, pX, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
 
         if (pBold) {
-            render(pGlyph, pX + pBoldOffset, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
-            //pGlyph.render(pItalic, pX + pBoldOffset, pY, pMatrix, buffer, pRed, pGreen, pBlue, pAlpha, pPackedLight);
+            render(pGlyph, index, pX + pBoldOffset, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
         }
     }
 
@@ -33,7 +31,7 @@ public abstract class CustomTextRendering extends Font {
         return original;
     }
 
-    protected void render(BakedGlyph glyph, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+    protected void render(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
         float left = pX + glyph.left;
         float right = pX + glyph.right;
         float f2 = glyph.up - 3.0F;
