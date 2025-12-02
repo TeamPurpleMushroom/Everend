@@ -12,15 +12,11 @@ public class FestiveTextRendering extends CustomTextRendering {
     }
 
     @Override
-    protected void render(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+    protected void renderChar(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
         boolean isGreen = (index / 3) % 2 == 0;
         if (swapped) isGreen = !isGreen;
 
         // the vanilla red, green, and blue values already account for the shadowFactor
-        float redTop = 1.0f * red;
-        float greenTop = 1.0f * green;
-        float blueTop = 1.0f * blue;
-
         float redBottom;
         float greenBottom;
         float blueBottom;
@@ -44,9 +40,9 @@ public class FestiveTextRendering extends CustomTextRendering {
         float italicTopOffset = italic ? 1.0F - 0.25F * f2 : 0.0F;
         float italicBottomOffset = italic ? 1.0F - 0.25F * f3 : 0.0F;
 
-        buffer.vertex(matrix, left + italicTopOffset, top, 0.0F).color(redTop, greenTop, blueTop, alpha).uv(glyph.u0, glyph.v0).uv2(light).endVertex();
+        buffer.vertex(matrix, left + italicTopOffset, top, 0.0F).color(red, green, blue, alpha).uv(glyph.u0, glyph.v0).uv2(light).endVertex();
         buffer.vertex(matrix, left + italicBottomOffset, bottom, 0.0F).color(redBottom, greenBottom, blueBottom, alpha).uv(glyph.u0, glyph.v1).uv2(light).endVertex();
         buffer.vertex(matrix, right + italicBottomOffset, bottom, 0.0F).color(redBottom, greenBottom, blueBottom, alpha).uv(glyph.u1, glyph.v1).uv2(light).endVertex();
-        buffer.vertex(matrix, right + italicTopOffset, top, 0.0F).color(redTop, greenTop, blueTop, alpha).uv(glyph.u1, glyph.v0).uv2(light).endVertex();
+        buffer.vertex(matrix, right + italicTopOffset, top, 0.0F).color(red, green, blue, alpha).uv(glyph.u1, glyph.v0).uv2(light).endVertex();
     }
 }

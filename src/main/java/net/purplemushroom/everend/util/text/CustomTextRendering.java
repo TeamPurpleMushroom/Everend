@@ -4,9 +4,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
 public abstract class CustomTextRendering extends Font {
@@ -19,11 +16,11 @@ public abstract class CustomTextRendering extends Font {
 
     }
 
-    public final void renderChar(BakedGlyph pGlyph, int index, boolean pBold, boolean pItalic, float pBoldOffset, float pX, float pY, Matrix4f pMatrix, VertexConsumer buffer, DisplayMode mode, float pRed, float pGreen, float pBlue, float pAlpha, boolean shadow, float shadowFactor, int pPackedLight) {
-        render(pGlyph, index, pX, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
+    public final void render(BakedGlyph pGlyph, int index, boolean pBold, boolean pItalic, float pBoldOffset, float pX, float pY, Matrix4f pMatrix, VertexConsumer buffer, DisplayMode mode, float pRed, float pGreen, float pBlue, float pAlpha, boolean shadow, int pPackedLight) {
+        renderChar(pGlyph, index, pX, pY, pRed, pGreen, pBlue, pAlpha, shadow, pItalic, pMatrix, buffer, pPackedLight);
 
         if (pBold) {
-            render(pGlyph, index, pX + pBoldOffset, pY, pRed, pGreen, pBlue, pAlpha, shadow, shadowFactor, pItalic, pMatrix, buffer, pPackedLight);
+            renderChar(pGlyph, index, pX + pBoldOffset, pY, pRed, pGreen, pBlue, pAlpha, shadow, pItalic, pMatrix, buffer, pPackedLight);
         }
     }
 
@@ -31,7 +28,7 @@ public abstract class CustomTextRendering extends Font {
         return original;
     }
 
-    protected void render(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+    protected void renderChar(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
         float left = pX + glyph.left;
         float right = pX + glyph.right;
         float f2 = glyph.up - 3.0F;
@@ -45,5 +42,12 @@ public abstract class CustomTextRendering extends Font {
         buffer.vertex(matrix, left + italicBottomOffset, bottom, 0.0F).color(red, green, blue, alpha).uv(glyph.u0, glyph.v1).uv2(light).endVertex();
         buffer.vertex(matrix, right + italicBottomOffset, bottom, 0.0F).color(red, green, blue, alpha).uv(glyph.u1, glyph.v1).uv2(light).endVertex();
         buffer.vertex(matrix, right + italicTopOffset, top, 0.0F).color(red, green, blue, alpha).uv(glyph.u1, glyph.v0).uv2(light).endVertex();
+    }
+
+    public void renderEffect(BakedGlyph glyph, BakedGlyph.Effect pEffect, Matrix4f pMatrix, VertexConsumer pBuffer, float originalCharX, float originalCharY, boolean isShadow, int pPackedLight) {
+        pBuffer.vertex(pMatrix, pEffect.x0, pEffect.y0, pEffect.depth).color(pEffect.r, pEffect.g, pEffect.b, pEffect.a).uv(glyph.u0, glyph.v0).uv2(pPackedLight).endVertex();
+        pBuffer.vertex(pMatrix, pEffect.x1, pEffect.y0, pEffect.depth).color(pEffect.r, pEffect.g, pEffect.b, pEffect.a).uv(glyph.u0, glyph.v1).uv2(pPackedLight).endVertex();
+        pBuffer.vertex(pMatrix, pEffect.x1, pEffect.y1, pEffect.depth).color(pEffect.r, pEffect.g, pEffect.b, pEffect.a).uv(glyph.u1, glyph.v1).uv2(pPackedLight).endVertex();
+        pBuffer.vertex(pMatrix, pEffect.x0, pEffect.y1, pEffect.depth).color(pEffect.r, pEffect.g, pEffect.b, pEffect.a).uv(glyph.u1, glyph.v0).uv2(pPackedLight).endVertex();
     }
 }

@@ -18,7 +18,7 @@ public class RainbowTextRendering extends CustomTextRendering {
     }
 
     @Override
-    protected void render(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+    protected void renderChar(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
         float left = pX + glyph.left;
         float right = pX + glyph.right;
         float f2 = glyph.up - 3.0F;
