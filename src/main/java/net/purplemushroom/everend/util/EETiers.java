@@ -16,22 +16,22 @@ public enum EETiers {
         this.speedModifier = speed;
     }
 
-    EETiers(Tier tier, int type) {
-        int d = 1;          //hoe
+    EETiers(Tier tier, Type type) {
+        int damageModifier = 1;
         this.tier = tier;
-        if(type == 1){      //sword
-            d = 5;
+        if(type == type.getSword()){
+            damageModifier = 5;
         }
-        if(type == 2){      //pickaxe
-            d = 2;
+        if(type == type.getPickaxe()){
+            damageModifier = 2;
         }
-        if(type == 3){      //axe
-            d = 7;
+        if(type == type.getAxe()){
+            damageModifier = 7;
         }
-        if(type == 4){      //shovel
-            d = 3;
+        if(type == type.getShovel()){
+            damageModifier = 3;
         }
-        damage = d;
+        this.damage = damageModifier;
         this.speedModifier = 0;
     }
 
@@ -49,5 +49,43 @@ public enum EETiers {
 
     public static class EETier {
         public static final Tier DEV = new ForgeTier(3, 3000, 10F, 10000F, 25, null, () -> null);
+    }
+
+    public enum Type {
+        SWORD(1),
+        PICKAXE(2),
+        SHOVEL(3),
+        AXE(4),
+        HOE(5);
+
+        private final int typeID;
+
+        Type(int typeID) {
+            this.typeID = typeID;
+        }
+
+        public int getTypeID() {
+            return typeID;
+        }
+
+        public Type getSword() {
+            return SWORD;
+        }
+
+        public Type getPickaxe() {
+            return PICKAXE;
+        }
+
+        public Type getShovel() {
+            return SHOVEL;
+        }
+
+        public Type getAxe() {
+            return AXE;
+        }
+
+        public Type getHoe() {
+            return HOE;
+        }
     }
 }
