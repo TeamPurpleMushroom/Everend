@@ -4,7 +4,9 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.content.items.*;
+import net.purplemushroom.everend.content.items.ability.*;
 import net.purplemushroom.everend.content.items.gear.*;
+import net.purplemushroom.everend.util.EETiers;
 import ru.timeconqueror.timecore.api.client.resource.StandardItemModelParents;
 import ru.timeconqueror.timecore.api.registry.ItemRegister;
 import ru.timeconqueror.timecore.api.registry.util.AutoRegistrable;
@@ -25,66 +27,69 @@ public class EEItems {
 
     public static Item SHIFTERINE_ROD;
 
+    /* TODO: register all items (toolsets / armor / etc.) as static instances like above */
+
     @AutoRegistrable
     private static final ItemRegister ITEMS = new ItemRegister(Everend.MODID);
 
     @AutoRegistrable.Init
     private static void register() {
         register("dull_shifterine", "Dull Shifterine");
-        register("shifterine_crystal", "Shifterine Crystal", () -> new NESpecialAbilityResource(new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        register("shifterine_crystal", "Shifterine Crystal", () -> new EESpecialAbilityResource(new Item.Properties(), shifterineAbility()));
 
-        // TODO: stats
-        registerTool("shifterine_sword", "Shifterine Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerTool("shifterine_pickaxe", "Shifterine Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerTool("shifterine_axe", "Shifterine Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerTool("shifterine_shovel", "Shifterine Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerTool("shifterine_hoe", "Shifterine Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerArmor("shifterine_helmet", "Shifterine Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerArmor("shifterine_chestplate", "Shifterine Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerArmor("shifterine_leggings", "Shifterine Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), ShifterineItemAbility.INSTANCE));
-        registerArmor("shifterine_boots", "Shifterine Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), ShifterineItemAbility.INSTANCE));
+        registerTool("dev_sword", "Dev Sword", () -> new NESword(EETiers.DEVELOPER_SWORD.getTier(), 10, 5.0f, new Item.Properties(), DefaultItemAbility.INSTANCE));
 
+        // TODO: stats / custom tiers (EETiers class)
+        registerTool("shifterine_sword", "Shifterine Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), shifterineAbility()));
+        registerTool("shifterine_pickaxe", "Shifterine Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), shifterineAbility()));
+        registerTool("shifterine_axe", "Shifterine Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), shifterineAbility()));
+        registerTool("shifterine_shovel", "Shifterine Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), shifterineAbility()));
+        registerTool("shifterine_hoe", "Shifterine Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), shifterineAbility()));
+        registerArmor("shifterine_helmet", "Shifterine Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), shifterineAbility()));
+        registerArmor("shifterine_chestplate", "Shifterine Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), shifterineAbility()));
+        registerArmor("shifterine_leggings", "Shifterine Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), shifterineAbility()));
+        registerArmor("shifterine_boots", "Shifterine Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), shifterineAbility()));
 
         register("ludunite_thing", "Ludunite Thing");
 
-        //TODO: stats
-        registerTool("ludunite_sword", "Ludunite Sword", () -> new NESword(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerTool("ludunite_pickaxe", "Ludunite Pickaxe", () -> new NEPickaxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerTool("ludunite_axe", "Ludunite Axe", () -> new NEAxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerTool("ludunite_shovel", "Ludunite Shovel", () -> new NEShovel(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerTool("ludunite_hoe", "Ludunite Hoe", () -> new NEHoe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerArmor("ludunite_helmet", "Ludunite Helmet", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.HELMET, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerArmor("ludunite_chestplate", "Ludunite Chestplate", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.CHESTPLATE, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerArmor("ludunite_leggings", "Ludunite Leggings", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.LEGGINGS, new Item.Properties(), LuduniteItemAbility.INSTANCE));
-        registerArmor("ludunite_boots", "Ludunite Boots", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.BOOTS, new Item.Properties(), LuduniteItemAbility.INSTANCE));
+        // TODO: stats / custom tiers (EETiers class)
+        registerTool("ludunite_sword", "Ludunite Sword", () -> new NESword(Tiers.GOLD, 3, 1.0f, new Item.Properties(), luduniteAbility()));
+        registerTool("ludunite_pickaxe", "Ludunite Pickaxe", () -> new NEPickaxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), luduniteAbility()));
+        registerTool("ludunite_axe", "Ludunite Axe", () -> new NEAxe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), luduniteAbility()));
+        registerTool("ludunite_shovel", "Ludunite Shovel", () -> new NEShovel(Tiers.GOLD, 3, 1.0f, new Item.Properties(), luduniteAbility()));
+        registerTool("ludunite_hoe", "Ludunite Hoe", () -> new NEHoe(Tiers.GOLD, 3, 1.0f, new Item.Properties(), luduniteAbility()));
+        registerArmor("ludunite_helmet", "Ludunite Helmet", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.HELMET, new Item.Properties(), luduniteAbility()));
+        registerArmor("ludunite_chestplate", "Ludunite Chestplate", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.CHESTPLATE, new Item.Properties(), luduniteAbility()));
+        registerArmor("ludunite_leggings", "Ludunite Leggings", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.LEGGINGS, new Item.Properties(), luduniteAbility()));
+        registerArmor("ludunite_boots", "Ludunite Boots", () -> new NEArmor(ArmorMaterials.GOLD, ArmorItem.Type.BOOTS, new Item.Properties(), luduniteAbility()));
 
         register("dull_aldores", "Dull Aldores");
         register("aldores_thing", "Aldores Thing");
         register("ethereal_eye", "Ethereal Eye");
 
-        //TODO: stats
-        registerTool("aldores_sword", "Aldores Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerTool("aldores_pickaxe", "Aldores Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerTool("aldores_axe", "Aldores Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerTool("aldores_shovel", "Aldores Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerTool("aldores_hoe", "Aldores Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerArmor("aldores_helmet", "Aldores Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerArmor("aldores_chestplate", "Aldores Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerArmor("aldores_leggings", "Aldores Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), AldoresItemAbility.INSTANCE));
-        registerArmor("aldores_boots", "Aldores Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), AldoresItemAbility.INSTANCE));
+        // TODO: stats / custom tiers (EETiers class)
+        registerTool("aldores_sword", "Aldores Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), aldoresAbility()));
+        registerTool("aldores_pickaxe", "Aldores Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), aldoresAbility()));
+        registerTool("aldores_axe", "Aldores Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), aldoresAbility()));
+        registerTool("aldores_shovel", "Aldores Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), aldoresAbility()));
+        registerTool("aldores_hoe", "Aldores Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), aldoresAbility()));
+        registerArmor("aldores_helmet", "Aldores Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), aldoresAbility()));
+        registerArmor("aldores_chestplate", "Aldores Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), aldoresAbility()));
+        registerArmor("aldores_leggings", "Aldores Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), aldoresAbility()));
+        registerArmor("aldores_boots", "Aldores Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), aldoresAbility()));
 
         register("dragonbone", "Dragonbone");
 
-        //TODO: stats
-        registerTool("dragonbone_sword", "Dragonbone Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerTool("dragonbone_pickaxe", "Dragonbone Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerTool("dragonbone_axe", "Dragonbone Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerTool("dragonbone_shovel", "Dragonbone Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerTool("dragonbone_hoe", "Dragonbone Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerArmor("dragonbone_helmet", "Dragonbone Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerArmor("dragonbone_chestplate", "Dragonbone Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerArmor("dragonbone_leggings", "Dragonbone Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), DragonboneItemAbility.INSTANCE));
-        registerArmor("dragonbone_boots", "Dragonbone Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), DragonboneItemAbility.INSTANCE));
+        // TODO: stats / custom tiers (EETiers class)
+        registerTool("dragonbone_sword", "Dragonbone Sword", () -> new NESword(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), dragonboneAbility()));
+        registerTool("dragonbone_pickaxe", "Dragonbone Pickaxe", () -> new NEPickaxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), dragonboneAbility()));
+        registerTool("dragonbone_axe", "Dragonbone Axe", () -> new NEAxe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), dragonboneAbility()));
+        registerTool("dragonbone_shovel", "Dragonbone Shovel", () -> new NEShovel(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), dragonboneAbility()));
+        registerTool("dragonbone_hoe", "Dragonbone Hoe", () -> new NEHoe(Tiers.DIAMOND, 3, 1.0f, new Item.Properties(), dragonboneAbility()));
+        registerArmor("dragonbone_helmet", "Dragonbone Helmet", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties(), dragonboneAbility()));
+        registerArmor("dragonbone_chestplate", "Dragonbone Chestplate", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties(), dragonboneAbility()));
+        registerArmor("dragonbone_leggings", "Dragonbone Leggings", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties(), dragonboneAbility()));
+        registerArmor("dragonbone_boots", "Dragonbone Boots", () -> new NEArmor(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties(), dragonboneAbility()));
 
         register("enchantment_crystal", "Enchantment Crystal");
         register("enderium_dust", "Enderium Dust");
@@ -191,5 +196,25 @@ public class EEItems {
     //Could probably remove this, as tabs are now set by registry chain and not item properties
     private static Item.Properties baseProps() {
         return new Item.Properties();
+    }
+    
+    private static EEItemAbility shifterineAbility() {
+        return ShifterineItemAbility.INSTANCE;
+    }
+
+    private static EEItemAbility noAbility() {
+        return DefaultItemAbility.INSTANCE;
+    }
+
+    private static EEItemAbility luduniteAbility() {
+        return LuduniteItemAbility.INSTANCE;
+    }
+
+    private static EEItemAbility aldoresAbility() {
+        return AldoresItemAbility.INSTANCE;
+    }
+
+    private static EEItemAbility dragonboneAbility() {
+        return DragonboneItemAbility.INSTANCE;
     }
 }

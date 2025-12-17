@@ -12,15 +12,15 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.purplemushroom.everend.content.items.INESpecialAbilityItem;
-import net.purplemushroom.everend.content.items.NEItemAbility;
+import net.purplemushroom.everend.content.items.ability.IEESpecialAbilityItem;
+import net.purplemushroom.everend.content.items.ability.EEItemAbility;
 
 import java.util.function.Consumer;
 
-public class NEAxe extends AxeItem implements INESpecialAbilityItem {
-    private final NEItemAbility ability;
+public class NEAxe extends AxeItem implements IEESpecialAbilityItem {
+    private final EEItemAbility ability;
 
-    public NEAxe(Tier pTier, float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties, NEItemAbility ability) {
+    public NEAxe(Tier pTier, float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties, EEItemAbility ability) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
         this.ability = ability;
     }
@@ -85,7 +85,7 @@ public class NEAxe extends AxeItem implements INESpecialAbilityItem {
     }
 
     @Override
-    public NEItemAbility getAbility() {
+    public EEItemAbility getAbility() {
         return ability;
     }
 }

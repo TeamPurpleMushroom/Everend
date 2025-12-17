@@ -1,4 +1,4 @@
-package net.purplemushroom.everend.content.items;
+package net.purplemushroom.everend.content.items.ability;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,7 +7,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class LuduniteItemAbility extends NEItemAbility {
+public class LuduniteItemAbility extends EEItemAbility {
     public static final LuduniteItemAbility INSTANCE = new LuduniteItemAbility();
 
     @Override

@@ -1,4 +1,4 @@
-package net.purplemushroom.everend.content.items;
+package net.purplemushroom.everend.content.items.ability;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,8 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public abstract class NEItemAbility {
-    protected NEItemAbility() {
+public abstract class EEItemAbility {
+    protected EEItemAbility() {
 
     }
 
