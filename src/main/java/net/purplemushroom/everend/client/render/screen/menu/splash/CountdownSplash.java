@@ -13,7 +13,7 @@ public class CountdownSplash extends EverendSplash {
     protected CountdownSplash(String pSplash) {
         super(pSplash);
         launchStart = System.nanoTime();
-        redFont = new GradientTextRendering(Minecraft.getInstance().font, BitUtil.rgbToInt(120, 0, 0), GradientTextRendering.GradientDirection.DOWN);
+        redFont = new GradientTextRendering(Minecraft.getInstance().font, BitUtil.rgbToInt(180, 0, 0), BitUtil.rgbToInt(120, 0, 0));
     }
 
     @Override
@@ -22,9 +22,9 @@ public class CountdownSplash extends EverendSplash {
         if (secondsLeft > 0) {
             String msg = String.valueOf(secondsLeft) + '!';
             if (secondsLeft <= 3) {
-                graphics.drawCenteredString(redFont, msg, 0, -8, BitUtil.rgbToInt(180, 0, 0) | color);
+                graphics.drawCenteredString(redFont, msg, 0, -8, BitUtil.rgbToInt(255, 255, 255) | color);
             } else {
-                graphics.drawCenteredString(font, msg, 0, -8, BitUtil.rgbToInt(13, 82, 60) | color);
+                graphics.drawCenteredString(font, msg, 0, -8, BitUtil.rgbToInt(255, 255, 255) | color);
             }
         }
     }

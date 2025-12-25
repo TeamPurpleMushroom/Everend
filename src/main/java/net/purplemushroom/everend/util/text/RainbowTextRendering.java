@@ -34,13 +34,13 @@ public class RainbowTextRendering extends CustomTextRendering {
         Color colLeft = Color.getHSBColor(hueLeft, 1.0f, 1.0f);
         Color colRight = Color.getHSBColor(hueRight, 1.0f, 1.0f);
 
-        float rl = shadowFactor * (float) colLeft.getRed() / 255.0f;
-        float gl = shadowFactor * (float) colLeft.getGreen() / 255.0f;
-        float bl = shadowFactor * (float) colLeft.getBlue() / 255.0f;
+        float rl = red * (float) colLeft.getRed() / 255.0f;
+        float gl = green * (float) colLeft.getGreen() / 255.0f;
+        float bl = blue * (float) colLeft.getBlue() / 255.0f;
 
-        float rr = shadowFactor * (float) colRight.getRed() / 255.0f;
-        float gr = shadowFactor * (float) colRight.getGreen() / 255.0f;
-        float br = shadowFactor * (float) colRight.getBlue() / 255.0f;
+        float rr = red * (float) colRight.getRed() / 255.0f;
+        float gr = green * (float) colRight.getGreen() / 255.0f;
+        float br = blue * (float) colRight.getBlue() / 255.0f;
 
         buffer.vertex(matrix, left + italicTopOffset, top, 0.0F).color(rl, gl, bl, alpha).uv(glyph.u0, glyph.v0).uv2(light).endVertex();
         buffer.vertex(matrix, left + italicBottomOffset, bottom, 0.0F).color(rl, gl, bl, alpha).uv(glyph.u0, glyph.v1).uv2(light).endVertex();

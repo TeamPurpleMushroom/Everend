@@ -13,6 +13,7 @@ import net.purplemushroom.everend.util.text.GradientTextRendering;
 
 public class EverendSplash extends SplashRenderer {
     private final Font customFont;
+
     protected EverendSplash(String pSplash) {
         super(pSplash);
         this.customFont = getCustomFont();
@@ -37,7 +38,7 @@ public class EverendSplash extends SplashRenderer {
     }
 
     protected Font getCustomFont() {
-        return new GradientTextRendering(Minecraft.getInstance().font, BitUtil.rgbToInt(13, 0, 60), GradientTextRendering.GradientDirection.DOWN);
+        return new GradientTextRendering(BitUtil.rgbToInt(26, 164, 120), BitUtil.rgbToInt(13, 0, 60));
     }
 
     public String getText() {
@@ -45,6 +46,6 @@ public class EverendSplash extends SplashRenderer {
     }
 
     protected void renderText(GuiGraphics graphics, Font font, int color) {
-        graphics.drawCenteredString(font, this.splash, 0, -8, BitUtil.rgbToInt(26, 164, 120) | color);
+        graphics.drawCenteredString(font, this.splash, 0, -8, BitUtil.rgbToInt(255, 255, 255) | color);
     }
 }

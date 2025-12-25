@@ -388,9 +388,7 @@ public class EnderLord extends Monster implements NeutralMob, IEverendBoss<Ender
     public EverendBossInfo<EnderLord> getBossInfo() {
         return new EverendBossInfo<>(
                 this,
-                new GradientTextRendering(BitUtil.rgbToInt(52, 7, 43), GradientTextRendering.GradientDirection.UP),
-                BitUtil.rgbToInt(245, 13, 201),
-
+                new GradientTextRendering(BitUtil.rgbToInt(52, 7, 43), BitUtil.rgbToInt(245, 13, 201)),
                 new Color(255, 255, 255, 255),
                 new Color(255, 255, 255, 0),
                 EEMusic.ENDER_LORD);

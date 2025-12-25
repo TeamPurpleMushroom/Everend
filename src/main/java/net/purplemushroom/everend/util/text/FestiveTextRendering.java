@@ -1,35 +1,39 @@
 package net.purplemushroom.everend.util.text;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import org.joml.Matrix4f;
 
-public class GradientTextRendering extends CustomTextRendering {
-    private final int gradientTopColor;
-    private final int gradientBottomColor;
+public class FestiveTextRendering extends CustomTextRendering {
+    private boolean swapped = false;
 
-    public GradientTextRendering(int gradientTop, int gradientBottom) {
-        super();
-        this.gradientTopColor = Font.adjustColor(gradientTop);
-        this.gradientBottomColor = Font.adjustColor(gradientBottom);
-    }
-
-    public GradientTextRendering(Font mainFont, int gradientTop, int gradientBottom) {
-        super(mainFont);
-        this.gradientTopColor = Font.adjustColor(gradientTop);
-        this.gradientBottomColor = Font.adjustColor(gradientBottom);
+    public void setColorsSwapped(boolean swap) {
+        this.swapped = swap;
     }
 
     @Override
     protected void render(BakedGlyph glyph, int index, float pX, float pY, float red, float green, float blue, float alpha, boolean shadow, float shadowFactor, boolean italic, Matrix4f matrix, VertexConsumer buffer, int light) {
+        boolean isGreen = (index / 3) % 2 == 0;
+        if (swapped) isGreen = !isGreen;
+
         // the vanilla red, green, and blue values already account for the shadowFactor
-        float redTop = (float)(gradientTopColor >> 16 & 255) / 255.0F * red;
-        float greenTop = (float)(gradientTopColor >> 8 & 255) / 255.0F * green;
-        float blueTop = (float)(gradientTopColor & 255) / 255.0F * blue;
-        float redBottom = (float)(gradientBottomColor >> 16 & 255) / 255.0F * red;
-        float greenBottom = (float)(gradientBottomColor >> 8 & 255) / 255.0F * green;
-        float blueBottom = (float)(gradientBottomColor & 255) / 255.0F * blue;
+        float redTop = 1.0f * red;
+        float greenTop = 1.0f * green;
+        float blueTop = 1.0f * blue;
+
+        float redBottom;
+        float greenBottom;
+        float blueBottom;
+
+        if (isGreen) {
+            redBottom = 0.0f * red;
+            greenBottom = 1.0f * green;
+            blueBottom = 0.0f * blue;
+        } else {
+            redBottom = 1.0f * red;
+            greenBottom = 0.0f * green;
+            blueBottom = 0.0f * blue;
+        }
 
         float left = pX + glyph.left;
         float right = pX + glyph.right;

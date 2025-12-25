@@ -25,11 +25,11 @@ public class FoolsSplash extends EverendSplash {
     @Override
     public void renderText(GuiGraphics graphics, Font font, int color) {
         int line = (int) ((System.nanoTime() - startTime) / 3E9) % LINES.length;
-        graphics.drawCenteredString(font, LINES[line], 0, -8, BitUtil.rgbToInt(0, 255, 0) | color);
+        graphics.drawCenteredString(font, LINES[line], 0, -8, BitUtil.rgbToInt(255, 255, 255) | color);
     }
 
     @Override
     protected Font getCustomFont() {
-        return new GradientTextRendering(BitUtil.rgbToInt(200, 255, 200), GradientTextRendering.GradientDirection.UP);
+        return new GradientTextRendering(BitUtil.rgbToInt(200, 255, 200), BitUtil.rgbToInt(0, 255, 0));
     }
 }
