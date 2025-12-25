@@ -23,12 +23,18 @@ public class EverendBossInfo<T extends LivingEntity> {
     private static final ResourceLocation GUI_BARS_LOCATION = new ResourceLocation("textures/gui/bars.png");
 
     T boss;
+    Font font;
+    int textColor;
     float primaryRed, primaryGreen, primaryBlue, primaryAlpha;
     float secondaryRed, secondaryGreen, secondaryBlue, secondaryAlpha;
     Music music;
 
-    public EverendBossInfo(T boss, Color primaryFogColor, Color secondaryFogColor, Music music) {
+    public EverendBossInfo(T boss, Font text, int textColorModifier, Color primaryFogColor, Color secondaryFogColor, Music music) {
         this.boss = boss;
+
+        this.font = text;
+        textColor = textColorModifier;
+
         primaryRed = (float)primaryFogColor.getRed() / 255;
         primaryGreen = (float)primaryFogColor.getGreen() / 255;
         primaryBlue = (float)primaryFogColor.getBlue() / 255;
@@ -43,8 +49,6 @@ public class EverendBossInfo<T extends LivingEntity> {
     }
 
     public void renderBar(GuiGraphics graphics, int x, int y) {
-        Font font = Minecraft.getInstance().font;
-
         Matrix4f matrix = graphics.pose().last().pose();
 
         // set up shader colors
@@ -75,7 +79,7 @@ public class EverendBossInfo<T extends LivingEntity> {
         int l = font.width(component);
         int i1 = graphics.guiWidth() / 2 - l / 2;
         int j1 = y - 9;
-        graphics.drawString(font, component, i1, j1, 16777215);
+        graphics.drawString(font, component, i1, j1, textColor);
         RenderSystem.enableDepthTest();
     }
 

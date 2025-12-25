@@ -17,6 +17,6 @@ public class SpookySplash extends EverendSplash {
 
     @Override
     protected void renderText(GuiGraphics graphics, Font font, int color) {
-        graphics.drawCenteredString(getCustomFont(), this.splash, 0, -8, BitUtil.rgbToInt(242, 156, 27) | color);
+        graphics.drawCenteredString(font, this.splash, 0, -8, BitUtil.rgbToInt(242, 156, 27) | color);
     }
 }

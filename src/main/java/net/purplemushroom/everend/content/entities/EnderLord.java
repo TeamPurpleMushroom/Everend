@@ -46,9 +46,11 @@ import net.minecraft.world.phys.Vec3;
 import net.purplemushroom.everend.client.registry.EEMusic;
 import net.purplemushroom.everend.packet.SBossInfoPacket;
 import net.purplemushroom.everend.registry.EEPackets;
+import net.purplemushroom.everend.util.BitUtil;
 import net.purplemushroom.everend.util.EntityUtil;
 import net.purplemushroom.everend.util.EverendBossInfo;
 import net.purplemushroom.everend.util.ai.EverendMeleeAttack;
+import net.purplemushroom.everend.util.text.GradientTextRendering;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -386,6 +388,9 @@ public class EnderLord extends Monster implements NeutralMob, IEverendBoss<Ender
     public EverendBossInfo<EnderLord> getBossInfo() {
         return new EverendBossInfo<>(
                 this,
+                new GradientTextRendering(BitUtil.rgbToInt(52, 7, 43), GradientTextRendering.GradientDirection.UP),
+                BitUtil.rgbToInt(245, 13, 201),
+
                 new Color(255, 255, 255, 255),
                 new Color(255, 255, 255, 0),
                 EEMusic.ENDER_LORD);

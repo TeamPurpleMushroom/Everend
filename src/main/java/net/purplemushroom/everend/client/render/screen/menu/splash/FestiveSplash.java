@@ -31,6 +31,6 @@ public class FestiveSplash extends EverendSplash {
             }
             builder.append(green ? "§a" : "§c").append(c);
         }
-        graphics.drawCenteredString(getCustomFont(), builder.toString(), 0, -8, BitUtil.rgbToInt(13, 82, 60) | color);
+        graphics.drawCenteredString(font, builder.toString(), 0, -8, BitUtil.rgbToInt(13, 82, 60) | color);
     }
 }
