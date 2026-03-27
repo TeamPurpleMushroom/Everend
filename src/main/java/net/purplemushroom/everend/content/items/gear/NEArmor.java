@@ -11,15 +11,15 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.purplemushroom.everend.content.items.INESpecialAbilityItem;
-import net.purplemushroom.everend.content.items.NEItemAbility;
+import net.purplemushroom.everend.content.items.ability.IEESpecialAbilityItem;
+import net.purplemushroom.everend.content.items.ability.EEItemAbility;
 
 import java.util.function.Consumer;
 
-public class NEArmor extends ArmorItem implements INESpecialAbilityItem {
-    private final NEItemAbility ability;
+public class NEArmor extends ArmorItem implements IEESpecialAbilityItem {
+    private final EEItemAbility ability;
 
-    public NEArmor(ArmorMaterial pMaterial, Type pType, Properties pProperties, NEItemAbility ability) {
+    public NEArmor(ArmorMaterial pMaterial, Type pType, Properties pProperties, EEItemAbility ability) {
         super(pMaterial, pType, pProperties);
         this.ability = ability;
     }
@@ -73,7 +73,7 @@ public class NEArmor extends ArmorItem implements INESpecialAbilityItem {
     }
 
     @Override
-    public NEItemAbility getAbility() {
+    public EEItemAbility getAbility() {
         return ability;
     }
 }

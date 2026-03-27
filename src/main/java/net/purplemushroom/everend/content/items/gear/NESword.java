@@ -15,14 +15,14 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.purplemushroom.everend.content.items.INESpecialAbilityItem;
-import net.purplemushroom.everend.content.items.NEItemAbility;
+import net.purplemushroom.everend.content.items.ability.IEESpecialAbilityItem;
+import net.purplemushroom.everend.content.items.ability.EEItemAbility;
 
 import java.util.function.Consumer;
 
-public class NESword extends SwordItem implements INESpecialAbilityItem {
-    private final NEItemAbility ability;
-    public NESword(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Item.Properties pProperties, NEItemAbility ability) {
+public class NESword extends SwordItem implements IEESpecialAbilityItem {
+    private final EEItemAbility ability;
+    public NESword(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Item.Properties pProperties, EEItemAbility ability) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
         this.ability = ability;
     }
@@ -87,7 +87,7 @@ public class NESword extends SwordItem implements INESpecialAbilityItem {
     }
 
     @Override
-    public NEItemAbility getAbility() {
+    public EEItemAbility getAbility() {
         return ability;
     }
 }

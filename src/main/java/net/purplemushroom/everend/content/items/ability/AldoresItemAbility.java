@@ -1,4 +1,4 @@
-package net.purplemushroom.everend.content.items;
+package net.purplemushroom.everend.content.items.ability;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.purplemushroom.everend.util.BitUtil;
 
-public class AldoresItemAbility extends NEItemAbility {
+public class AldoresItemAbility extends EEItemAbility {
     public static final AldoresItemAbility INSTANCE = new AldoresItemAbility();
 
     @Override

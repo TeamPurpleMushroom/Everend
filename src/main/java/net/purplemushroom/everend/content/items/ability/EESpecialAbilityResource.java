@@ -1,4 +1,4 @@
-package net.purplemushroom.everend.content.items;
+package net.purplemushroom.everend.content.items.ability;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -15,10 +15,10 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
-public class NESpecialAbilityResource extends Item implements INESpecialAbilityItem {
-    private final NEItemAbility ability;
+public class EESpecialAbilityResource extends Item implements IEESpecialAbilityItem {
+    private final EEItemAbility ability;
 
-    public NESpecialAbilityResource(Properties pProperties, NEItemAbility ability) {
+    public EESpecialAbilityResource(Properties pProperties, EEItemAbility ability) {
         super(pProperties);
         this.ability = ability;
     }
@@ -72,7 +72,7 @@ public class NESpecialAbilityResource extends Item implements INESpecialAbilityI
     }
 
     @Override
-    public NEItemAbility getAbility() {
+    public EEItemAbility getAbility() {
         return ability;
     }
 }

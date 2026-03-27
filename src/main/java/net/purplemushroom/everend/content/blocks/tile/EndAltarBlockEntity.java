@@ -15,9 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.purplemushroom.everend.Everend;
 import net.purplemushroom.everend.content.blocks.EndAltarBlock;
-import net.purplemushroom.everend.content.items.DragonboneItemAbility;
-import net.purplemushroom.everend.content.items.INESpecialAbilityItem;
-import net.purplemushroom.everend.content.items.LuduniteItemAbility;
+import net.purplemushroom.everend.content.items.ability.DragonboneItemAbility;
+import net.purplemushroom.everend.content.items.ability.IEESpecialAbilityItem;
+import net.purplemushroom.everend.content.items.ability.LuduniteItemAbility;
 import net.purplemushroom.everend.registry.EEBlockEntities;
 import net.purplemushroom.everend.registry.EEItems;
 import org.jetbrains.annotations.NotNull;
@@ -87,7 +87,7 @@ public class EndAltarBlockEntity extends BlockEntity {
         int requiredDust = -1;
         if (recipes.containsKey(placedItem.getItem())) {
             requiredDust = recipes.get(placedItem.getItem()).dust;
-        } else if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
+        } else if (placedItem.getItem() instanceof IEESpecialAbilityItem abilityItem &&
                 (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE || abilityItem.getAbility() == DragonboneItemAbility.INSTANCE) &&
                 placedItem.getTag() != null &&
                 placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {
@@ -117,7 +117,7 @@ public class EndAltarBlockEntity extends BlockEntity {
                 }
 
                 if (dustCount >= requiredDust) {
-                    if (placedItem.getItem() instanceof INESpecialAbilityItem abilityItem &&
+                    if (placedItem.getItem() instanceof IEESpecialAbilityItem abilityItem &&
                             (abilityItem.getAbility() == LuduniteItemAbility.INSTANCE || abilityItem.getAbility() == DragonboneItemAbility.INSTANCE) &&
                             placedItem.getTag() != null &&
                             placedItem.getTag().getInt("Charge") < placedItem.getMaxDamage()) {

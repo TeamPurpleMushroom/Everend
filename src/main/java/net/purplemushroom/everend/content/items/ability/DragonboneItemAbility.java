@@ -1,4 +1,4 @@
-package net.purplemushroom.everend.content.items;
+package net.purplemushroom.everend.content.items.ability;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -6,11 +6,56 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.purplemushroom.everend.capability.player.EEPlayer;
+import net.purplemushroom.everend.util.BitUtil;
 import net.purplemushroom.everend.util.EntityUtil;
 
-public class ShifterineItemAbility extends NEItemAbility {
-    public static final ShifterineItemAbility INSTANCE = new ShifterineItemAbility();
+public class DragonboneItemAbility extends EEItemAbility {
+    public static final DragonboneItemAbility INSTANCE = new DragonboneItemAbility();
+
+    @Override
+    public boolean acceptsEnchantment(Enchantment enchant) {
+        return enchant != Enchantments.MENDING;
+    }
+
+    @Override
+    public boolean canRepair() {
+        return false;
+    }
+
+    @Override
+    public int handleItemDamage(LivingEntity entity, ItemStack stack, int amount) {
+        if (stack.hasTag() && stack.getTag().getInt("Charge") > 0) {
+            int prevDamage = stack.getDamageValue();
+            stack.hurt(amount, entity.getRandom(), entity instanceof ServerPlayer ? (ServerPlayer)entity : null);
+            amount = stack.getDamageValue() - prevDamage;
+            stack.getOrCreateTag().putInt("Charge", stack.getOrCreateTag().getInt("Charge") - amount);
+        }
+        stack.setDamageValue(0);
+        return 0;
+    }
+
+    @Override
+    public boolean applyAttributes(ItemStack stack) {
+        return stack.hasTag() && stack.getTag().getInt("Charge") > 0;
+    }
+
+    @Override
+    public boolean isDurabilityBarVisible(ItemStack stack, boolean originallyVisible) {
+        return stack.getMaxDamage() > 0;
+    }
+
+    @Override
+    public int getDurabilityBarWidth(ItemStack stack, int originalWidth) {
+        return Math.round((float)stack.getOrCreateTag().getInt("Charge") * 13.0F / (float)stack.getMaxDamage());
+    }
+
+    @Override
+    public int getDurabilityBarColor(int originalColor) {
+        return BitUtil.rgbToInt(225, 127, 245);
+    }
 
     @Override
     public void onDroppedTick(ItemStack stack, ItemEntity entity) {
