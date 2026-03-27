@@ -1,7 +1,9 @@
 package net.purplemushroom.everend.client.render.screen.menu.splash;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoader;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -291,7 +293,8 @@ public class SplashProvider {
             "To be, or not to be!",
             "If at first you don't succeed, redefine success!",
             "Post-processing!",
-            "Not necessarily just a problem, but an opportunity as well!"
+            "Not necessarily just a problem, but an opportunity as well!",
+            "Keep the door open three inches!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
@@ -386,7 +389,138 @@ public class SplashProvider {
             () -> new EverendSplash("That " + Minecraft.getInstance().getUser().getName() + " is such a- oh, didn't see you there!"),
 
             // rainbow
-            () -> new RainbowSplash("COLORS!!!!!!!!!")
+            () -> new RainbowSplash("COLORS!!!!!!!!!"),
+
+            () -> {
+                String[] versions = new String[] {
+                        "1.0.0",
+                        "1.0.1",
+
+                        "1.1",
+
+                        "1.2.1",
+                        "1.2.2",
+                        "1.2.3",
+                        "1.2.4",
+                        "1.2.5",
+
+                        "1.3.1",
+                        "1.3.2",
+
+                        "1.4.2",
+                        "1.4.4",
+                        "1.4.5",
+                        "1.4.6",
+                        "1.4.7",
+
+                        "1.5",
+                        "1.5.1",
+                        "1.5.2",
+
+                        "1.6.1",
+                        "1.6.2",
+
+                        "1.7.2",
+                        "1.7.4",
+                        "1.7.5",
+                        "1.7.6",
+                        "1.7.7",
+                        "1.7.8",
+                        "1.7.9",
+                        "1.7.10",
+
+                        "1.8",
+                        "1.8.1",
+                        "1.8.2",
+                        "1.8.3",
+                        "1.8.4",
+                        "1.8.5",
+                        "1.8.6",
+                        "1.8.7",
+                        "1.8.8",
+                        "1.8.9",
+
+                        "1.9",
+                        "1.9.1",
+                        "1.9.2",
+                        "1.9.3",
+                        "1.9.4",
+
+                        "1.10",
+                        "1.10.1",
+                        "1.10.2",
+
+                        "1.11",
+                        "1.11.1",
+                        "1.11.2",
+
+                        "1.12",
+                        "1.12.1",
+                        "1.12.2",
+
+                        "1.13",
+                        "1.13.1",
+                        "1.13.2",
+
+                        "1.14",
+                        "1.14.1",
+                        "1.14.2",
+                        "1.14.3",
+                        "1.14.4",
+
+                        "1.15",
+                        "1.15.1",
+                        "1.15.2",
+
+                        "1.16",
+                        "1.16.1",
+                        "1.16.2",
+                        "1.16.3",
+                        "1.16.4",
+                        "1.16.5",
+
+                        "1.17",
+                        "1.17.1",
+
+                        "1.18",
+                        "1.18.1",
+                        "1.18.2",
+
+                        "1.19",
+                        "1.19.1",
+                        "1.19.2",
+                        "1.19.3",
+                        "1.19.4",
+
+                        "1.20",
+                        "1.20.1",
+                        "1.20.2",
+                        "1.20.3",
+                        "1.20.4",
+                        "1.20.5",
+                        "1.20.6",
+
+                        "1.21",
+                        "1.21.1",
+                        "1.21.2",
+                        "1.21.3",
+                        "1.21.4",
+                        "1.21.5",
+                        "1.21.6",
+                        "1.21.7",
+                        "1.21.8",
+                        "1.21.9",
+                        "1.21.10",
+                        "1.21.11"
+                };
+
+                String selectedVersion;
+                do {
+                    selectedVersion = versions[new Random().nextInt(versions.length)];
+                } while (selectedVersion.equals(SharedConstants.getCurrentVersion().getName()));
+
+                return new EverendSplash(selectedVersion + " please!");
+            }
     };
 
     private static final Calendar RELEASE_DATE = Calendar.getInstance();
@@ -425,6 +559,7 @@ public class SplashProvider {
         if (rand.nextInt(1000) == 0) return new ClickMeSplash("Click me!");
 
         int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES.length);
+        pick = SPECIAL_SPLASHES.length - 1;
         if (pick < SPECIAL_SPLASHES.length) {
             return (EverendSplash) SPECIAL_SPLASHES[pick].get();
         }
