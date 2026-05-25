@@ -559,7 +559,6 @@ public class SplashProvider {
         if (rand.nextInt(1000) == 0) return new ClickMeSplash("Click me!");
 
         int pick = rand.nextInt(SPLASHES.length + SPECIAL_SPLASHES.length);
-        pick = SPECIAL_SPLASHES.length - 1;
         if (pick < SPECIAL_SPLASHES.length) {
             return (EverendSplash) SPECIAL_SPLASHES[pick].get();
         }
