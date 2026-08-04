@@ -294,7 +294,9 @@ public class SplashProvider {
             "If at first you don't succeed, redefine success!",
             "Post-processing!",
             "Not necessarily just a problem, but an opportunity as well!",
-            "Keep the door open three inches!"
+            "Keep the door open three inches!",
+            "Sorry to keep you waiting!",
+            "SAME BAT-TIME, SAME BAT-CHANNEL!"
     };
 
     public static final String[] SPOOKY_SPLASHES = {
